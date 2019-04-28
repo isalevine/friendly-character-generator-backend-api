@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  base_character_id: 1
+  stat_preference: MyString
+  action_preference: MyString
+  power_preference: MyString
+
+two:
+  base_character_id: 1
+  stat_preference: MyString
+  action_preference: MyString
+  power_preference: MyString
