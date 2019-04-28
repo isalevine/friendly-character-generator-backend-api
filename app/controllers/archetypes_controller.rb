@@ -1,2 +1,2 @@
-class ArchetypesController < ApplicationController
+class Api::V1::ArchetypesController < ApplicationController
 end

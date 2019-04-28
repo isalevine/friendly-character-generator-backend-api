@@ -1,2 +1,2 @@
-class SearchPreferencesController < ApplicationController
+class Api::V1::SearchPreferencesController < ApplicationController
 end
