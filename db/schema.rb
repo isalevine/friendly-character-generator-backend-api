@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_30_000530) do
+ActiveRecord::Schema.define(version: 2019_04_30_214420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,7 +40,6 @@ ActiveRecord::Schema.define(version: 2019_04_30_000530) do
   end
 
   create_table "search_preferences", force: :cascade do |t|
-    t.integer "base_character_id"
     t.string "stat_preference"
     t.string "action_preference"
     t.string "power_preference"
