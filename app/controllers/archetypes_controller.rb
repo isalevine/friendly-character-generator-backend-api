@@ -1,5 +1,10 @@
 class ArchetypesController < ApplicationController
 
+  def index
+    @archetypes = Archetype.all
+    render json: @archetypes
+  end
+
   def show
     find_archetype
     render json: @archetype
