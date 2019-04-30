@@ -11,3 +11,6 @@ class CreateSearchLists < ActiveRecord::Migration[5.2]
     end
   end
 end
+
+# may be worth deprecating "search_stat_preference", and just
+# rely on playstyle and action to guide the searching?

@@ -1,4 +1,4 @@
-class Api::V1::SearchPreferencesController < ApplicationController
+class SearchPreferencesController < ApplicationController
 
   def show
     find_search_preference
