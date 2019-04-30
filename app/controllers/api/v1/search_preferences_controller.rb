@@ -33,7 +33,7 @@ class Api::V1::SearchPreferencesController < ApplicationController
   end
 
   def search_preference_params
-    params.permit(:stat_preference, :action_preference, :power_preference)
+    params.permit(:playstyle_preference, :action_preference, :stat_preference, :power_preference)
   end
 
 end

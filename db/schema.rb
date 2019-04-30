@@ -10,19 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_28_172910) do
+ActiveRecord::Schema.define(version: 2019_04_30_000530) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "api_v1_search_lists", force: :cascade do |t|
-    t.integer "archetype_id"
-    t.string "search_stat_pref"
-    t.string "search_action_pref"
-    t.string "search_power_pref"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "archetypes", force: :cascade do |t|
     t.string "name"
@@ -38,6 +29,16 @@ ActiveRecord::Schema.define(version: 2019_04_28_172910) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "search_lists", force: :cascade do |t|
+    t.integer "archetype_id"
+    t.string "search_playstyle_pref"
+    t.string "search_action_pref"
+    t.string "search_stat_pref"
+    t.string "search_power_pref"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "search_preferences", force: :cascade do |t|
     t.integer "base_character_id"
     t.string "stat_preference"
@@ -45,6 +46,7 @@ ActiveRecord::Schema.define(version: 2019_04_28_172910) do
     t.string "power_preference"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "playstyle_preference"
   end
 
 end

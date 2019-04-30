@@ -2,12 +2,14 @@
 
 one:
   archetype_id: 1
-  search_stat_pref: MyString
+  search_playstyle_pref: MyString
   search_action_pref: MyString
+  search_stat_pref: MyString
   search_power_pref: MyString
 
 two:
   archetype_id: 1
-  search_stat_pref: MyString
+  search_playstyle_pref: MyString
   search_action_pref: MyString
+  search_stat_pref: MyString
   search_power_pref: MyString
