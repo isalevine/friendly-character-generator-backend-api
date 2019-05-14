@@ -1,6 +1,8 @@
-TEST CONVERTER-OBJECT FOR DnD:
+TEST DND-GAME-SYSTEM OBJECT:
 
 {
+  id: 1,
+
   systemClasses: {
     systemId: 1,
     hasClasses: true,
@@ -95,10 +97,19 @@ TEST CONVERTER-OBJECT FOR DnD:
       { name: null, roll: null, description: null },
       { name: null, roll: null, description: null }
     ]
+  },
+
+  # use as default text, override w/ Archetype's systemUnique["dnd"] ??
+  systemUnique: {
+    hitPoints: "roll hit die, add Constitution modifier",
+    armorClass: "armor base AC, add Dexterity modifier",
+    alignment: "lawful/neutral/chaotic, good/neutral/evil"
   }
 
-  # NEED IMMEDIATE NEW ONE FOR systemUnique (armor class, hit points, alignment, etc.)
-
   # NEED TO BUILD A SEPARATE ONE FOR SPELLS?!
+
+
+
+  # CONVERSIONS (see Pages file w/ outline of objects)
 
 }

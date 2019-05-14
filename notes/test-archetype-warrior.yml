@@ -1,0 +1,63 @@
+TEST ARCHETYPE WARRIOR:
+
+{
+  id: 1,
+
+  name: "warrior",
+
+  # integers represent percents (for Javascript, not needed in Ruby)
+  statWeights: {
+    chosenByPlayer: {
+      strenth: 50,
+      dexterity: 10,
+      constitution: 30,
+      intelligence: 0,
+      wisdom: 10,
+      charisma: 0
+    },
+    chosenByClassRace: {
+
+    }
+  }
+
+  skillPriorities: {
+    chosenByPlayer: [
+      "feats_of_strength",
+      "intimidation",
+      "athletics_dodge",
+      "awareness",
+      "larceny_crime",
+      "investigation",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    chosenByClassRace: {
+
+    }
+  },
+
+  powerPriorities: {
+    chosenByPlayer: {
+
+    },
+    chosenByClassRace: {
+
+    }
+  },
+
+  systemUnique: {
+    dnd: {
+      class: "fighter",
+      race: "half-orc",
+      hitPoints: "roll d10, add Constitution modifier",
+      armorClass: "armor base AC, add Dexterity modifier",
+      alignment: "chaotic-neutral"
+    }
+  }
+
+
+}
