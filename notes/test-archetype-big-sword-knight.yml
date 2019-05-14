@@ -1,0 +1,68 @@
+TEST ARCHETYPE WARRIOR:
+
+{
+  id: 1,
+
+  name: "big sword knight",
+
+  # integers represent percents (for Javascript, not needed in Ruby)
+  statWeights: {
+    chosenByPlayer: [
+      "strength",
+      "constitution",
+      "dexterity",
+      "wisdom",
+      "charisma",
+      "intelligence"
+    ]
+  }
+
+  skillPriorities: {
+    chosenByPlayer: [
+      "feats_of_strength",
+      "intimidation",
+      "athletics_dodge",
+      "awareness",
+      "larceny_crime",
+      "investigation",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ]
+  },
+
+  powerPriorities: {
+    chosenByPlayer: {
+      tags: ["sword", "combat", "extra attacks", "accuracy", "strength", "dodge", "reduce damage", "intimidate"]
+    }
+  },
+
+  systemUnique: {
+    dnd: {
+      class: "fighter",
+      race: "half-orc",
+      hitPoints: "roll d10, add Constitution modifier",
+      armorClass: "armor base AC, add Dexterity modifier",
+      alignment: "chaotic-neutral"
+    },
+    exalted: {
+      class: "dawn",
+      race: "solar exalted",
+      anima: "big sword with angel wings",
+      backgrounds: "artifact: 3 (daiklave), resources: 3 (armor, traveling gear, and lots of tavern-drinking), manse: 1 (delerium orb - lvl 1 fire stone, grants berserk/combat bonus)"
+      virtues: "valor: 4, conviction: 3, temperence: 1, compassion: 1",
+      virtue flaw: "valor - will try to fight and conquer anything bigger than their sword"
+      willpower: "7"
+      hitPoints: "-0: 1, -1: 2, -2: 2, -4: 1, I: 1",
+      soak: "bashing: , lethal: , aggravated: ",
+      defenseValues: "dodge: , parry: , mental: ",
+      essence: "level 2, personal: 13 motes, peripheral: 30 motes",
+      bonusPoints: "18"
+    }
+  }
+
+
+}
