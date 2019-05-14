@@ -40,24 +40,26 @@ TEST CONVERTER-OBJECT FOR DnD:
   },
 
   # 12/30 skills are null
+  # pointsNum reflects the MAXIMUM number a lvl 1 character might have
   systemSkills: {
     systemId: 1,
     skillAlias: “skill”,
     hasSkills: true,
-    chosenBy: “class/race”
-    pointsNum: 4,
+    chosenBy: “both”
+    pointsNum: 6,
     minimumScore: 0,
     skillNum: 18,
     skillList: [“acrobatics”, “animal handling”, “arcana”, “athletics”, “deception”, “history”, “insight”, “intimidation”, “investigation”, “medicine”, “nature”, “perception”, “performance”, “persuasion”, “religion”, “sleight of hand”, “stealth”, “survival”, null, null, null, null, null, null, null, null, null, null, null, null]
   },
 
   # 12/30 powers are null
+  # startingNum reflects the MAXIMUM number a lvl 1 character might have
   systemPowers: {
     systemId: 1,
     powerAlias: “feature”,
     hasPowers: true,
-    chosenBy: "player",
-    startingNum: 2,
+    chosenBy: "class/race",
+    startingNum: 3,
     powerNum: 24,
     powerList: [
       { name: “Arcane Recovery”, roll: “once per day”, description: “You have learned to regain some of your magical energy by studying your spellbook. Once per day when you finish a short rest, you can choose expended spell slots to recover. You can recover either a 2nd-level spell slot or two 1st-level spell slots.” },
@@ -94,4 +96,9 @@ TEST CONVERTER-OBJECT FOR DnD:
       { name: null, roll: null, description: null }
     ]
   }
+
+  # NEED TO BUILD A SEPARATE ONE FOR SPELLS?!
+
+  # Possibly build one for Alignment/Virtues too??
+
 }
