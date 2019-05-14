@@ -3,9 +3,7 @@ TEST DND-GAME-SYSTEM OBJECT:
 {
   id: 1,
 
-  # playstyles can be used as default/fallback queries if
-  # system-specific class is NOT selected in ArchetypeMaker
-  #
+
   # from form 1 (to fill in form 2 options)
   systemClasses: {
     systemId: 1,
@@ -13,24 +11,11 @@ TEST DND-GAME-SYSTEM OBJECT:
     classAlias: “class”,
     chosenBy: "player",
     classNum: 12,
-    classList: [
-      {name: “barbarian”, playstyles: ["physical"] },
-      {name: "bard", playstyles: ["mental", "social"] },
-      {name: "cleric", playstyles: ["physical", "mental"] },
-      {name: "druid", playstyles: ["mental", "social"] },
-      {name: "fighter", playstyles: ["physical"] },
-      {name: "monk", playstyles: ["physical"] },
-      {name: "paladin", playstyles: ["physical", "social"] },
-      {name: "ranger", playstyles: ["physical", "mental"] },
-      {name: "rogue", playstyles: ["physical", "mental", "social"] },
-      {name: "sorcerer", playstyles: ["physical", "mental"] },
-      {name: "warlock", playstyles: ["mental", "social"] },
-      {name: "wizard", playstyles: ["physical", "mental", "social"] },
-    ],
+    classList: ["barbarian", "bard", "cleric", "druid", "fighter", "monk", "paladin", "ranger", "rogue", "sorcerer", "warlock", "wizard"],
     hasStatBonus: true,
     hasSkillBonus: true,
     hasSetPowers: true,
-    parameterList: [“hit die”, “equipment”, “saving throws”, null, null]
+    parameterList: [“hit die”, “saving throws”, “equipment”, null, null]
   },
 
   # from form 1 (to fill in form 2 options)
@@ -48,9 +33,10 @@ TEST DND-GAME-SYSTEM OBJECT:
   },
 
   # pointsPlayer - used to rank 15/14/13/12/10/8 default stat allotments
-  # pointsClassRace - whether bonuses are subtracted from pointsNum or not
+  # pointsClassRace["spendPoints"] - whether bonuses are subtracted from pointsNum or not
   # => ("bonus" is NOT - this was specifically implemented to handle Humans getting +6 stats)
   # => this will also determine the ORDER that points are allocated (bonus = points added AFTER player's allocation)
+  # => (presetNums refers to ALL points being pre-set)
   #
   # 24/30 stats are null
   # from form 1 (to fill in form 2 options)
@@ -62,9 +48,14 @@ TEST DND-GAME-SYSTEM OBJECT:
     pointsNum: 24,
     pointsPlayer: {
       presetNums: true,
-      statPriority: [7, 6, 5, 4, 2, 0]
+      statPriority: [7, 6, 5, 4, 2, 0],
+      spendPoints: "subtract"
     }
-    pointsClassRace: "bonus",
+    pointsClassRace: {
+      presetNums: false,
+      statPriority: [],
+      spendPoints: "bonus"
+    }
     minimumScore: 8,
     maxPlayerScore: 15,
     maxClassRaceScore: null,
@@ -74,12 +65,24 @@ TEST DND-GAME-SYSTEM OBJECT:
 
   # 12/30 skills are null
   # pointsNum reflects the MAXIMUM number a lvl 1 character might have
+  #
+  # DOUBLE-CHECK the pointsPlayer and pointsClassRace objects - are these correct and necessary??
   systemSkills: {
     systemId: 1,
     skillAlias: “skill”,
     hasSkills: true,
     chosenBy: “both”
     pointsNum: 6,
+        pointsPlayer: {
+          presetNums: false,
+          skillPriority: [1, 1, 0, 0, 0, 0],
+          spendPoints: "subtract"
+        }
+        pointsClassRace: {
+          presetNums: false,
+          skillPriority: [1, 1, 0, 0, 0, 0],
+          spendPoints: "subtract"
+        }
     minimumScore: 0,
     skillNum: 18,
     skillList: [“acrobatics”, “animal handling”, “arcana”, “athletics”, “deception”, “history”, “insight”, “intimidation”, “investigation”, “medicine”, “nature”, “perception”, “performance”, “persuasion”, “religion”, “sleight of hand”, “stealth”, “survival”, null, null, null, null, null, null, null, null, null, null, null, null]
@@ -135,7 +138,7 @@ TEST DND-GAME-SYSTEM OBJECT:
 
   # use as default text, override w/ Archetype's systemUnique["dnd"] ??
   # from form 1 (to fill in form 2 options)
-  systemUnique: ["hit points", "armor class", "alignment"]
+  systemUnique: ["hit points", "armor class", "alignment", "ability modifiers"]
 
   # NEED TO BUILD A SEPARATE ONE FOR SPELLS?!
 
@@ -147,7 +150,7 @@ TEST DND-GAME-SYSTEM OBJECT:
   #
   # chosenByPlayer stat conversions are used for convering 6x base stats into system-specific stats;
   # chosenByClassRace directly identify the system's stats to apply bonuses
-  statConversions = {
+  statConversions: {
     systemId: 1,
     chosenByPlayer: [
       { base: { stat1: "strength", stat2: null}, output: { stat1: "strength", stat2: null} },
@@ -191,6 +194,31 @@ TEST DND-GAME-SYSTEM OBJECT:
       { race: null, list: [ {stat: null, bonus: null}, {stat: null, bonus: null}, {stat: null, bonus: null}, {stat: null, bonus: null}, {stat: null, bonus: null}, {stat: null, bonus: null} ] },
       { race: null, list: [ {stat: null, bonus: null}, {stat: null, bonus: null}, {stat: null, bonus: null}, {stat: null, bonus: null}, {stat: null, bonus: null}, {stat: null, bonus: null} ] },
     ]
+  }
+
+  # playstyles can be used as default/fallback queries if
+  # system-specific class is NOT selected in ArchetypeMaker
+  #
+  # refereance:
+      # {name: “barbarian”, playstyles: ["physical"] },
+      # {name: "bard", playstyles: ["mental", "social"] },
+      # {name: "cleric", playstyles: ["physical", "mental"] },
+      # {name: "druid", playstyles: ["mental", "social"] },
+      # {name: "fighter", playstyles: ["physical"] },
+      # {name: "monk", playstyles: ["physical"] },
+      # {name: "paladin", playstyles: ["physical", "social"] },
+      # {name: "ranger", playstyles: ["physical", "mental"] },
+      # {name: "rogue", playstyles: ["physical", "mental", "social"] },
+      # {name: "sorcerer", playstyles: ["physical", "mental"] },
+      # {name: "warlock", playstyles: ["mental", "social"] },
+      # {name: "wizard", playstyles: ["physical", "mental", "social"] },
+  classConversions: {
+    fighter: {
+      playstyles: ["physical"],
+      hit_die: "d10",
+      saving_throws: "strength, constitution",
+      equipment: "greatsword, chainmail, explorer's pack, two handaxes"
+    }
   }
 
 

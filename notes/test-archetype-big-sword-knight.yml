@@ -1,4 +1,4 @@
-TEST ARCHETYPE WARRIOR:
+TEST ARCHETYPE WARRIOR (now "big sword knight"):
 
 {
   id: 1,
@@ -7,7 +7,7 @@ TEST ARCHETYPE WARRIOR:
 
   # integers represent percents (for Javascript, not needed in Ruby)
   statWeights: {
-    chosenByPlayer: [
+    chosen_by_player: [
       "strength",
       "constitution",
       "dexterity",
@@ -18,7 +18,7 @@ TEST ARCHETYPE WARRIOR:
   }
 
   skillPriorities: {
-    chosenByPlayer: [
+    chosen_by_player: [
       "feats_of_strength",
       "intimidation",
       "athletics_dodge",
@@ -35,7 +35,7 @@ TEST ARCHETYPE WARRIOR:
   },
 
   powerPriorities: {
-    chosenByPlayer: {
+    chosen_by_player: {
       tags: ["sword", "combat", "extra attacks", "accuracy", "strength", "dodge", "reduce damage", "intimidate"]
     }
   },
@@ -44,9 +44,10 @@ TEST ARCHETYPE WARRIOR:
     dnd: {
       class: "fighter",
       race: "half-orc",
-      hitPoints: "roll d10, add Constitution modifier",
-      armorClass: "armor base AC, add Dexterity modifier",
-      alignment: "chaotic-neutral"
+      hit_points: "roll d10, add Constitution modifier",
+      armor_class: "armor base AC, add Dexterity modifier",
+      alignment: "chaotic-neutral",
+      ability_modifiers: ""
     },
     exalted: {
       class: "dawn",
@@ -54,13 +55,13 @@ TEST ARCHETYPE WARRIOR:
       anima: "big sword with angel wings",
       backgrounds: "artifact: 3 (daiklave), resources: 3 (armor, traveling gear, and lots of tavern-drinking), manse: 1 (delerium orb - lvl 1 fire stone, grants berserk/combat bonus)"
       virtues: "valor: 4, conviction: 3, temperence: 1, compassion: 1",
-      virtue flaw: "valor - will try to fight and conquer anything bigger than their sword"
+      virtue_flaw: "valor - will try to fight and conquer anything bigger than their sword"
       willpower: "7"
-      hitPoints: "-0: 1, -1: 2, -2: 2, -4: 1, I: 1",
+      hit_points: "-0: 1, -1: 2, -2: 2, -4: 1, I: 1",
       soak: "bashing: , lethal: , aggravated: ",
-      defenseValues: "dodge: , parry: , mental: ",
+      defense_values: "dodge: , parry: , mental: ",
       essence: "level 2, personal: 13 motes, peripheral: 30 motes",
-      bonusPoints: "18"
+      bonus_points: "18"
     }
   }
 
