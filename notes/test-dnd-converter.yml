@@ -97,8 +97,8 @@ TEST CONVERTER-OBJECT FOR DnD:
     ]
   }
 
-  # NEED TO BUILD A SEPARATE ONE FOR SPELLS?!
+  # NEED IMMEDIATE NEW ONE FOR systemUnique (armor class, hit points, alignment, etc.)
 
-  # Possibly build one for Alignment/Virtues too??
+  # NEED TO BUILD A SEPARATE ONE FOR SPELLS?!
 
 }
