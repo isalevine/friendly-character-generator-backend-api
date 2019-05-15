@@ -1,6 +1,6 @@
 # built referencing /notes/test-archetype-big-sword-knight.yml
 
-archetype_big_sword_knight = {
+$archetype_big_sword_knight = {
   id: 1,
   name: "big sword knight",
 

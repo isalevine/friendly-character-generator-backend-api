@@ -1,4 +1,4 @@
-dnd_output_character_big_sword_knight = {
+$dnd_output_character_big_sword_knight = {
     class: "fighter",
     race: "half-orc",
     archetype_name: "big sword knight",
@@ -18,12 +18,12 @@ dnd_output_character_big_sword_knight = {
     skills: {
         alias: "skill",
         list: ["athletics", "intimidation", "acrobatics", "perception"]
-    }
+    },
 
     powers: {
         alias: "feature",
-        list:
-    }
+        list: [],
+    },
 
     ability_modifiers: "8-9 = -1; 10-11 = 0; 12-13 = +1; 14-15 = +2; 16-17 = +3, 18-19 = +4",
     alignment: "chaotic-neutral",
@@ -38,7 +38,7 @@ dnd_output_character_big_sword_knight = {
 
 # blank version to use to test output
 
-blank_dnd_output_character = {
+$blank_dnd_output_character = {
     class: nil,
     race: nil,
     archetype_name: nil,
@@ -58,12 +58,12 @@ blank_dnd_output_character = {
     skills: {
         alias: "skill",
         list: []
-    }
+    },
 
     powers: {
         alias: "power",
         list: []
-    }
+    },
 
     ability_modifiers: nil,
     alignment: nil,
