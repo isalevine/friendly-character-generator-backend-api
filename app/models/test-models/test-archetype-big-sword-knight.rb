@@ -1,12 +1,10 @@
-TEST ARCHETYPE WARRIOR (now "big sword knight"):
+# built referencing /notes/test-archetype-big-sword-knight.yml
 
-{
+archetype_big_sword_knight = {
   id: 1,
-
   name: "big sword knight",
 
-  # integers represent percents (for Javascript, not needed in Ruby)
-  statWeights: {
+  stat_weights: {
     chosen_by_player: [
       "strength",
       "constitution",
@@ -15,9 +13,9 @@ TEST ARCHETYPE WARRIOR (now "big sword knight"):
       "charisma",
       "intelligence"
     ]
-  }
+  },
 
-  skillPriorities: {
+  skill_priorities: {
     chosen_by_player: [
       "feats_of_strength",
       "intimidation",
@@ -25,22 +23,22 @@ TEST ARCHETYPE WARRIOR (now "big sword knight"):
       "awareness",
       "larceny_crime",
       "investigation",
-      null,
-      null,
-      null,
-      null,
-      null,
-      null
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil
     ]
   },
 
-  powerPriorities: {
+  power_priorities: {
     chosen_by_player: {
       tags: ["sword", "combat", "extra attacks", "accuracy", "strength", "dodge", "reduce damage", "intimidate"]
     }
   },
 
-  systemUnique: {
+  system_unique: {
     dnd_5th_001: {
       class: "fighter",
       race: "half-orc",
@@ -53,10 +51,10 @@ TEST ARCHETYPE WARRIOR (now "big sword knight"):
       class: "dawn",
       race: "solar exalted",
       anima: "big sword with angel wings",
-      backgrounds: "artifact: 3 (daiklave), resources: 3 (armor, traveling gear, and lots of tavern-drinking), manse: 1 (delerium orb - lvl 1 fire stone, grants berserk/combat bonus)"
+      backgrounds: "artifact: 3 (daiklave), resources: 3 (armor, traveling gear, and lots of tavern-drinking), manse: 1 (delerium orb - lvl 1 fire stone, grants berserk/combat bonus)",
       virtues: "valor: 4, conviction: 3, temperence: 1, compassion: 1",
-      virtue_flaw: "valor - will try to fight and conquer anything bigger than their sword"
-      willpower: "7"
+      virtue_flaw: "valor - will try to fight and conquer anything bigger than their sword",
+      willpower: "7",
       hit_points: "-0: 1, -1: 2, -2: 2, -4: 1, I: 1",
       soak: "bashing: , lethal: , aggravated: ",
       defense_values: "dodge: , parry: , mental: ",
@@ -67,3 +65,6 @@ TEST ARCHETYPE WARRIOR (now "big sword knight"):
 
 
 }
+
+# to test auto-searching for dnd classes/races, consider how ArchetypeMaker may leave those
+# fields in system_unique as nil => handle logic based on that (i.e. call a search method...)

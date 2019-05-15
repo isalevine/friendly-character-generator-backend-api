@@ -2,6 +2,11 @@ TEST DND-GAME-SYSTEM OBJECT:
 
 {
   id: 1,
+  fullTitle: "Dungeons and Dragons",
+  edition: "5th",
+  alias: "dnd",
+  uniqueName: "dnd_5th_001",
+  description: "Dungeons and Dragons, 5th Edition (core, with minor tweaks/simplifications for simplifying coding)"
 
 
   # from form 1 (to fill in form 2 options)
