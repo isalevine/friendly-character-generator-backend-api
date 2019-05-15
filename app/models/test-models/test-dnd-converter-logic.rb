@@ -1,22 +1,28 @@
 
+# IS IT NECESSARY TO REQUIRE_ALL / INPORT THE HASHES TO PASS IN???
+
+
 def archetype_system_converter(archetype, game_system, output_character)
 
+    # set output-character's archetype_name to archetype's name
+
+
     # check class
-    if game_system.system_classes.has_classes
-        output_character.class = archetype.system_unique["#{game_system.unique_name}"].class
+    if game_system.system_classes[:has_classes]
+        output_character[:class] = archetype[:system_unique]["#{game_system[:unique_name]}"][:class]
     end
 
 
     # check race
-    if game_system.system_races.has_races
-        output_character.race = archetype.system_unique["#{game_system.unique_name}"].race
+    if game_system[:system_races][:has_races]
+        output_character[:race] = archetype[:system_unique]["#{game_system[:unique_name]}"][:race]
     end
 
 
     # check stats
-    if game_system.system_stats.has_stats
-        stats = game_system.system_stats
-        conversions = game_system.stat_conversions
+    if game_system[:system_stats][:has_stats]
+        stats = game_system[:system_stats]
+        conversions = game_system[:stat_conversions]
         stat_choice_order = []
         points = nil
 
@@ -33,8 +39,8 @@ def archetype_system_converter(archetype, game_system, output_character)
             stat_choice_order = ["class_race"]
         end
         
-        if stats.points_num
-            points = stats.points_num
+        if stats[:points_num]
+            points = stats[:points_num]
             # modularize logic in elsif block, and implement points-subtracting/bonus logic (Exalted)
         elsif 
             stat_choice_order.each do |source|
@@ -46,6 +52,7 @@ def archetype_system_converter(archetype, game_system, output_character)
                             index += 1
                         end
                     end
+                end
                 if source == "class_race"
                     # ask ix about efficiency re: using race/class 
                     # names as key-strings, and calling .keys => then do a 
@@ -62,6 +69,7 @@ def archetype_system_converter(archetype, game_system, output_character)
                                         output_character[:stats][:list][bonus_hash[:stat]] += bonus_hash[:bonus]
                                     end
                                 end
+                                break
                             end
                         end
                     end            
@@ -90,5 +98,11 @@ def archetype_system_converter(archetype, game_system, output_character)
 
     end
 
-    
+
+    binding.pry
+
 end
+
+
+
+archetype_system_converter(archetype: archetype_big_sword_knight, game_system: dnd_game_system, output_character: blank_dnd_output_character )
