@@ -143,6 +143,7 @@ $dnd_game_system = {
 
 
   stat_conversions: {
+    base_output_conversions: "1_to_1",
     term_conversions: [
       { base: { stat1: "strength", stat2: nil}, output: { stat1: "strength", stat2: nil} },
       { base: { stat1: "dexterity", stat2: nil}, output: { stat1: "dexterity", stat2: nil} },
@@ -192,6 +193,7 @@ $dnd_game_system = {
 
 
   skill_conversions: {
+    base_output_conversions: "1_to_2",
     term_conversions: [
       { base: {skill1: "athletics_dodge" , skill2: nil}, output: {skill1: "acrobatics", skill2: nil} },
       { base: {skill1: "awareness" , skill2: nil}, output: {skill1: "perception", skill2: "nature"} },
@@ -210,17 +212,17 @@ $dnd_game_system = {
     chosen_by_class_race: {
       classes: [
         { name: "barbarian", num_chosen: nil, list: [] },
-        { name: "bard", num_chosen: 3, list: [ {skill: "performance", bonus: 1}, {stat: "persuasion", bonus: 1}, {stat: "intimidation", bonus: 1}, {stat: "insight", bonus: 1}, {stat: "perception", bonus: 1}, {stat: "deception", bonus: 1} ] },
+        { name: "bard", num_chosen: 3, list: [ {skill: "performance", bonus: 1}, {skill: "persuasion", bonus: 1}, {skill: "intimidation", bonus: 1}, {skill: "insight", bonus: 1}, {skill: "perception", bonus: 1}, {skill: "deception", bonus: 1} ] },
         { name: "cleric", num_chosen: nil, list: [] },
         { name: "druid", num_chosen: nil, list: [] },
-        { name: "fighter", num_chosen: 2, list: [ {skill: "animal_handling", bonus: 1}, {stat: "athletics", bonus: 1}, {stat: "intimidation", bonus: 1}, {stat: "nature", bonus: 1}, {stat: "perception", bonus: 1}, {stat: "survival", bonus: 1} ] },
+        { name: "fighter", num_chosen: 2, list: [ {skill: "animal_handling", bonus: 1}, {skill: "athletics", bonus: 1}, {skill: "intimidation", bonus: 1}, {skill: "nature", bonus: 1}, {skill: "perception", bonus: 1}, {skill: "survival", bonus: 1} ] },
         { name: "monk", num_chosen: nil, list: [] },
         { name: "paladin", num_chosen: nil, list: [] },
         { name: "ranger", num_chosen: nil, list: [] },
-        { name: "rogue", num_chosen: 4, list: [ {skill: "acrobatics", bonus: 1}, {stat: "athletics", bonus: 1}, {stat: "deception", bonus: 1}, {stat: "intimidation", bonus: 1}, {stat: "investigation", bonus: 1}, {stat: "stealth", bonus: 1}, {stat: "sleight_of_hand", bonus: 1}, {stat: "perception", bonus: 1}, {stat: "persuasion", bonus: 1}, {stat: "insight", bonus: 1} ] },
+        { name: "rogue", num_chosen: 4, list: [ {skill: "acrobatics", bonus: 1}, {skill: "athletics", bonus: 1}, {skill: "deception", bonus: 1}, {skill: "intimidation", bonus: 1}, {skill: "investigation", bonus: 1}, {skill: "stealth", bonus: 1}, {skill: "sleight_of_hand", bonus: 1}, {skill: "perception", bonus: 1}, {skill: "persuasion", bonus: 1}, {skill: "insight", bonus: 1} ] },
         { name: "sorcerer", num_chosen: nil, list: [] },
         { name: "warlock", num_chosen: nil, list: [] },
-        { name: "wizard", num_chosen: 2, list: [ {skill: "arcana", bonus: 1}, {stat: "history", bonus: 1}, {stat: "insight", bonus: 1}, {stat: "investigation", bonus: 1}, {stat: "medicine", bonus: 1}, {stat: "religion", bonus: 1} ] },
+        { name: "wizard", num_chosen: 2, list: [ {skill: "arcana", bonus: 1}, {skill: "history", bonus: 1}, {skill: "insight", bonus: 1}, {skill: "investigation", bonus: 1}, {skill: "medicine", bonus: 1}, {skill: "religion", bonus: 1} ] },
       ],
       races: [
         { name: nil, list: [] },

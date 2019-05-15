@@ -145,19 +145,41 @@ class Converter
                                     break
                                 elsif class_race_hash[:name] == output_character[:class] || class_race_hash[:name] == output_character[:race]
                                     index = 0
-                                    while index < class_race_hash[:num_chosen]
-                                        priority_skill = archetype[:skill_priorities][:chosen_by_player][index]
+
+                                    while index < class_race_hash[:num_chosen]                                        
+                                        priority_skill1 = nil
+                                        priority_skill2 = nil
+
+                                        if conversions[:base_output_conversions] == "1_to_2"
+                                            archetype_skill = archetype[:skill_priorities][:chosen_by_player][index]
+
+                                            conversions[:term_conversions].each do |conversion_hash|
+                                                if conversion_hash[:base][:skill1] == archetype_skill
+                                                    priority_skill1 = conversion_hash[:output][:skill1]
+                                                    priority_skill2 = conversion_hash[:output][:skill2]
+                                                end
+                                            end
+                                        # elsif conversions[:base_output_conversions] == "2_to_1"
+                                        # elsif conversions[:base_output_conversions] == "1_to_1"
+                                        end
+
                                         class_race_hash[:list].each do |skill|
+                                            skill_hash = {} 
                                             byebug
-                                            if skill[:skill] == priority_skill
-                                                skill_hash = {} 
-                                                skill_hash[:name] = priority_skill
+                                            if skill[:skill] == priority_skill1
+                                                skill_hash[:name] = priority_skill1
                                                 skill_hash[:points] = skills[:minimum_score] + skill[:bonus]
                                                 output_character[:skills][:list] << skill_hash
-                                                byebug
+                                                break
+                                            elsif skill[:skill] == priority_skill2
+                                                skill_hash = {} 
+                                                skill_hash[:name] = priority_skill2
+                                                skill_hash[:points] = skills[:minimum_score] + skill[:bonus]
+                                                output_character[:skills][:list] << skill_hash
                                                 break
                                             end
                                         end
+
                                         index += 1
                                     end
                                 end
