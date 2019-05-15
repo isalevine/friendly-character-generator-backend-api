@@ -4,7 +4,7 @@ $archetype_big_sword_knight = {
   id: 1,
   name: "big sword knight",
 
-  stat_weights: {
+  stat_priorities: {
     chosen_by_player: [
       "strength",
       "constitution",

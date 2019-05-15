@@ -41,11 +41,13 @@ class Converter
             #
             # commented-out logic has NOT been tested yet... 
             #
+            # consider refactoring with SKILLS logic below, when/if modularized...
+            #
             # determine order that point allocations will go in
             if stats[:chosen_by] == "both"
-                if !stats[:points_class_race][:spend_method] || stats[:points_class_race][:spend_method] == "bonus"
+                if !stats[:points_class_race][:spend_points][:spend_method] || stats[:points_class_race][:spend_points][:spend_method] == "bonus"
                     stat_choice_order = ["player", "class_race"]
-                # elsif stats[:points_class_race][:spend_method] == "automatic" || stats[:points_class_race][:spend_method] == "subtract"
+                # elsif stats[:points_class_race][:spend_points][:spend_method] == "automatic" || stats[:points_class_race][:spend_points][:spend_method] == "subtract"
                 #     stat_choice_order = ["class_race", "player"]
                 end  
             # elsif stats[:chosen_by] == "player"
@@ -56,13 +58,15 @@ class Converter
             
             if stats[:points_num]
                 points = stats[:points_num]
+                # check for choice_order + what spends the points (player/class/race)
+
                 # modularize logic in elsif block, and implement points-subtracting/bonus logic (Exalted)
             else
                 stat_choice_order.each do |chooser|
                     if chooser == "player"
                         if stats[:points_player][:preset][:preset_nums]
                             index = 0
-                            archetype[:stat_weights][:chosen_by_player].each do |stat|
+                            archetype[:stat_priorities][:chosen_by_player].each do |stat|
                                 output_character[:stats][:list][stat.to_sym] = stats[:minimum_score] + stats[:points_player][:preset][:stat_priority][index]
                                 index += 1
                             end
@@ -72,12 +76,12 @@ class Converter
                         # ask ix about efficiency re: using race/class 
                         # names as key-strings, and calling .keys => then do a 
                         # .keys.include()...is that 2 full iterations??
-                        conversions[:chosen_by_class_race].each_value do |array|
-                            array.each do |hash|
-                                if !hash[:name]
+                        conversions[:chosen_by_class_race].each_value do |class_race_array|
+                            class_race_array.each do |class_race_hash|
+                                if !class_race_hash[:name]
                                     break
-                                elsif hash[:name] == output_character[:class] || hash[:name] == output_character[:race]
-                                    hash[:list].each do |bonus_hash|
+                                elsif class_race_hash[:name] == output_character[:class] || class_race_hash[:name] == output_character[:race]
+                                    class_race_hash[:list].each do |bonus_hash|
                                         if !bonus_hash[:stat]
                                             break
                                         else
@@ -115,8 +119,52 @@ class Converter
             #     stat_choice_order = ["player"]
             # elsif stats[:chosen_by] == "class_race"
             #     stat_choice_order = ["class_race"]
-            # end
+            end
 
+            if skills[:points_num]
+                points = skills[:points_num]
+
+                skill_choice_order.each do |chooser|
+                    chooser_key = ("points_" + chooser).to_sym
+                    # check chooser_key
+                    byebug
+                    subtraction = false
+                    if skills[chooser_key][:spend_points][:spend_method] == "automatic" || skills[chooser_key][:spend_points][:spend_method] == "bonus"
+                        # no change
+                    elsif skills[chooser_key][:spend_points][:spend_method] == "subtract"
+                        subtraction = true
+                    end
+
+                    if chooser == "player"
+                        # build out chosen_by_player in skill_conversions ASAP!!!
+                    elsif chooser == "class_race"
+                        conversions[:chosen_by_class_race].each do |class_race_array|
+                            class_race_array.each do |class_race_hash|
+                                if !class_race_hash[:name]
+                                    break
+                                elsif class_race_hash[:name] == output_character[:class] || class_race_hash[:name] == output_character[:race]
+                                    index = 0
+                                    while index < class_race_hash[:num_chosen]
+                                        priority_skill = archetype[:skill_priorities][:chosen_by_player][index]
+                                        class_race_hash[:list].each do |skill|
+                                            if skill[:skill] == priority_skill
+                                                skill_hash = {
+                                                    name: priority_skill,
+                                                    points: skills[:minimum_score] + skill[:bonus]
+                                                }
+                                                output_character[:skills][:list] << skill_hash
+                                                break
+                                            end
+                                        end
+                                        index += 1
+                                    end
+                                end
+                            end
+                        end
+                    end
+
+                end
+            end
 
         end
 

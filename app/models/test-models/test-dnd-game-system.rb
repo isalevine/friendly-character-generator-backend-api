@@ -52,9 +52,14 @@ $dnd_game_system = {
       }
     },
     points_class_race: {
-      preset_nums: false,
-      stat_priority: [],
-      spend_method: nil
+      preset: {
+        preset_nums: false,
+        stat_priority: []
+      },
+      spend_points: {
+        spend_method: nil,
+        stat_weights: []
+      }
     },
     minimum_score: 8,
     max_player_score: nil,
@@ -79,9 +84,14 @@ $dnd_game_system = {
       }
     },
     points_class_race: {
-      preset_nums: false,
-      skill_priority: [],
-      spend_method: "automatic"
+      preset: {
+        preset_nums: false,
+        skill_priority: []
+      },
+      spend_points: {
+        spend_method: "automatic",
+        skill_weights: []
+      }
     },
     minimum_score: 0,
     skill_num: 18,
