@@ -28,7 +28,9 @@ class Converter
             output_character[:race] = archetype[:system_unique][system_key][:race]
         end
 
-
+        # term_conversions MUST BE BUILT IN EVENTUALLY (for Exalted stats...)
+        # => see Skills below for term_conversions implementation
+        #
         # check stats
         if game_system[:system_stats][:has_stats]
             stats = game_system[:system_stats]
@@ -110,15 +112,16 @@ class Converter
 
             #determine order that point allocations will go in
             if skills[:chosen_by] == "both"
-                # if !skills[:points_class_race][:spend_method] || skills[:points_class_race][:spend_method] == "bonus"
+                # if !skills[:points_class_race][:spend_points][:spend_method] || skills[:points_class_race][:spend_points][:spend_method] == "bonus"
                 #     skill_choice_order = ["player", "class_race"]
-                elsif skills[:points_class_race][:spend_method] == "automatic" || skills[:points_class_race][:spend_method] == "subtract"
-                    skill_coice_order = ["class_race", "player"]
+                # (!!! when uncommented, change next line to elsif !!!)
+                if skills[:points_class_race][:spend_points][:spend_method] == "automatic" || skills[:points_class_race][:spend_points][:spend_method] == "subtract"
+                    skill_choice_order = ["class_race", "player"]
                 end
-            # elsif stats[:chosen_by] == "player"
-            #     stat_choice_order = ["player"]
-            # elsif stats[:chosen_by] == "class_race"
-            #     stat_choice_order = ["class_race"]
+            # elsif skills[:chosen_by] == "player"
+            #     skill_choice_order = ["player"]
+            # elsif skills[:chosen_by] == "class_race"
+            #     skill_choice_order = ["class_race"]
             end
 
             if skills[:points_num]
@@ -126,8 +129,6 @@ class Converter
 
                 skill_choice_order.each do |chooser|
                     chooser_key = ("points_" + chooser).to_sym
-                    # check chooser_key
-                    byebug
                     subtraction = false
                     if skills[chooser_key][:spend_points][:spend_method] == "automatic" || skills[chooser_key][:spend_points][:spend_method] == "bonus"
                         # no change
@@ -138,7 +139,7 @@ class Converter
                     if chooser == "player"
                         # build out chosen_by_player in skill_conversions ASAP!!!
                     elsif chooser == "class_race"
-                        conversions[:chosen_by_class_race].each do |class_race_array|
+                        conversions[:chosen_by_class_race].each_value do |class_race_array|
                             class_race_array.each do |class_race_hash|
                                 if !class_race_hash[:name]
                                     break
@@ -147,12 +148,13 @@ class Converter
                                     while index < class_race_hash[:num_chosen]
                                         priority_skill = archetype[:skill_priorities][:chosen_by_player][index]
                                         class_race_hash[:list].each do |skill|
+                                            byebug
                                             if skill[:skill] == priority_skill
-                                                skill_hash = {
-                                                    name: priority_skill,
-                                                    points: skills[:minimum_score] + skill[:bonus]
-                                                }
+                                                skill_hash = {} 
+                                                skill_hash[:name] = priority_skill
+                                                skill_hash[:points] = skills[:minimum_score] + skill[:bonus]
                                                 output_character[:skills][:list] << skill_hash
+                                                byebug
                                                 break
                                             end
                                         end
@@ -162,8 +164,8 @@ class Converter
                             end
                         end
                     end
-
                 end
+                
             end
 
         end

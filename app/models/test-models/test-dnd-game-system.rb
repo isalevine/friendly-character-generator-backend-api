@@ -143,7 +143,7 @@ $dnd_game_system = {
 
 
   stat_conversions: {
-    chosen_by_player: [
+    term_conversions: [
       { base: { stat1: "strength", stat2: nil}, output: { stat1: "strength", stat2: nil} },
       { base: { stat1: "dexterity", stat2: nil}, output: { stat1: "dexterity", stat2: nil} },
       { base: { stat1: "constitution", stat2: nil}, output: { stat1: "constitution", stat2: nil} },
@@ -192,8 +192,19 @@ $dnd_game_system = {
 
 
   skill_conversions: {
-    chosen_by_player: [
-      {}
+    term_conversions: [
+      { base: {skill1: "athletics_dodge" , skill2: nil}, output: {skill1: "acrobatics", skill2: nil} },
+      { base: {skill1: "awareness" , skill2: nil}, output: {skill1: "perception", skill2: "nature"} },
+      { base: {skill1: "deception" , skill2: nil}, output: {skill1: "deception", skill2: nil} },
+      { base: {skill1: "feats_of_strength" , skill2: nil}, output: {skill1: "athletics", skill2: "survival"} },
+      { base: {skill1: "intimidation" , skill2: nil}, output: {skill1: "intimidation", skill2: nil} },
+      { base: {skill1: "investigation" , skill2: nil}, output: {skill1: "investigation", skill2: "history"} },
+      { base: {skill1: "larceny_crime" , skill2: nil}, output: {skill1: "sleight_of_hand", skill2: "medicine"} },
+      { base: {skill1: "magic_computer" , skill2: nil}, output: {skill1: "arcana", skill2: "religion"} },
+      { base: {skill1: "performance" , skill2: nil}, output: {skill1: "performance", skill2: nil} },
+      { base: {skill1: "persuasion" , skill2: nil}, output: {skill1: "persuasion", skill2: nil} },
+      { base: {skill1: "socialize" , skill2: nil}, output: {skill1: "insight", skill2: "animal_handling"} },
+      { base: {skill1: "stealth" , skill2: nil}, output: {skill1: "stealth", skill2: nil} }
     ],
     
     chosen_by_class_race: {
@@ -215,7 +226,7 @@ $dnd_game_system = {
         { name: nil, list: [] },
       ]
     }
-  }
+  },
 
 
   class_conversions: {
