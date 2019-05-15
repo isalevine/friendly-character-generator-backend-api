@@ -17,7 +17,12 @@ $dnd_output_character_big_sword_knight = {
 
     skills: {
         alias: "skill",
-        list: ["athletics", "intimidation", "acrobatics", "perception"]
+        list: [ 
+            {name: "athletics", points: 1}, 
+            {name: "intimidation", points: 1},
+            {name: "acrobatics", points: 1},
+            {name: "perception", points: 1}
+        ]
     },
 
     powers: {

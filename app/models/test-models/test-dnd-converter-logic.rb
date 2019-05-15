@@ -36,17 +36,22 @@ class Converter
             stat_choice_order = []
             points = nil
 
+            # OPTIONS FOR :spend_method INCLUDE: nil, "automatic", "subtract", "bonus"
+            # ("automatic" is prioritized first, and "bonus" is prioritized last -- neither spend points from points_num, unlike "subtract")
+            #
+            # commented-out logic has NOT been tested yet... 
+            #
             # determine order that point allocations will go in
             if stats[:chosen_by] == "both"
-                if stats[:points_class_race][:spend_method] == "bonus" || !stats[:points_class_race][:spend_points]
+                if !stats[:points_class_race][:spend_method] || stats[:points_class_race][:spend_method] == "bonus"
                     stat_choice_order = ["player", "class_race"]
-                elsif stats[:points_class_race][:spend_method] == "subtract"
-                    stat_choice_order = ["class_race", "player"]
+                # elsif stats[:points_class_race][:spend_method] == "automatic" || stats[:points_class_race][:spend_method] == "subtract"
+                #     stat_choice_order = ["class_race", "player"]
                 end  
-            elsif stats[:chosen_by] == "player"
-                stat_choice_order = ["player"]
-            elsif stats[:class_race] == "class_race"
-                stat_choice_order = ["class_race"]
+            # elsif stats[:chosen_by] == "player"
+            #     stat_choice_order = ["player"]
+            # elsif stats[:class_race] == "class_race"
+            #     stat_choice_order = ["class_race"]
             end
             
             if stats[:points_num]
@@ -94,6 +99,24 @@ class Converter
 
         # check skills
         if game_system[:system_skills][:has_skills]
+            skills = game_system[:system_skills]
+            conversions = game_system[:skill_conversions]
+            skill_choice_order = []
+            points = nil
+
+            #determine order that point allocations will go in
+            if skills[:chosen_by] == "both"
+                # if !skills[:points_class_race][:spend_method] || skills[:points_class_race][:spend_method] == "bonus"
+                #     skill_choice_order = ["player", "class_race"]
+                elsif skills[:points_class_race][:spend_method] == "automatic" || skills[:points_class_race][:spend_method] == "subtract"
+                    skill_coice_order = ["class_race", "player"]
+                end
+            # elsif stats[:chosen_by] == "player"
+            #     stat_choice_order = ["player"]
+            # elsif stats[:chosen_by] == "class_race"
+            #     stat_choice_order = ["class_race"]
+            # end
+
 
         end
 

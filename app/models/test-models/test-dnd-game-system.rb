@@ -67,17 +67,22 @@ $dnd_game_system = {
     skill_alias: "skill",
     has_skills: true,
     chosen_by: "both",
-    points_num: 6,
-        points_player: {
-          preset_nums: false,
-          skill_priority: [1, 1, 0, 0, 0, 0],
-          spend_points: "subtract"
-        },
-        points_class_race: {
-          preset_nums: false,
-          skill_priority: [1, 1, 0, 0, 0, 0],
-          spend_points: "subtract"
-        },
+    points_num: 2,
+    points_player: {
+      preset: {
+        preset_nums: false,
+        skill_priority: [],
+      },
+      spend_points: {
+        spend_method: "subtract",
+        skill_weights: [50, 50]
+      }
+    },
+    points_class_race: {
+      preset_nums: false,
+      skill_priority: [],
+      spend_method: "automatic"
+    },
     minimum_score: 0,
     skill_num: 18,
     skill_list: ["acrobatics", "animal handling", "arcana", "athletics", "deception", "history", "insight", "intimidation", "investigation", "medicine", "nature", "perception", "performance", "persuasion", "religion", "sleight of hand", "stealth", "survival", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
@@ -90,13 +95,7 @@ $dnd_game_system = {
     starting_num: 3,
     power_num: 23,
     power_list: [
-
-      { name: "Arcane Recovery",
-        tags: ["wizard"],
-        roll: "once per day",
-        description: "You have learned to regain some of your magical energy by studying your spellbook. Once per day when you finish a short rest, you can choose expended spell slots to recover. You can recover either a 2nd-level spell slot or two 1st-level spell slots."
-      },
-
+      { name: "Arcane Recovery", tags: ["wizard"], roll: "once per day", description: "You have learned to regain some of your magical energy by studying your spellbook. Once per day when you finish a short rest, you can choose expended spell slots to recover. You can recover either a 2nd-level spell slot or two 1st-level spell slots."},
       { name: "Bardic Inspiration", tags: ["bard"], roll: "d6", description: "You can inspire others through stirring words or music. To do so, you use a bonus action on your turn to choose one creature other than yourself within 60 feet of you who can hear you. That creature gains one Bardic Inspiration die, a d6. Once within the next 10 minutes, the creature can roll the die and add the number rolled to one ability check, attack roll, or saving throw it makes. Once the Bardic Inspiration die is rolled, it is lost. A creature can have only one Bardic Inspiration die at a time." },
       { name: "Bonus Proficiency", tags: [""], roll: "automatic", description: "When you choose this domain at 1st level, you gain proficiency with heavy armor." },
       { name: "Choose: Dragon Ancestor", tags: [""], roll: "automatic", description: "At 1st level, you choose one type of dragon as your ancestor. The damage type associated with each dragon is used by features you gain later. You can speak, read, and write Draconic. Additionally, whenever you make a Charisma check when interacting with dragons, your proficiency bonus is doubled if it applies to the check." },
@@ -105,7 +104,7 @@ $dnd_game_system = {
       { name: "Divine Domain", tags: ["cleric"], roll: "automatic", description: "Choose one domain related to your deity: Knowledge, Life, Light, Nature, Tempest, Trickery, or War. Your domain grants you domain spells and other features when you choose it at 1st level. (From Domain Spells 1 Feature:) Each domain has a list of spells—its domain spells— that you gain at the cleric levels noted in the domain description. Once you gain a domain spell, you always have it prepared, and it doesn’t count against the number of spells you can prepare each day." },
       { name: "Divine Sense", tags: ["paladin"], roll: "uses per day: 1 + Constitution modifier", description: "The presence of strong evil registers on your senses like a noxious odor, and powerful good rings like heavenly music in your ears. As an action, you can open your awareness to detect such forces. Until the end of your next turn, you know the location of any celestial, fiend, or undead within 60 feet of you that is not behind total cover. You know the type (celestial, fiend, or undead) of any being whose presence you sense, but not its identity. Within the same radius, you also detect the presence of any place or object that has been consecrated or desecrated, as with the hallow spell. You can use this feature a number of times equal to 1 + your Charisma modifier. When you finish a long rest, you regain all expended uses." },
       { name: "Druidic", tags: ["druid"], roll: "automatic", description: "You know Druidic, the secret language of druids. You can speak the language and use it to leave hidden messages. You and others who know this language automatically spot such a message. Others spot the message's presence with a successful DC 15 Wisdom (Perception) check but can't decipher it without magic." },
-      { name: "Favored Enemy (1 Type)", tags: ["ranger"], roll: "bonus to Wisdom, Intelligence, Survival checks", description: "Beginning at 1st level, you have significant experience studying, tracking, hunting, and even talking to a certain type of enemy. Choose a type of favored enemy: aberrations, beasts, celestials, constructs, dragons, elementals, fey, fiends, giants, monstrosities, oozes, plants, or undead. You have advantage on Wisdom (Survival) checks to track your favored enemies, as well as on Intelligence checks to recall information about them." },
+      { name: "Favored Enemy (Choose 1)", tags: ["ranger"], roll: "bonus to Wisdom, Intelligence, Survival checks", description: "Beginning at 1st level, you have significant experience studying, tracking, hunting, and even talking to a certain type of enemy. Choose a type of favored enemy: aberrations, beasts, celestials, constructs, dragons, elementals, fey, fiends, giants, monstrosities, oozes, plants, or undead. You have advantage on Wisdom (Survival) checks to track your favored enemies, as well as on Intelligence checks to recall information about them." },
       { name: "Lay On Hands", tags: ["paladin"], roll: "restore hit points", description: "Your blessed touch can heal wounds. You have a pool of healing power that replenishes when you take a long rest. With that pool, you can restore a total number of hit points equal to your paladin level × 5. As an action, you can touch a creature and draw power from the pool to restore a number of hit points to that creature, up to the maximum amount remaining in your pool. Alternatively, you can expend 5 hit points from your pool of healing to cure the target of one disease or neutralize one poison affecting it. You can cure multiple diseases and neutralize multiple poisons with a single use of Lay on Hands, expending hit points separately for each one.This feature has no effect on undead and constructs." },
       { name: "Martial Arts", tags: ["monk"], roll: "when only using monk equipment", description: "At 1st level, your practice of martial arts gives you mastery of combat styles that use unarmed strikes and monk weapons, which are shortswords and any simple melee weapons that don’t have the two- handed or heavy property. You gain the following benefits while you are unarmed or wielding only monk weapons and you aren’t wearing armor or wielding a shield: 1) You can use Dexterity instead of Strength for the attack and damage rolls of your unarmed strikes and monk weapons. 2) You can roll a d4 in place of the normal damage of your unarmed strike or monk weapon. 3) When you use the Attack action with an unarmed strike or a monk weapon on your turn, you can make one unarmed strike as a bonus action." },
       { name: "Natural Explorer (1 terrain type)", tags: ["ranger"], roll: "Intelligence or Wisdom check", description: "You are particularly familiar with one type of natural environment and are adept at traveling and surviving in such regions. Choose one type of favored terrain: arctic, coast, desert, forest, grassland, mountain, or swamp. When you make an Intelligence or Wisdom check related to your favored terrain, your proficiency bonus is doubled if you are using a skill that you’re proficient in. While traveling for an hour or more in your favored terrain, you gain the following benefits: 1) Difficult terrain doesn’t slow your group’s travel. 2) Your group can’t become lost except by magical means. 3) Even when you are engaged in another activity while traveling (such as foraging, navigating, or tracking), you remain alert to danger. 4) If you are traveling alone, you can move stealthily at a normal pace. 5) When you forage, you find twice as much food as you normally would. 6) While tracking other creatures, you also learn their exact number, their sizes, and how long ago they passed through the area." },
@@ -180,6 +179,33 @@ $dnd_game_system = {
       ]
     }
   },
+
+
+  skill_conversions: {
+    chosen_by_player: [
+      {}
+    ],
+    
+    chosen_by_class_race: {
+      classes: [
+        { name: "barbarian", num_chosen: nil, list: [] },
+        { name: "bard", num_chosen: 3, list: [ {skill: "performance", bonus: 1}, {stat: "persuasion", bonus: 1}, {stat: "intimidation", bonus: 1}, {stat: "insight", bonus: 1}, {stat: "perception", bonus: 1}, {stat: "deception", bonus: 1} ] },
+        { name: "cleric", num_chosen: nil, list: [] },
+        { name: "druid", num_chosen: nil, list: [] },
+        { name: "fighter", num_chosen: 2, list: [ {skill: "animal_handling", bonus: 1}, {stat: "athletics", bonus: 1}, {stat: "intimidation", bonus: 1}, {stat: "nature", bonus: 1}, {stat: "perception", bonus: 1}, {stat: "survival", bonus: 1} ] },
+        { name: "monk", num_chosen: nil, list: [] },
+        { name: "paladin", num_chosen: nil, list: [] },
+        { name: "ranger", num_chosen: nil, list: [] },
+        { name: "rogue", num_chosen: 4, list: [ {skill: "acrobatics", bonus: 1}, {stat: "athletics", bonus: 1}, {stat: "deception", bonus: 1}, {stat: "intimidation", bonus: 1}, {stat: "investigation", bonus: 1}, {stat: "stealth", bonus: 1}, {stat: "sleight_of_hand", bonus: 1}, {stat: "perception", bonus: 1}, {stat: "persuasion", bonus: 1}, {stat: "insight", bonus: 1} ] },
+        { name: "sorcerer", num_chosen: nil, list: [] },
+        { name: "warlock", num_chosen: nil, list: [] },
+        { name: "wizard", num_chosen: 2, list: [ {skill: "arcana", bonus: 1}, {stat: "history", bonus: 1}, {stat: "insight", bonus: 1}, {stat: "investigation", bonus: 1}, {stat: "medicine", bonus: 1}, {stat: "religion", bonus: 1} ] },
+      ],
+      races: [
+        { name: nil, list: [] },
+      ]
+    }
+  }
 
 
   class_conversions: {
