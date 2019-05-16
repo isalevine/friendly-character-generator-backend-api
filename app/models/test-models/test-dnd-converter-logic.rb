@@ -2,6 +2,7 @@
 # IS IT NECESSARY TO REQUIRE_ALL / INPORT THE HASHES TO PASS IN???
 require './test-archetype-big-sword-knight'
 require './test-archetype-smooth-talking-ninja'
+require './test-archetype-corn-god-worshipping-wizard'
 require './test-dnd-game-system'
 require './test-dnd-output-character'
 require './test-blank-dnd-output-character'
@@ -9,10 +10,12 @@ require 'byebug'
 
 knight_archetype = $archetype_big_sword_knight
 ninja_archetype = $archetype_smooth_talking_ninja
+wizard_archetype = $archetype_corn_god_worshipping_wizard
 game_system = dnd_game_system
 
 blank1 = blank_dnd_output_character
 blank2 = blank_dnd_output_character
+blank3 = blank_dnd_output_character
 
 
 class Converter
@@ -153,7 +156,7 @@ class Converter
                             priority_skill = nil
 
                             conversions[:term_conversions].each do |conversion_hash|
-                                byebug
+                                # byebug
                                 if conversion_hash[:base][:skill1] == archetype_skill
                                     output_skill1 = conversion_hash[:output][:skill1]
                                     output_skill2 = conversion_hash[:output][:skill2]
@@ -194,6 +197,7 @@ class Converter
                                             archetype_skill = archetype[:skill_priorities][:chosen_by_player][priority_index]
 
                                             conversions[:term_conversions].each do |conversion_hash|
+                                                byebug
                                                 if conversion_hash[:base][:skill1] == archetype_skill
                                                     priority_skill1 = conversion_hash[:output][:skill1]
                                                     priority_skill2 = conversion_hash[:output][:skill2]
@@ -205,7 +209,28 @@ class Converter
 
                                         class_race_hash[:list].each do |skill|
                                             skill_hash = {} 
-                                            if skill[:skill] == priority_skill1
+                                            skill1_points_maxed = false
+                                            skill2_points_maxed = false
+                                            # byebug
+                                            
+                                            # check if skill max scores have been reached
+                                            if output_character[:skills][:list].length > 0
+                                                # byebug
+                                                output_character[:skills][:list].each do |character_skill_hash|
+                                                    # byebug
+                                                    if character_skill_hash[:name] == priority_skill1 && character_skill_hash[:points] >= skills[:maximum_score]
+                                                        skill1_points_maxed = true
+                                                    end
+                                                    if character_skill_hash[:name] == priority_skill2 && character_skill_hash[:points] >= skills[:maximum_score]
+                                                        skill2_points_maxed = true
+                                                    end
+                                                end
+                                            end
+
+                                            # byebug
+                                            # priority skill not being set for Wizard!!!
+                                            if skill[:skill] == priority_skill1 && !skill1_points_maxed
+                                                # byebug
                                                 skill_hash[:name] = priority_skill1
                                                 skill_hash[:points] = skills[:minimum_score] + skill[:bonus]
                                                 output_character[:skills][:list] << skill_hash
@@ -215,7 +240,7 @@ class Converter
                                                 #     points_to_spend -= skill[:bonus]
                                                 # end
                                                 break
-                                            elsif skill[:skill] == priority_skill2
+                                            elsif skill[:skill] == priority_skill2 && !skill2_points_maxed
                                                 skill_hash = {} 
                                                 skill_hash[:name] = priority_skill2
                                                 skill_hash[:points] = skills[:minimum_score] + skill[:bonus]
@@ -345,5 +370,6 @@ class Converter
 end
 
 
-Converter.archetype_system_converter(knight_archetype, game_system, blank1)
-Converter.archetype_system_converter(ninja_archetype, game_system, blank2)
+# Converter.archetype_system_converter(knight_archetype, game_system, blank1)
+# Converter.archetype_system_converter(ninja_archetype, game_system, blank2)
+Converter.archetype_system_converter(wizard_archetype, game_system, blank3)

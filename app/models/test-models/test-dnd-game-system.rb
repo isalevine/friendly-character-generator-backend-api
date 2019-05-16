@@ -63,8 +63,7 @@ def dnd_game_system
         }
       },
       minimum_score: 8,
-      max_player_score: nil,
-      max_class_race_score: nil,
+      maximum_score: 20,
       stat_num: 6,
       stat_list: ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
     },
@@ -95,6 +94,7 @@ def dnd_game_system
         }
       },
       minimum_score: 0,
+      maximum_score: 1,
       skill_num: 18,
       skill_list: ["acrobatics", "animal handling", "arcana", "athletics", "deception", "history", "insight", "intimidation", "investigation", "medicine", "nature", "perception", "performance", "persuasion", "religion", "sleight of hand", "stealth", "survival", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
     },
