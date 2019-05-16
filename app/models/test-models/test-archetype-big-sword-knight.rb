@@ -45,7 +45,8 @@ $archetype_big_sword_knight = {
       hit_points: "roll d10, add Constitution modifier",
       armor_class: "armor base AC, add Dexterity modifier",
       alignment: "chaotic-neutral",
-      ability_modifiers: "8-9 = -1; 10-11 = 0; 12-13 = +1; 14-15 = +2; 16-17 = +3, 18-19 = +4"
+      ability_modifiers: "8-9 = -1; 10-11 = 0; 12-13 = +1; 14-15 = +2; 16-17 = +3, 18-19 = +4",
+      output_skill_preferences: ["perception", "acrobatics", "athletics"]
     },
     exalted_2nd_001: {
       class: "dawn",
@@ -59,7 +60,8 @@ $archetype_big_sword_knight = {
       soak: "bashing: , lethal: , aggravated: ",
       defense_values: "dodge: , parry: , mental: ",
       essence: "level 2, personal: 13 motes, peripheral: 30 motes",
-      bonus_points: "18"
+      bonus_points: "18",
+      output_skill_preferences: []
     }
   }
 

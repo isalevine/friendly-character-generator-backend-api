@@ -125,7 +125,8 @@ class Converter
             end
 
             if skills[:points_num]
-                points = skills[:points_num]
+                points_to_spend = skills[:points_num]
+                priority_index = 0
 
                 skill_choice_order.each do |chooser|
                     chooser_key = ("points_" + chooser).to_sym
@@ -137,21 +138,49 @@ class Converter
                     end
 
                     if chooser == "player"
-                        # build out chosen_by_player in skill_conversions ASAP!!!
+                        skill_weight_index = 0
+
+                        while points_to_spend > 0
+                            archetype_skill = archetype[:skill_priorities][:chosen_by_player][priority_index]
+                            priority_skill = nil
+
+                            conversions[:term_conversions].each do |conversion_hash|
+                                if conversion_hash[:base][:skill1] == archetype_skill
+                                    output_skill1 = conversion_hash[:output][:skill1]
+                                    output_skill2 = conversion_hash[:output][:skill2]
+                                    if archetype[:system_unique][system_key][:output_skill_preferences].include?(output_skill1)
+                                        priority_skill = output_skill1
+                                    elsif archetype[:system_unique][system_key][:output_skill_preferences].include?(output_skill2)
+                                        priority_skill = output_skill2
+                                    end
+                                end
+                            end
+
+                            skill_hash = {}
+                            skill_hash[:name] = priority_skill
+                            # integer math in Ruby will always take .floor of decimal - this is helpful for spending points!
+                            # (will eventually need to deal with leftover points! => can you predict using % at start of point allocation??)
+                            points_spent = ((skills[:points_num] * skills[:points_player][:spend_points][:skill_weights][skill_weight_index]) / 100)
+                            skill_hash[:points] = skills[:minimum_score] + points_spent
+                            output_character[:skills][:list] << skill_hash
+                            priority_index += 1
+                            skill_weight_index += 1
+                            points_to_spend -= points_spent
+                        end
+
                     elsif chooser == "class_race"
                         conversions[:chosen_by_class_race].each_value do |class_race_array|
                             class_race_array.each do |class_race_hash|
                                 if !class_race_hash[:name]
                                     break
                                 elsif class_race_hash[:name] == output_character[:class] || class_race_hash[:name] == output_character[:race]
-                                    index = 0
 
-                                    while index < class_race_hash[:num_chosen]                                        
+                                    class_race_hash[:num_chosen].times do                                       
                                         priority_skill1 = nil
                                         priority_skill2 = nil
 
                                         if conversions[:base_output_conversions] == "1_to_2"
-                                            archetype_skill = archetype[:skill_priorities][:chosen_by_player][index]
+                                            archetype_skill = archetype[:skill_priorities][:chosen_by_player][priority_index]
 
                                             conversions[:term_conversions].each do |conversion_hash|
                                                 if conversion_hash[:base][:skill1] == archetype_skill
@@ -165,22 +194,31 @@ class Converter
 
                                         class_race_hash[:list].each do |skill|
                                             skill_hash = {} 
-                                            byebug
                                             if skill[:skill] == priority_skill1
                                                 skill_hash[:name] = priority_skill1
                                                 skill_hash[:points] = skills[:minimum_score] + skill[:bonus]
                                                 output_character[:skills][:list] << skill_hash
+                                                # enable subtraction when ready to implement checking vs points_to_spend (refactor as while loop?)
+                                                # => (see "if chooser == player" above for example...)
+                                                # if subtraction
+                                                #     points_to_spend -= skill[:bonus]
+                                                # end
                                                 break
                                             elsif skill[:skill] == priority_skill2
                                                 skill_hash = {} 
                                                 skill_hash[:name] = priority_skill2
                                                 skill_hash[:points] = skills[:minimum_score] + skill[:bonus]
                                                 output_character[:skills][:list] << skill_hash
+                                                # enable subtraction when ready to implement checking vs points_to_spend (refactor as while loop?)
+                                                # => (see "if chooser == player" above for example...)
+                                                # if subtraction
+                                                #     points_to_spend -= skill[:bonus]
+                                                # end
                                                 break
                                             end
                                         end
 
-                                        index += 1
+                                        priority_index += 1
                                     end
                                 end
                             end
