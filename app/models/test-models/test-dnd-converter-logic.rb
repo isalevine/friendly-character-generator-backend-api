@@ -3,6 +3,7 @@
 require './test-archetype-big-sword-knight'
 require './test-archetype-smooth-talking-ninja'
 require './test-archetype-corn-god-worshipping-wizard'
+require './test-archetype-the-mime'
 require './test-dnd-game-system'
 require './test-dnd-output-character'
 require './test-blank-dnd-output-character'
@@ -11,11 +12,13 @@ require 'byebug'
 knight_archetype = $archetype_big_sword_knight
 ninja_archetype = $archetype_smooth_talking_ninja
 wizard_archetype = $archetype_corn_god_worshipping_wizard
+bard_archetype = $archetype_the_mime
 game_system = dnd_game_system
 
 blank1 = blank_dnd_output_character
 blank2 = blank_dnd_output_character
 blank3 = blank_dnd_output_character
+blank4 = blank_dnd_output_character
 
 
 class Converter
@@ -373,3 +376,4 @@ end
 # Converter.archetype_system_converter(knight_archetype, game_system, blank1)
 # Converter.archetype_system_converter(ninja_archetype, game_system, blank2)
 Converter.archetype_system_converter(wizard_archetype, game_system, blank3)
+Converter.archetype_system_converter(bard_archetype, game_system, blank4)
