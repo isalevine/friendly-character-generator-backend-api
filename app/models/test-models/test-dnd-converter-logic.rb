@@ -28,6 +28,7 @@ class Converter
             output_character[:race] = archetype[:system_unique][system_key][:race]
         end
 
+
         # term_conversions MUST BE BUILT IN EVENTUALLY (for Exalted stats...)
         # => see Skills below for term_conversions implementation
         #
@@ -98,10 +99,8 @@ class Converter
                     end
                 end
             end
-
-            # 
-            #
         end
+
 
         # check skills
         if game_system[:system_skills][:has_skills]
@@ -217,34 +216,97 @@ class Converter
                                                 break
                                             end
                                         end
-
                                         priority_index += 1
                                     end
                                 end
                             end
                         end
                     end
-                end
-                
+                end  
+            else
+                # do something
             end
-
         end
 
 
         # check powers
         if game_system[:system_powers][:has_powers]
+            powers = game_system[:system_powers]
+            power_choice_order = []
 
+            if powers[:chosen_by] == "both"
+                # logic to determine order...
+            elsif powers[:chosen_by] == "player"
+                # power_choice_order = ["player"]
+            elsif powers[:chosen_by] == "class_race"
+                power_choice_order = ["class_race"]
+            end
+
+            if powers[:points_num]
+                points_to_spend = powers[:points_num]
+                while points_to_spend > 0
+                    powers[:search_tags].each do |chooser|
+                        tag_key = ("chosen_by_" + chooser).to_sym
+                        if tag_key = :chosen_by_class_race
+                            powers[:power_list].each do |power_hash|
+                                if power_hash[:tags][tag_key].include?(output_character[:class]) || power_hash[:tags][tag_key].include?(output_character[:race])
+                                    shortened_power_hash = { name: power_hash[:name], roll: power_hash[:roll], description: power_hash[:description] }
+                                    output_character[:powers][:list] << shortened_power_hash
+                                    break
+                                end
+                            end
+                        elsif tag_key = :chosen_by_player
+                            # more complex logic needed - especially for requirements (super-nested hash)...
+                        end
+
+                    end
+                    
+                    points_to_spend -= 1
+                end
+
+            else
+                # is this necessary? or we assume that ALL powers cost
+                # 1 point, and MUST be subtracted (or just .times do)?
+                #
+                # do something(?)
+            end
         end
 
 
         # check system_unique
         if game_system[:system_unique][0]
-
         end
-
 
         byebug
 
+        self.format_text_output(output_character)
+    end
+
+
+    def self.format_text_output(output_character)
+        output = File.open("test_output.txt", "w")
+        output << "Race: #{output_character[:race]}\n"
+        output << "Class: #{output_character[:class]}\n \n"
+        output << "Abilities:\n"
+            output << "Strength: #{output_character[:stats][:list][:strength]}\n"
+            output << "Dexterity: #{output_character[:stats][:list][:dexterity]}\n"
+            output << "Constitution: #{output_character[:stats][:list][:constitution]}\n"
+            output << "Intelligence: #{output_character[:stats][:list][:intelligence]}\n"
+            output << "Wisdom: #{output_character[:stats][:list][:wisdom]}\n"
+            output << "Charisma: #{output_character[:stats][:list][:charisma]}\n \n"
+        output << "Skills:\n"
+            output << "#{output_character[:skills][:list][0][:name]}\n"
+            output << "#{output_character[:skills][:list][1][:name]}\n"
+            output << "#{output_character[:skills][:list][2][:name]}\n"
+            output << "#{output_character[:skills][:list][3][:name]}\n \n"
+        output << "Powers:\n"
+            output << "#{output_character[:powers][:list][0][:name]}\n"
+                output << "Roll: #{output_character[:powers][:list][0][:roll]}\n"
+                output << "Description: #{output_character[:powers][:list][0][:description]}\n \n"
+            output << "#{output_character[:powers][:list][1][:name]}\n \n"
+                output << "Roll: #{output_character[:powers][:list][1][:roll]}\n"
+                output << "Description: #{output_character[:powers][:list][1][:description]}\n \n"
+        output.close
     end
 
 end
