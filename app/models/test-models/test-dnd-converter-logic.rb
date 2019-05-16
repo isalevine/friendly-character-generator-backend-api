@@ -1,20 +1,26 @@
 
 # IS IT NECESSARY TO REQUIRE_ALL / INPORT THE HASHES TO PASS IN???
 require './test-archetype-big-sword-knight'
+require './test-archetype-smooth-talking-ninja'
 require './test-dnd-game-system'
 require './test-dnd-output-character'
+require './test-blank-dnd-output-character'
 require 'byebug'
 
+knight_archetype = $archetype_big_sword_knight
+ninja_archetype = $archetype_smooth_talking_ninja
+game_system = dnd_game_system
 
-archetype = $archetype_big_sword_knight
-game_system = $dnd_game_system
-output_character = $blank_dnd_output_character
+blank1 = blank_dnd_output_character
+blank2 = blank_dnd_output_character
+
 
 class Converter
     def self.archetype_system_converter(archetype, game_system, output_character)
         system_key = game_system[:unique_name].to_sym
 
         # set output-character's archetype_name to archetype's name
+        output_character[:archetype_name] = archetype[:name]
 
 
         # check class
@@ -139,11 +145,15 @@ class Converter
                     if chooser == "player"
                         skill_weight_index = 0
 
+                        # only implement a while loop if subtraction is true?? 
+                        # => refactor so that the block is modularized, and can be called in either a while or times loop based on subtraction??
                         while points_to_spend > 0
+                        # points_to_spend.times do
                             archetype_skill = archetype[:skill_priorities][:chosen_by_player][priority_index]
                             priority_skill = nil
 
                             conversions[:term_conversions].each do |conversion_hash|
+                                byebug
                                 if conversion_hash[:base][:skill1] == archetype_skill
                                     output_skill1 = conversion_hash[:output][:skill1]
                                     output_skill2 = conversion_hash[:output][:skill2]
@@ -151,6 +161,8 @@ class Converter
                                         priority_skill = output_skill1
                                     elsif archetype[:system_unique][system_key][:output_skill_preferences].include?(output_skill2)
                                         priority_skill = output_skill2
+                                    else
+                                        priority_skill = output_skill1
                                     end
                                 end
                             end
@@ -243,31 +255,29 @@ class Converter
             end
 
             if powers[:points_num]
-                points_to_spend = powers[:points_num]
-                while points_to_spend > 0
+                # points_to_spend = powers[:points_num]
                     powers[:search_tags].each do |chooser|
                         tag_key = ("chosen_by_" + chooser).to_sym
-                        if tag_key = :chosen_by_class_race
+                        if tag_key == :chosen_by_class_race
                             powers[:power_list].each do |power_hash|
-                                if power_hash[:tags][tag_key].include?(output_character[:class]) || power_hash[:tags][tag_key].include?(output_character[:race])
-                                    shortened_power_hash = { name: power_hash[:name], roll: power_hash[:roll], description: power_hash[:description] }
-                                    output_character[:powers][:list] << shortened_power_hash
+                                # byebug
+                                if !power_hash[:name]
                                     break
+                                elsif ( power_hash[:tags][tag_key].include?(output_character[:class]) || power_hash[:tags][tag_key].include?(output_character[:race]) ) && !output_character[:powers][:list].include?(power_hash)
+                                    # shortened_power_hash = { name: power_hash[:name], roll: power_hash[:roll], description: power_hash[:description] }
+                                    output_character[:powers][:list] << power_hash
                                 end
                             end
-                        elsif tag_key = :chosen_by_player
+                        elsif tag_key == :chosen_by_player
                             # more complex logic needed - especially for requirements (super-nested hash)...
                         end
 
                     end
                     
-                    points_to_spend -= 1
-                end
+                    # points_to_spend -= 1
+                # end
 
             else
-                # is this necessary? or we assume that ALL powers cost
-                # 1 point, and MUST be subtracted (or just .times do)?
-                #
                 # do something(?)
             end
         end
@@ -284,32 +294,56 @@ class Converter
 
 
     def self.format_text_output(output_character)
-        output = File.open("test_output.txt", "w")
+        filename = "test-output-#{output_character[:archetype_name]}.txt"
+        output = File.open(filename, "w")
+        output << "Dnd Character Sheet\n"
+        output << "======================\n"
+        output << "Archetype: #{output_character[:archetype_name]}\n"
         output << "Race: #{output_character[:race]}\n"
         output << "Class: #{output_character[:class]}\n \n"
+
         output << "Abilities:\n"
+        output << "======================\n"
             output << "Strength: #{output_character[:stats][:list][:strength]}\n"
             output << "Dexterity: #{output_character[:stats][:list][:dexterity]}\n"
             output << "Constitution: #{output_character[:stats][:list][:constitution]}\n"
             output << "Intelligence: #{output_character[:stats][:list][:intelligence]}\n"
             output << "Wisdom: #{output_character[:stats][:list][:wisdom]}\n"
             output << "Charisma: #{output_character[:stats][:list][:charisma]}\n \n"
+
         output << "Skills:\n"
+        output << "======================\n"
             output << "#{output_character[:skills][:list][0][:name]}\n"
             output << "#{output_character[:skills][:list][1][:name]}\n"
             output << "#{output_character[:skills][:list][2][:name]}\n"
-            output << "#{output_character[:skills][:list][3][:name]}\n \n"
+            output << "#{output_character[:skills][:list][3][:name]}\n"
+            if output_character[:skills][:list][4]
+                output << "#{output_character[:skills][:list][4][:name]}\n"
+            end
+            if output_character[:skills][:list][5]
+                output << "#{output_character[:skills][:list][5][:name]}\n"
+            end
+            output << "\n"
+
         output << "Powers:\n"
-            output << "#{output_character[:powers][:list][0][:name]}\n"
+        output << "======================\n"
+            output << "Power: #{output_character[:powers][:list][0][:name]}\n"
                 output << "Roll: #{output_character[:powers][:list][0][:roll]}\n"
                 output << "Description: #{output_character[:powers][:list][0][:description]}\n \n"
-            output << "#{output_character[:powers][:list][1][:name]}\n \n"
+            output << "Power: #{output_character[:powers][:list][1][:name]}\n"
                 output << "Roll: #{output_character[:powers][:list][1][:roll]}\n"
                 output << "Description: #{output_character[:powers][:list][1][:description]}\n \n"
+            if output_character[:powers][:list][2]
+                output << "Power: #{output_character[:powers][:list][2][:name]}\n"
+                    output << "Roll: #{output_character[:powers][:list][2][:roll]}\n"
+                    output << "Description: #{output_character[:powers][:list][2][:description]}\n \n"
+
+            end
         output.close
     end
 
 end
 
 
-Converter.archetype_system_converter(archetype, game_system, output_character)
+Converter.archetype_system_converter(knight_archetype, game_system, blank1)
+Converter.archetype_system_converter(ninja_archetype, game_system, blank2)

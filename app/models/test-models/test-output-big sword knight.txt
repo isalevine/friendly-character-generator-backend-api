@@ -1,0 +1,32 @@
+Dnd Character Sheet
+======================
+Archetype: big sword knight
+Race: half-orc
+Class: fighter
+ 
+Abilities:
+======================
+Strength: 17
+Dexterity: 13
+Constitution: 15
+Intelligence: 8
+Wisdom: 12
+Charisma: 10
+ 
+Skills:
+======================
+athletics
+intimidation
+acrobatics
+perception
+
+Powers:
+======================
+Power: Choose: Fighting Style
+Roll: automatic
+Description: You adopt a particular style of fighting as your specialty. Choose one of the following options: Archery, Defense, Dueling, Great Weapon Fighting, Protection, or Two-Weapon Fighting. You can’t take a Fighting Style option more than once, even if you later get to choose again.
+ 
+Power: Second Wind
+Roll: use as bonus action
+Description: You have a limited well of stamina that you can draw on to protect yourself from harm. On your turn, you can use a bonus action to regain hit points equal to 1d10 + your fighter level. Once you use this feature, you must finish a short or long rest before you can use it again.
+ 
