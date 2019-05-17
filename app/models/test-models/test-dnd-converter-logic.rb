@@ -25,26 +25,30 @@ class Converter
     def self.archetype_system_converter(archetype, game_system, output_character)
         system_key = game_system[:unique_name].to_sym
 
+
         # set output-character's archetype_name to archetype's name
         output_character[:archetype_name] = archetype[:name]
 
 
-        # check class
+
+        # check CLASS
+        # =============================================================
         if game_system[:system_classes][:has_classes]
             output_character[:class] = archetype[:system_unique][system_key][:class]
         end
 
 
-        # check race
+        # check RACE
+        # =============================================================
         if game_system[:system_races][:has_races]
             output_character[:race] = archetype[:system_unique][system_key][:race]
         end
 
 
+        # check STATS
+        # =============================================================
         # term_conversions MUST BE BUILT IN EVENTUALLY (for Exalted stats...)
         # => see Skills below for term_conversions implementation
-        #
-        # check stats
         if game_system[:system_stats][:has_stats]
             stats = game_system[:system_stats]
             conversions = game_system[:stat_conversions]
@@ -57,7 +61,7 @@ class Converter
             # commented-out logic has NOT been tested yet... 
             #
             # consider refactoring with SKILLS logic below, when/if modularized...
-            #
+
             # determine order that point allocations will go in
             if stats[:chosen_by] == "both"
                 if !stats[:points_class_race][:spend_points][:spend_method] || stats[:points_class_race][:spend_points][:spend_method] == "bonus"
@@ -71,12 +75,13 @@ class Converter
             #     stat_choice_order = ["class_race"]
             end
             
+            # check if stats are allocated by spending a limited nunber of points
             if stats[:points_num]
                 points = stats[:points_num]
                 # check for choice_order + what spends the points (player/class/race)
-
                 # modularize logic in elsif block, and implement points-subtracting/bonus logic (Exalted)
             else
+                # stat points are preset--allocate according to presets in game_system
                 stat_choice_order.each do |chooser|
                     if chooser == "player"
                         if stats[:points_player][:preset][:preset_nums]
@@ -114,7 +119,8 @@ class Converter
         end
 
 
-        # check skills
+        # check SKILLS
+        # =============================================================
         if game_system[:system_skills][:has_skills]
             skills = game_system[:system_skills]
             conversions = game_system[:skill_conversions]
@@ -135,10 +141,12 @@ class Converter
             #     skill_choice_order = ["class_race"]
             end
 
+            # check if skills are allocated by spending a limited number of points
             if skills[:points_num]
                 points_to_spend = skills[:points_num]
                 priority_index = 0
 
+                # determine order that point allocations will go in
                 skill_choice_order.each do |chooser|
                     chooser_key = ("points_" + chooser).to_sym
                     subtraction = false
@@ -150,7 +158,6 @@ class Converter
 
                     if chooser == "player"
                         skill_weight_index = 0
-
                         # only implement a while loop if subtraction is true?? 
                         # => refactor so that the block is modularized, and can be called in either a while or times loop based on subtraction??
                         while points_to_spend > 0
@@ -158,6 +165,8 @@ class Converter
                             archetype_skill = archetype[:skill_priorities][:chosen_by_player][priority_index]
                             priority_skill = nil
 
+                            # (for 1-to-2 conversion) find correct output skill to prioritize from output_skill_preference list
+                            # => will this need additional checks against max_points, like with "chosen_by_class_race" below??
                             conversions[:term_conversions].each do |conversion_hash|
                                 # byebug
                                 if conversion_hash[:base][:skill1] == archetype_skill
@@ -173,6 +182,7 @@ class Converter
                                 end
                             end
 
+                            # format skill output and shovel into output_character's skill list
                             skill_hash = {}
                             skill_hash[:name] = priority_skill
                             # integer math in Ruby will always take .floor of decimal - this is helpful for spending points!
@@ -186,21 +196,20 @@ class Converter
                         end
 
                     elsif chooser == "class_race"
+                        # find matching class or race for conversion
                         conversions[:chosen_by_class_race].each_value do |class_race_array|
                             class_race_array.each do |class_race_hash|
                                 if !class_race_hash[:name]
                                     break
                                 elsif class_race_hash[:name] == output_character[:class] || class_race_hash[:name] == output_character[:race]
-
                                     class_race_hash[:num_chosen].times do                                       
                                         priority_skill1 = nil
                                         priority_skill2 = nil
 
                                         if conversions[:base_output_conversions] == "1_to_2"
                                             archetype_skill = archetype[:skill_priorities][:chosen_by_player][priority_index]
-
                                             conversions[:term_conversions].each do |conversion_hash|
-                                                byebug
+                                                # byebug
                                                 if conversion_hash[:base][:skill1] == archetype_skill
                                                     priority_skill1 = conversion_hash[:output][:skill1]
                                                     priority_skill2 = conversion_hash[:output][:skill2]
@@ -230,8 +239,7 @@ class Converter
                                                 end
                                             end
 
-                                            # byebug
-                                            # priority skill not being set for Wizard!!!
+                                            # current logic: allocate all points to priority_skill1 until max is reached, then allocate to priority_skill2
                                             if skill[:skill] == priority_skill1 && !skill1_points_maxed
                                                 # byebug
                                                 skill_hash[:name] = priority_skill1
@@ -269,7 +277,8 @@ class Converter
         end
 
 
-        # check powers
+        # check POWERS
+        # =============================================================
         if game_system[:system_powers][:has_powers]
             powers = game_system[:system_powers]
             power_choice_order = []
@@ -282,6 +291,7 @@ class Converter
                 power_choice_order = ["class_race"]
             end
 
+            # check if powers are allocated by spending a limited nunber of points
             if powers[:points_num]
                 # points_to_spend = powers[:points_num]
                     powers[:search_tags].each do |chooser|
@@ -291,8 +301,9 @@ class Converter
                                 # byebug
                                 if !power_hash[:name]
                                     break
+                                # find matching powers by searching for tags with class/race
+                                # (logic also prevents duplicating powers -- it presumes they are unique!)
                                 elsif ( power_hash[:tags][tag_key].include?(output_character[:class]) || power_hash[:tags][tag_key].include?(output_character[:race]) ) && !output_character[:powers][:list].include?(power_hash)
-                                    # shortened_power_hash = { name: power_hash[:name], roll: power_hash[:roll], description: power_hash[:description] }
                                     output_character[:powers][:list] << power_hash
                                 end
                             end
@@ -311,16 +322,20 @@ class Converter
         end
 
 
-        # check system_unique
+        # check SYSTEM_UNIQUE
+        # =============================================================
         if game_system[:system_unique][0]
+            # do something
         end
 
+        # output_character is ready
         byebug
 
         self.format_text_output(output_character)
     end
 
 
+    # formatting currently hardcoded -- start by building in iteration
     def self.format_text_output(output_character)
         filename = "test-output-#{output_character[:archetype_name]}.txt"
         output = File.open(filename, "w")
@@ -373,7 +388,7 @@ class Converter
 end
 
 
-# Converter.archetype_system_converter(knight_archetype, game_system, blank1)
-# Converter.archetype_system_converter(ninja_archetype, game_system, blank2)
+Converter.archetype_system_converter(knight_archetype, game_system, blank1)
+Converter.archetype_system_converter(ninja_archetype, game_system, blank2)
 Converter.archetype_system_converter(wizard_archetype, game_system, blank3)
 Converter.archetype_system_converter(bard_archetype, game_system, blank4)
