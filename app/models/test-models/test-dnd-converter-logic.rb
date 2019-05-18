@@ -21,14 +21,20 @@ blank3 = blank_dnd_output_character
 blank4 = blank_dnd_output_character
 
 
+# Testing variables - see benchmark section below
+$test_time_counter = 0
+$test_time_start = 0
+$test_time_end = 0
+
+
 class Converter
     def self.archetype_system_converter(archetype, game_system, output_character)
         system_key = game_system[:unique_name].to_sym
 
-
+        self.start_test
         # set output-character's archetype_name to archetype's name
         output_character[:archetype_name] = archetype[:name]
-
+        self.end_test
 
 
         # check CLASS
@@ -117,6 +123,7 @@ class Converter
                 end
             end
         end
+
 
 
         # check SKILLS
@@ -277,6 +284,7 @@ class Converter
         end
 
 
+    
         # check POWERS
         # =============================================================
         if game_system[:system_powers][:has_powers]
@@ -329,7 +337,7 @@ class Converter
         end
 
         # output_character is ready
-        byebug
+        # byebug
 
         self.format_text_output(output_character)
     end
@@ -385,10 +393,97 @@ class Converter
         output.close
     end
 
+
+
+    # benchmark testing methods
+    def self.reset_test_time_counter
+        $test_time_counter = 0
+    end
+
+    def self.start_test
+        $test_time_start = Time.now
+    end
+    
+    def self.end_test
+        $test_time_end = Time.now
+        test_time = $test_time_end - $test_time_start
+        $test_time_counter += test_time
+    end
+    
+    def self.output_test(text)
+        puts "testing results for: " + text
+        puts "$test_time_counter: " + $test_time_counter.to_s + " seconds"
+
+        puts
+        puts
+    end
+
 end
 
 
-Converter.archetype_system_converter(knight_archetype, game_system, blank1)
-Converter.archetype_system_converter(ninja_archetype, game_system, blank2)
-Converter.archetype_system_converter(wizard_archetype, game_system, blank3)
-Converter.archetype_system_converter(bard_archetype, game_system, blank4)
+# Converter.archetype_system_converter(knight_archetype, game_system, blank1)
+# Converter.archetype_system_converter(ninja_archetype, game_system, blank2)
+# Converter.archetype_system_converter(wizard_archetype, game_system, blank3)
+# Converter.archetype_system_converter(bard_archetype, game_system, blank4)
+
+
+
+# BENCHMARK TESTING
+# ====================================
+
+def test_loops(archetype, game_system, num)
+    Converter.reset_test_time_counter
+
+    start = Time.now
+    num.times do
+        blank = blank_dnd_output_character
+        Converter.archetype_system_converter(archetype, game_system, blank)
+    end
+    finish = Time.now
+    benchmark_seconds = (finish - start)
+    puts benchmark_seconds.to_s + " seconds to run #{num} loops"
+
+    Converter.output_test("set archetype name")
+end
+
+
+
+
+
+
+
+puts
+puts
+
+# test knight
+puts "Testing knight_archetype..."
+puts "===================================="
+test_loops(knight_archetype, dnd_game_system, 1000)
+test_loops(knight_archetype, dnd_game_system, 10000)
+test_loops(knight_archetype, dnd_game_system, 100000)
+
+
+# test ninja
+puts "Testing ninja_archetype..."
+puts "===================================="
+test_loops(ninja_archetype, dnd_game_system, 1000)
+test_loops(ninja_archetype, dnd_game_system, 10000)
+test_loops(ninja_archetype, dnd_game_system, 100000)
+
+
+# test wizard
+puts "Testing wizard_archetype..."
+puts "===================================="
+test_loops(wizard_archetype, dnd_game_system, 1000)
+test_loops(wizard_archetype, dnd_game_system, 10000)
+test_loops(wizard_archetype, dnd_game_system, 100000)
+
+
+# test bard
+puts "Testing bard_archetype..."
+puts "===================================="
+test_loops(bard_archetype, dnd_game_system, 1000)
+test_loops(bard_archetype, dnd_game_system, 10000)
+test_loops(bard_archetype, dnd_game_system, 100000)
+
+
