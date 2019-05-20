@@ -30,11 +30,12 @@ $test_time_end = 0
 class Converter
     def self.archetype_system_converter(archetype, game_system, output_character)
         system_key = game_system[:unique_name].to_sym
+        output_character[:game_system_id] = game_system[:id]
 
-        self.start_test
-        # set output-character's archetype_name to archetype's name
+
+        # set output-character's archetype_name to archetype's name, and add game_system's id
         output_character[:archetype_name] = archetype[:name]
-        self.end_test
+
 
 
         # check CLASS
@@ -337,10 +338,28 @@ class Converter
         end
 
         # output_character is ready
-        # byebug
+        byebug
+        
+
+        # self.load_snippets(output_character)
+
+
 
         self.format_text_output(output_character)
     end
+
+
+    # QUERY LOGIC NOT WORKING: Tag, SnippetTag, and Snippet are not available in this file to test...
+    # (consider migrating these tests to a testing folder? ask TCFs if 'rails test' or something does that)
+    #
+    # def self.load_snippets(output_character)
+    #     # use output_character[:game_system_id] for snippet query below
+    #     tag_list = Tag.all
+    #     snippets = tag_list.map do |tag|
+    #         tag.snippets.where(system_specific: nil)
+    #     end
+    #     byebug
+    # end
 
 
     # formatting currently hardcoded -- start by building in iteration
@@ -428,7 +447,7 @@ end
 
 
 
-# BENCHMARK TESTING
+# PERFORMANCE TESTING
 # ====================================
 
 def test_loops(archetype, game_system, num)
@@ -452,38 +471,38 @@ end
 
 
 
-puts
-puts
+# puts
+# puts
 
-# test knight
-puts "Testing knight_archetype..."
-puts "===================================="
-test_loops(knight_archetype, dnd_game_system, 1000)
-test_loops(knight_archetype, dnd_game_system, 10000)
-test_loops(knight_archetype, dnd_game_system, 100000)
-
-
-# test ninja
-puts "Testing ninja_archetype..."
-puts "===================================="
-test_loops(ninja_archetype, dnd_game_system, 1000)
-test_loops(ninja_archetype, dnd_game_system, 10000)
-test_loops(ninja_archetype, dnd_game_system, 100000)
+# # test knight
+# puts "Testing knight_archetype..."
+# puts "===================================="
+# test_loops(knight_archetype, dnd_game_system, 1000)
+# test_loops(knight_archetype, dnd_game_system, 10000)
+# test_loops(knight_archetype, dnd_game_system, 100000)
 
 
-# test wizard
+# # test ninja
+# puts "Testing ninja_archetype..."
+# puts "===================================="
+# test_loops(ninja_archetype, dnd_game_system, 1000)
+# test_loops(ninja_archetype, dnd_game_system, 10000)
+# test_loops(ninja_archetype, dnd_game_system, 100000)
+
+
+# # test wizard
 puts "Testing wizard_archetype..."
 puts "===================================="
 test_loops(wizard_archetype, dnd_game_system, 1000)
-test_loops(wizard_archetype, dnd_game_system, 10000)
-test_loops(wizard_archetype, dnd_game_system, 100000)
+# test_loops(wizard_archetype, dnd_game_system, 10000)
+# test_loops(wizard_archetype, dnd_game_system, 100000)
 
 
-# test bard
+# # test bard
 puts "Testing bard_archetype..."
 puts "===================================="
 test_loops(bard_archetype, dnd_game_system, 1000)
-test_loops(bard_archetype, dnd_game_system, 10000)
-test_loops(bard_archetype, dnd_game_system, 100000)
+# test_loops(bard_archetype, dnd_game_system, 10000)
+# test_loops(bard_archetype, dnd_game_system, 100000)
 
 

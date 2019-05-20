@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Api::V1::SearchListTest < ActiveSupport::TestCase
+class SnippetTagsControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end
