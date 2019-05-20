@@ -2,6 +2,7 @@ $dnd_output_character_big_sword_knight = {
     class: "fighter",
     race: "half-orc",
     archetype_name: "big sword knight",
+    game_system_id: 1,
     
     stats: {
         alias: "ability",
