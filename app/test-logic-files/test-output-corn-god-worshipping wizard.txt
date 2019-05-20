@@ -1,0 +1,32 @@
+Dnd Character Sheet
+======================
+Archetype: corn-god-worshipping wizard
+Race: gnome
+Class: wizard
+ 
+Abilities:
+======================
+Strength: 8
+Dexterity: 13
+Constitution: 12
+Intelligence: 12
+Wisdom: 15
+Charisma: 15
+ 
+Skills:
+======================
+arcana
+religion
+performance
+nature
+
+Powers:
+======================
+Power: Arcane Recovery
+Roll: once per day
+Description: You have learned to regain some of your magical energy by studying your spellbook. Once per day when you finish a short rest, you can choose expended spell slots to recover. You can recover either a 2nd-level spell slot or two 1st-level spell slots.
+ 
+Power: Spellcasting
+Roll: automatic
+Description: An event in your past, or in the life of a parent or ancestor, left an indelible mark on you, infusing you with arcane magic. This font of magic, whatever its origin, fuels your spells. (NOTE: This feature is used in place of all other Spellcasting features.)
+ 
