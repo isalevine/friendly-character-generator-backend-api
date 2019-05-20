@@ -156,6 +156,10 @@ def dnd_game_system
       "output_skill_preferences"
     ],
 
+    unique_snippet_sources: [
+      "alignment"
+    ],
+
 
 
 
