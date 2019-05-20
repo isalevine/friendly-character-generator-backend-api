@@ -165,15 +165,12 @@ end
 
 
 
-# refactor name of this method => generate_snippet_pool ??
-def fetch_tag_list(output_character)
+def generate_snippet_pool(output_character)
     # refactor to only grab ids based on SystemTag joins
     all_tags = Tag.all
     tag_dictionary = generate_tag_dictionary(all_tags)
     search_pool = generate_search_pool(output_character)
     snippet_pool = fetch_snippet_pool(tag_dictionary, search_pool)
-
-    byebug
 end
 
 
@@ -297,6 +294,8 @@ def generate_character_backstory(sorted_snippet_pool)
         random_index = (rand * snippet_array.length).floor
         character_backstory[story_location] = snippet_array[random_index]
     end
+    character_backstory
+    byebug
 end
 
 
@@ -305,5 +304,5 @@ parse_snippet_lists(smooth_talking_ninja)
 parse_snippet_lists(corn_god_worshipping_wizard)
 parse_snippet_lists(the_mime)
 
-fetch_tag_list(output_character1)
-fetch_tag_list(output_character2)
+generate_snippet_pool(output_character1)
+generate_snippet_pool(output_character2)
