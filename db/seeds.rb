@@ -38,7 +38,11 @@
 
 
 
+Snippet.all.destroy_all
+SnippetTag.all.destroy_all
+Tag.all.destroy_all
 
+require 'set'
 
 
 
@@ -53,8 +57,18 @@ the_mime = {
 }
 
 
+TAG_LIST = Set[]
+def load_tag_list
+    tags = Tag.all
+    tags.each do |tag|
+        TAG_LIST << tag.text
+    end
+end
+
 
 def parse_snippet_lists(object)
+    load_tag_list
+
     object.each do |story_key, snippet_array|
         story_location = story_key.to_s
         create_snippets(story_location, snippet_array)
@@ -64,36 +78,45 @@ end
 def create_snippets(story_location, snippet_array)
     snippet_array.each do |snippet_text|
         # byebug
-        new_snippet = Snippet.create(story_location: story_location, text: snippet_text)
+        new_snippet = Snippet.create(story_location: story_location, text: snippet_text, system_specific: nil)
+        generate_tags(snippet_text, new_snippet.id)
     end
 end
 
 
 # create tags, do not append to snippet yet (will require a new hash)
-def generate_tags(archetype)
-    output_array = []
-    archetype.each_value do |array|
-        regex1 = /(-)|(--)|(\.\.\.)/
-        regex2 = /([.,:;?!"'`@#$%^&*()_+={}-])/
-        filter_words = ["a", "an", "the", "of", "or", "in", "out", "above", "below", "with", "without", "their", "they", "them", "through", "as", "if", "from", "has", "have", "another", "always", "even", "since", "be", "and", "more", "by", "so", "what", "to", "at", "toward", "for", "was", "though", "could", "is", "on", "that", "like", "may", "but", "any", "about"]
-        snippet = array[0]
+def generate_tags(snippet_text, snippet_id)
+    regex1 = /(-)|(--)|(\.\.\.)/
+    regex2 = /([.,:;?!"'`@#$%^&*()_+={}-])/
+    filter_words = ["a", "an", "the", "of", "or", "in", "out", "above", "below", "with", "without", "their", "they", "them", "through", "as", "if", "from", "has", "have", "another", "always", "even", "since", "be", "and", "more", "by", "so", "what", "to", "at", "toward", "for", "was", "though", "could", "is", "on", "that", "like", "may", "but", "any", "about"]
 
-        snippet.downcase!
-        snippet.gsub!(regex1, " ")
-        snippet.gsub!(regex2, "")
-        snippet_array = snippet.split(" ")
-        snippet_array.uniq!
-        snippet_array.filter! { |word| !filter_words.include?(word) }
+    snippet_text.downcase!
+    snippet_text.gsub!(regex1, " ")
+    snippet_text.gsub!(regex2, "")
+    tag_array = snippet_text.split(" ")
+    tag_array.uniq!
+    tag_array.filter! { |tag| !filter_words.include?(tag) }
 
-        output_array << snippet_array
+    puts "generate_tags output the following tag_array:"
+    puts tag_array
+    puts
+
+    create_tags(tag_array, snippet_id)
+end
+
+
+def create_tags(tag_array, snippet_id)
+    tag_array.each do |tag|
+        if TAG_LIST.add?(tag)
+            new_tag = Tag.create(text: tag)
+            create_snippet_tag_join(snippet_id, new_tag.id)
+        end
     end
+end
 
 
-    puts "create_tags filtered snippet_array output:"
-    output_array.each do |array|
-        puts array
-        puts
-    end
+def create_snippet_tag_join(snippet_id, tag_id)
+    SnippetTag.create(snippet_id: snippet_id, tag_id: tag_id)
 end
 
 
@@ -102,5 +125,3 @@ end
 
 
 parse_snippet_lists(the_mime)
-
-generate_tags(the_mime)
