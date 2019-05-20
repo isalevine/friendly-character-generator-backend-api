@@ -1,0 +1,2 @@
+class SnippetTag < ApplicationRecord
+end

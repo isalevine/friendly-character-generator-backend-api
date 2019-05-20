@@ -44,7 +44,7 @@ the_mime = {
 
 
 # create tags, do not append to snippet yet (will require a new hash)
-def create_tags(archetype)
+def generate_tags(archetype)
     output_array = []
     archetype.each_value do |array|
         regex1 = /(-)|(--)|(\.\.\.)/
@@ -71,4 +71,4 @@ def create_tags(archetype)
 end
 
 
-create_tags(the_mime)
+generate_tags(the_mime)
