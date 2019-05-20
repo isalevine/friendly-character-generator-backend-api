@@ -121,13 +121,12 @@ end
 # create tags, do not append to snippet yet (will require a new hash)
 def generate_tags(snippet_text, snippet_id = nil, create_db_tags = false)
     regex1 = /(-)|(--)|(\.\.\.)|(_)/
-    regex2 = /([.,:;?!"'`@#$%^&*()_+={}-])/
+    regex2 = /([.,:;?!"'`@#$%^&*()+={}-])/
     # filter list is being CUT DOWN to increase randomness of matches
     # => different behavior will be needed once many snippets are seeded
     # => CONSIDER: what is the ideal % of total Snippets to show up in pool?
-    # => (currently, 11 / 24 for 'the_mime')
-    filter_words = ["a", "an", "the", "and", "to", "is", "that", "its", "it" 
-    ]
+    # => (currently, 9 / 24 for 'corn_god_worshipping_wizard')
+    filter_words = ["a", "an", "the", "and"]
 
     snippet_text.downcase!
     snippet_text.gsub!(regex1, " ")
@@ -250,8 +249,8 @@ def fetch_snippet_pool(tag_dictionary, search_pool)
 
             
     # not sure why multiples of snippets are ending up in snippet_pool - investigate!!
-    # snippet_pool = Set[]
-    snippet_pool = []
+    snippet_pool = Set[] 
+    # snippet_pool = []
 
     search_pool.each do |search_string|
         key = search_string.slice(0, 1)
@@ -265,9 +264,39 @@ def fetch_snippet_pool(tag_dictionary, search_pool)
             end
         end 
     end
-    byebug
     
-    snippet_pool
+    sort_snippets_story_location(snippet_pool)
+end
+
+
+def sort_snippets_story_location(snippet_pool)
+    sorted_snippet_pool = {
+        "very_beginning": [],
+        "near_beginning": [],
+        "middle": [],
+        "near_end": [],
+        "very_end": []
+    }
+    snippet_pool.each do |snippet_hash|
+        story_location = snippet_hash[:story_location].to_sym
+        sorted_snippet_pool[story_location] << snippet_hash[:text]
+    end    
+    generate_character_backstory(sorted_snippet_pool)
+end
+
+
+def generate_character_backstory(sorted_snippet_pool)
+    character_backstory = {
+        "very_beginning": "",
+        "near_beginning": "",
+        "middle": "",
+        "near_end": "",
+        "very_end": "" 
+    }
+    sorted_snippet_pool.each do |story_location, snippet_array|
+        random_index = (rand * snippet_array.length).floor
+        character_backstory[story_location] = snippet_array[random_index]
+    end
 end
 
 
@@ -276,5 +305,5 @@ parse_snippet_lists(smooth_talking_ninja)
 parse_snippet_lists(corn_god_worshipping_wizard)
 parse_snippet_lists(the_mime)
 
-# fetch_tag_list(output_character1)
+fetch_tag_list(output_character1)
 fetch_tag_list(output_character2)
