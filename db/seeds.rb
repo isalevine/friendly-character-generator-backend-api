@@ -120,9 +120,14 @@ end
 
 # create tags, do not append to snippet yet (will require a new hash)
 def generate_tags(snippet_text, snippet_id = nil, create_db_tags = false)
-    regex1 = /(-)|(--)|(\.\.\.)/
+    regex1 = /(-)|(--)|(\.\.\.)|(_)/
     regex2 = /([.,:;?!"'`@#$%^&*()_+={}-])/
-    filter_words = ["a", "an", "the", "of", "or", "in", "out", "above", "below", "with", "without", "their", "they", "them", "through", "as", "if", "from", "has", "have", "another", "always", "even", "since", "be", "and", "more", "by", "so", "what", "to", "at", "toward", "for", "was", "though", "could", "is", "on", "that", "like", "may", "but", "any", "about"]
+    # filter list is being CUT DOWN to increase randomness of matches
+    # => different behavior will be needed once many snippets are seeded
+    # => CONSIDER: what is the ideal % of total Snippets to show up in pool?
+    # => (currently, 11 / 24 for 'the_mime')
+    filter_words = ["a", "an", "the", "and", "to", "is", "that", "its", "it" 
+    ]
 
     snippet_text.downcase!
     snippet_text.gsub!(regex1, " ")
@@ -191,6 +196,8 @@ end
 
 
 def generate_search_pool(output_character)
+    # SEE IF YOU CAN ALSO USE THE  playstyle_preference + form text  TO ALSO ADD TO POOL!
+    #
     # refactor to lookup GameSystem with output_character[:game_system_id], and grab game_system[:unique_snippet_sources]
     unique_system_sources = $game_system_unique_snippet_sources || []
     string_pool = ""
@@ -212,10 +219,12 @@ def generate_search_pool(output_character)
                 end
             end
 
+        # take :name and 1st sentence ONLY of :description
         elsif key == :powers
             output_character[:powers][:list].each do |power_hash|
                 if power_hash[:name]
-                    string_pool += " #{power_hash[:name]} #{power_hash[:description]}"
+                    sentence = power_hash[:description].split(". ")[0]
+                    string_pool += " #{power_hash[:name]} #{sentence}"
                 end
             end
 
@@ -239,6 +248,9 @@ def fetch_snippet_pool(tag_dictionary, search_pool)
             #     tag.snippets.where(system_specific: nil)
             # end
 
+            
+    # not sure why multiples of snippets are ending up in snippet_pool - investigate!!
+    # snippet_pool = Set[]
     snippet_pool = []
 
     search_pool.each do |search_string|
@@ -253,14 +265,16 @@ def fetch_snippet_pool(tag_dictionary, search_pool)
             end
         end 
     end
+    byebug
     
     snippet_pool
 end
 
 
-
+parse_snippet_lists(big_sword_knight)
+parse_snippet_lists(smooth_talking_ninja)
 parse_snippet_lists(corn_god_worshipping_wizard)
 parse_snippet_lists(the_mime)
 
-fetch_tag_list(output_character1)
-# fetch_tag_list(output_character2)
+# fetch_tag_list(output_character1)
+fetch_tag_list(output_character2)
