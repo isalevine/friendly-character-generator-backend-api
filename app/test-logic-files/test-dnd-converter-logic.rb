@@ -338,10 +338,10 @@ class Converter
         end
 
         # output_character is ready
-        # byebug
+        byebug
         
 
-        self.load_snippets(output_character)
+        # self.load_snippets(output_character)
 
 
 
@@ -447,7 +447,7 @@ end
 
 
 
-# BENCHMARK TESTING
+# PERFORMANCE TESTING
 # ====================================
 
 def test_loops(archetype, game_system, num)

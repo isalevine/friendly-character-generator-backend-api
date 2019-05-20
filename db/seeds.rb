@@ -45,8 +45,15 @@ Tag.all.destroy_all
 require 'set'
 
 
+# copied from output_character, caught in byebug by running 'ruby test-dnd-converter-logic.rb'
+output_character1 = {:class=>"wizard", :race=>"gnome", :archetype_name=>"corn-god-worshipping wizard", :stats=>{:alias=>"stat", :list=>{:strength=>8, :dexterity=>13, :constitution=>12, :intelligence=>12, :wisdom=>15, :charisma=>15}}, :skills=>{:alias=>"skill", :list=>[{:name=>"arcana", :points=>1}, {:name=>"religion", :points=>1}, {:name=>"performance", :points=>1}, {:name=>"nature", :points=>1}]}, :powers=>{:alias=>"power", :list=>[{:name=>"Arcane Recovery", :tags=>{:chosen_by_class_race=>["wizard"], :chosen_by_player=>{:playstyle_preference=>[], :action_preference=>[], :power_preference=>[], :requirements=>{:stats=>[{:stat=>nil, :minimum=>nil}], :skills=>[{:skill=>nil, :minimum=>nil}], :class=>[{:includes=>[], :excludes=>[]}], :race=>[{:includes=>[], :excludes=>[]}]}}}, :roll=>"once per day", :description=>"You have learned to regain some of your magical energy by studying your spellbook. Once per day when you finish a short rest, you can choose expended spell slots to recover. You can recover either a 2nd-level spell slot or two 1st-level spell slots."}, {:name=>"Spellcasting", :tags=>{:chosen_by_class_race=>["bard", "cleric", "druid", "sorcerer", "wizard"], :chosen_by_player=>{:playstyle_preference=>[], :action_preference=>[], :power_preference=>[], :requirements=>{:stats=>[{:stat=>nil, :minimum=>nil}], :skills=>[{:skill=>nil, :minimum=>nil}], :class=>[{:includes=>[], :excludes=>[]}], :race=>[{:includes=>[], :excludes=>[]}]}}}, :roll=>"automatic", :description=>"An event in your past, or in the life of a parent or ancestor, left an indelible mark on you, infusing you with arcane magic. This font of magic, whatever its origin, fuels your spells. (NOTE: This feature is used in place of all other Spellcasting features.)"}]}, :ability_modifiers=>nil, :alignment=>nil, :hit_die=>nil, :saving_throws=>nil, :hit_points=>nil, :armor_class=>nil, :game_system_id=>1}
+output_character2 = {:class=>"bard", :race=>"tiefling", :archetype_name=>"the_mime", :stats=>{:alias=>"stat", :list=>{:strength=>12, :dexterity=>13, :constitution=>10, :intelligence=>15, :wisdom=>8, :charisma=>17}}, :skills=>{:alias=>"skill", :list=>[{:name=>"performance", :points=>1}, {:name=>"insight", :points=>1}, {:name=>"deception", :points=>1}, {:name=>"perception", :points=>1}]}, :powers=>{:alias=>"power", :list=>[{:name=>"Bardic Inspiration", :tags=>{:chosen_by_class_race=>["bard"], :chosen_by_player=>{:playstyle_preference=>[], :action_preference=>[], :power_preference=>[], :requirements=>{:stats=>[{:stat=>nil, :minimum=>nil}], :skills=>[{:skill=>nil, :minimum=>nil}], :class=>[{:includes=>[], :excludes=>[]}], :race=>[{:includes=>[], :excludes=>[]}]}}}, :roll=>"d6", :description=>"You can inspire others through stirring words or music. To do so, you use a bonus action on your turn to choose one creature other than yourself within 60 feet of you who can hear you. That creature gains one Bardic Inspiration die, a d6. Once within the next 10 minutes, the creature can roll the die and add the number rolled to one ability check, attack roll, or saving throw it makes. Once the Bardic Inspiration die is rolled, it is lost. A creature can have only one Bardic Inspiration die at a time."}, {:name=>"Spellcasting", :tags=>{:chosen_by_class_race=>["bard", "cleric", "druid", "sorcerer", "wizard"], :chosen_by_player=>{:playstyle_preference=>[], :action_preference=>[], :power_preference=>[], :requirements=>{:stats=>[{:stat=>nil, :minimum=>nil}], :skills=>[{:skill=>nil, :minimum=>nil}], :class=>[{:includes=>[], :excludes=>[]}], :race=>[{:includes=>[], :excludes=>[]}]}}}, :roll=>"automatic", :description=>"An event in your past, or in the life of a parent or ancestor, left an indelible mark on you, infusing you with arcane magic. This font of magic, whatever its origin, fuels your spells. (NOTE: This feature is used in place of all other Spellcasting features.)"}]}, :ability_modifiers=>nil, :alignment=>nil, :hit_die=>nil, :saving_throws=>nil, :hit_points=>nil, :armor_class=>nil, :game_system_id=>1}
 
-# CODE BELOW COPIED FROM /app/test-logic-files/test-backstory...
+$game_system_unique_snippet_sources = ["alignment"]
+
+
+# CODE BELOW COPIED FROM /app/test-logic-files/test-backstory... 
+# (and expanded upon--refactor to merge and put files in correct place to test...)
 
 big_sword_knight = {
     very_beginning: ["Birthed by an ironworker in an imperial steelmill during crunch-week for greatsword production, they were born with the smell of smelting metal in their nose and a fine coating of it in their lungs."],
@@ -106,13 +113,13 @@ def create_snippets(story_location, snippet_array)
     snippet_array.each do |snippet_text|
         # byebug
         new_snippet = Snippet.create(story_location: story_location, text: snippet_text, system_specific: nil)
-        generate_tags(snippet_text, new_snippet.id)
+        generate_tags(snippet_text, new_snippet.id, create_db_tags: true)
     end
 end
 
 
 # create tags, do not append to snippet yet (will require a new hash)
-def generate_tags(snippet_text, snippet_id)
+def generate_tags(snippet_text, snippet_id = nil, create_db_tags = false)
     regex1 = /(-)|(--)|(\.\.\.)/
     regex2 = /([.,:;?!"'`@#$%^&*()_+={}-])/
     filter_words = ["a", "an", "the", "of", "or", "in", "out", "above", "below", "with", "without", "their", "they", "them", "through", "as", "if", "from", "has", "have", "another", "always", "even", "since", "be", "and", "more", "by", "so", "what", "to", "at", "toward", "for", "was", "though", "could", "is", "on", "that", "like", "may", "but", "any", "about"]
@@ -128,7 +135,11 @@ def generate_tags(snippet_text, snippet_id)
     puts tag_array
     puts
 
-    create_tags(tag_array, snippet_id)
+    if create_db_tags
+        create_tags(tag_array, snippet_id)
+    else
+        tag_array
+    end
 end
 
 
@@ -147,22 +158,109 @@ def create_snippet_tag_join(snippet_id, tag_id)
 end
 
 
-def fetch_tag_list
+
+
+
+# refactor name of this method => generate_snippet_pool ??
+def fetch_tag_list(output_character)
     # refactor to only grab ids based on SystemTag joins
-    tag_list = Tag.all
-    fetch_snippet_list(tag_list)
-end
+    all_tags = Tag.all
+    tag_dictionary = generate_tag_dictionary(all_tags)
+    search_pool = generate_search_pool(output_character)
+    snippet_pool = fetch_snippet_pool(tag_dictionary, search_pool)
 
-
-def fetch_snippet_list(tag_list)
-    snippet_list = tag_list.map do |tag|
-        tag.snippets.where(system_specific: nil)
-    end
     byebug
 end
+
+
+# THIS WILL BE A VERY SLOW METHOD! DO UNIT TESTING HERE!
+# (try to design frontend to run this during, like, card animations or something to not slow down app...)
+def generate_tag_dictionary(all_tags)
+    # byebug
+    tag_dictionary = {}
+    all_tags.each do |tag|
+        first_letter = tag.text.slice(0, 1)
+        if !tag_dictionary.has_key?(first_letter)
+            tag_dictionary[first_letter] = []
+        end
+        tag_dictionary[first_letter] << tag
+    end
+    # byebug
+    tag_dictionary
+end
+
+
+def generate_search_pool(output_character)
+    # refactor to lookup GameSystem with output_character[:game_system_id], and grab game_system[:unique_snippet_sources]
+    unique_system_sources = $game_system_unique_snippet_sources || []
+    string_pool = ""
+
+    output_character.each do |key, value|
+        if key == :class
+            string_pool += " #{output_character[:class]}"
+
+        elsif key == :race
+            string_pool += " #{output_character[:race]}"
+
+        elsif key == :archetype_name
+            string_pool += " #{output_character[:archetype_name]}"
+
+        elsif key == :skills
+            output_character[:skills][:list].each do |skill_hash|
+                if skill_hash[:name]
+                    string_pool += " #{skill_hash[:name]}"
+                end
+            end
+
+        elsif key == :powers
+            output_character[:powers][:list].each do |power_hash|
+                if power_hash[:name]
+                    string_pool += " #{power_hash[:name]} #{power_hash[:description]}"
+                end
+            end
+
+        elsif unique_system_sources.length > 0
+            unique_system_sources.each do |string|
+                key = string.to_sym
+                string_pool += " #{output_character[:key]}"
+            end
+        end
+        
+    end
+
+    search_pool = generate_tags(string_pool)
+    
+end
+
+
+def fetch_snippet_pool(tag_dictionary, search_pool)
+    # compare tag_dictionary verses search_pool to narrow down character-specific tags
+            # snippet_list = tag_dictionary.map do |tag|
+            #     tag.snippets.where(system_specific: nil)
+            # end
+
+    snippet_pool = []
+
+    search_pool.each do |search_string|
+        key = search_string.slice(0, 1)
+        if tag_dictionary.has_key?(key)
+            tag_dictionary[key].each do |tag_hash|
+                if tag_hash[:text] == search_string
+                    tag_hash.snippets.each do |snippet|
+                        snippet_pool << snippet
+                    end
+                end
+            end
+        end 
+    end
+    
+    snippet_pool
+end
+
 
 
 parse_snippet_lists(corn_god_worshipping_wizard)
 parse_snippet_lists(the_mime)
 
-fetch_tag_list
+fetch_tag_list(output_character1)
+# fetch_tag_list(output_character2)
