@@ -120,8 +120,15 @@ def create_snippet_tag_join(snippet_id, tag_id)
 end
 
 
-
+def fetch_tag_ids
+    tag_ids = Tag.all.map do |tag|
+        tag.id
+    end
+    byebug
+end
 
 
 
 parse_snippet_lists(the_mime)
+
+fetch_tag_ids
