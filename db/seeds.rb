@@ -8,27 +8,298 @@
 
 
 
-# SearchList.all.destroy_all
-# SearchPreference.all.destroy_all
-# Archetype.all.destroy_all
-# BaseCharacter.all.destroy_all
+
+
+SearchList.all.destroy_all
+SearchPreference.all.destroy_all
+Archetype.all.destroy_all
+BaseCharacter.all.destroy_all
 
 # # playstyles: physical, mental, social
 # # actions: [weapon, tank, sneak, spells], [spells, investigate, knowledge], [leader, perform, manipulate, seduce]
 # # ??? DEPRECATE for only PLAYSTYLE and ACTIONS as search terms ???  stats: strength, stamina, dexterity, wisdom, intelligence, charisma
 # # powers: any, damage, heal, stealth, mind, control
 
-# warrior = Archetype.create(name: "Warrior")
-# warrior_search_list = SearchList.create(archetype_id: warrior.id, search_playstyle_pref: "physical", search_action_pref: "weapon, tank", search_power_pref: "any")
+big_sword_knight = Archetype.create(
+    name: "big sword knight",
 
-# ninja = Archetype.create(name: "Ninja")
-# ninja_search_list = SearchList.create(archetype_id: ninja.id, search_playstyle_pref: "physical, mental", search_action_pref: "sneak, investigate", search_power_pref: "any")
+    stat_priorities: {
+      chosen_by_player: [
+        "strength",
+        "constitution",
+        "dexterity",
+        "wisdom",
+        "charisma",
+        "intelligence"
+      ]
+    },
+  
+    skill_priorities: {
+      chosen_by_player: [
+        "feats_of_strength",
+        "intimidation",
+        "athletics_dodge",
+        "awareness",
+        "larceny_crime",
+        "investigation",
+        nil,
+        nil,
+        nil,
+        nil,
+        nil,
+        nil
+      ]
+    },
+  
+    power_priorities: {
+      chosen_by_player: {
+        tags: ["sword", "combat", "extra attacks", "accuracy", "strength", "dodge", "reduce damage", "intimidate"]
+      },
+      spell_priorities: {}
+    },
+  
+    system_unique: {
+      dnd_5th_001: {
+        class: "fighter",
+        race: "half-orc",
+        hit_points: "roll d10, add Constitution modifier",
+        armor_class: "armor base AC, add Dexterity modifier",
+        alignment: "chaotic-neutral",
+        ability_modifiers: "8-9 = -1; 10-11 = 0; 12-13 = +1; 14-15 = +2; 16-17 = +3, 18-19 = +4",
+        output_skill_preferences: ["perception", "acrobatics", "athletics"]
+      },
+      exalted_2nd_001: {
+        class: "dawn",
+        race: "solar exalted",
+        anima: "big sword with angel wings",
+        backgrounds: "artifact: 3 (daiklave), resources: 3 (armor, traveling gear, and lots of tavern-drinking), manse: 1 (delerium orb - lvl 1 fire stone, grants berserk/combat bonus)",
+        equipment: "Daiklave (giant magical golden sword), heavy plate armor, traveling gear with plenty of cash, magic stone: Delirium Orb - go berserk, lose control but gain combat bonus",
+        virtues: "valor: 4, conviction: 3, temperence: 1, compassion: 1",
+        virtue_flaw: "valor - will try to fight and conquer anything bigger than their sword",
+        willpower: "7",
+        hit_points: "-0: 1, -1: 2, -2: 2, -4: 1, I: 1",
+        soak: "bashing: , lethal: , aggravated: ",
+        defense_values: "dodge: , parry: , mental: ",
+        essence: "level 2, personal: 13 motes, peripheral: 30 motes",
+        bonus_points: "18",
+        output_stat_preferences: [],
+        output_skill_preferences: [],
+        output_power_preferences: []
+      }
+    }
+)
+big_sword_knight_search_list = SearchList.create(archetype_id: big_sword_knight.id, search_playstyle_pref: "physical", search_action_pref: "weapon, tank", search_power_pref: "any")
 
-# wizard = Archetype.create(name: "Wizard")
-# wizard_search_list = SearchList.create(archetype_id: wizard.id, search_playstyle_pref: "physical, mental", search_action_pref: "spells, knowledge", search_power_pref: "any")
 
-# seducer = Archetype.create(name: "Seducer")
-# seducer_search_list = SearchList.create(archetype_id: seducer.id, search_playstyle_pref: "social", search_action_pref: "leader, perform, manipulate, seduce", search_power_pref: "any")
+smooth_talking_ninja = Archetype.create(
+    name: "smooth-talking ninja",
+
+  stat_priorities: {
+    chosen_by_player: [
+      "dexterity",
+      "charisma",
+      "intelligence",
+      "wisdom",
+      "strength",
+      "constitution"
+    ]
+  },
+
+  skill_priorities: {
+    chosen_by_player: [
+      "stealth",
+      "athletics_dodge",
+      "persuasion",
+      "socialize",
+      "larceny_crime",
+      "deception",
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil
+    ]
+  },
+
+  power_priorities: {
+    chosen_by_player: {
+      tags: ["stealth", "persuasion", "socialize", "deception", "disguise", "dodge"]
+    },
+    spell_priorities: {}
+  },
+
+  system_unique: {
+    dnd_5th_001: {
+      class: "rogue",
+      race: "half-elf",
+      hit_points: "roll d10, add Constitution modifier",
+      armor_class: "armor base AC, add Dexterity modifier",
+      alignment: "true-neutral",
+      ability_modifiers: "8-9 = -1; 10-11 = 0; 12-13 = +1; 14-15 = +2; 16-17 = +3, 18-19 = +4",
+      output_skill_preferences: ["perception", "acrobatics", "athletics", "sleight_of_hand", "investigation", "insight"]
+    },
+    exalted_2nd_001: {
+      class: "night",
+      race: "solar exalted",
+      anima: "red lips dripping golden honey",
+      backgrounds: "contacts: 3, backing: 2, resources: 2",
+      equipment: "a perfectly-pressed suit that's dark as night, and holds a batman-like cowl inside it",
+      virtues: "valor: 3, conviction: 1, temperence: 3, compassion: 2",
+      virtue_flaw: "temperence - will give up trying to control their mooching, lecherous ways",
+      willpower: "6",
+      hit_points: "-0: 1, -1: 2, -2: 2, -4: 1, I: 1",
+      soak: "bashing: , lethal: , aggravated: ",
+      defense_values: "dodge: , parry: , mental: ",
+      essence: "level 2, personal: motes, peripheral: motes",
+      bonus_points: "18",
+      output_stat_preferences: [],
+      output_skill_preferences: [],
+      output_power_preferences: []
+    }
+  }
+)
+ninja_search_list = SearchList.create(archetype_id: smooth_talking_ninja.id, search_playstyle_pref: "physical, mental", search_action_pref: "sneak, investigate", search_power_pref: "any")
+
+
+corn_god_worshipping_wizard = Archetype.create(
+    name: "corn-god-worshipping wizard",
+
+    stat_priorities: {
+      chosen_by_player: [
+        "wisdom",
+        "charisma",
+        "dexterity",
+        "constitution",
+        "intelligence",
+        "strength"
+      ]
+    },
+  
+    skill_priorities: {
+      chosen_by_player: [
+        "magic_computer",
+        "magic_computer",
+        "performance",
+        "awareness",
+        "socialize",
+        "persuasion",
+        nil,
+        nil,
+        nil,
+        nil,
+        nil,
+        nil
+      ]
+    },
+  
+    power_priorities: {
+      chosen_by_player: {
+        tags: ["nature", "religion", "spells", "destruction", "growth", "healing", "divination"]
+      },
+      spell_priorities: {}
+    },
+  
+    system_unique: {
+      dnd_5th_001: {
+        class: "wizard",
+        race: "gnome",
+        hit_points: "roll d10, add Constitution modifier",
+        armor_class: "armor base AC, add Dexterity modifier",
+        alignment: "chaotic-good",
+        ability_modifiers: "8-9 = -1; 10-11 = 0; 12-13 = +1; 14-15 = +2; 16-17 = +3, 18-19 = +4",
+        output_skill_preferences: ["arcana", "religion", "nature"]
+      },
+      exalted_2nd_001: {
+        class: "twilight",
+        race: "solar exalted",
+        anima: "deep swirling void filled with ears of corn",
+        backgrounds: "backing: 3, influence: 3, resources: 1",
+        equipment: "just robes and a staff that looks like a broken hoe. no shoes.",
+        virtues: "valor: 1, conviction: 4, temperence: 1, compassion: 3",
+        virtue_flaw: "conviction - burn all plants, crops, and living things to make way for a world of corn",
+        willpower: "7",
+        hit_points: "-0: 1, -1: 2, -2: 2, -4: 1, I: 1",
+        soak: "bashing: , lethal: , aggravated: ",
+        defense_values: "dodge: , parry: , mental: ",
+        essence: "level 2, personal: motes, peripheral: motes",
+        bonus_points: "18",
+        output_stat_preferences: [],
+        output_skill_preferences: [],
+        output_power_preferences: []
+      }
+    }  
+)
+wizard_search_list = SearchList.create(archetype_id: corn_god_worshipping_wizard.id, search_playstyle_pref: "physical, mental", search_action_pref: "spells, knowledge", search_power_pref: "any")
+
+
+the_mime = Archetype.create(
+    name: "the mime",   
+    stat_priorities: {
+    chosen_by_player: [
+      "charisma",
+      "intelligence",
+      "dexterity",
+      "strength",
+      "constitution",
+      "wisdom"
+    ]
+  },
+  skill_priorities: {
+    chosen_by_player: [
+      "performance",
+      "socialize",
+      "athletics_dodge",
+      "deception",
+      "awareness",
+      "larceny_crime",
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil
+    ]
+  },
+  power_priorities: {
+    chosen_by_player: {
+      tags: ["acrobatics", "socialize", "deception", "performance"]
+    },
+    spell_priorities: {}
+  },
+  system_unique: {
+    dnd_5th_001: {
+      class: "bard",
+      race: "tiefling",
+      hit_points: "roll d10, add Constitution modifier",
+      armor_class: "armor base AC, add Dexterity modifier",
+      alignment: "lawful-evil",
+      ability_modifiers: "8-9 = -1; 10-11 = 0; 12-13 = +1; 14-15 = +2; 16-17 = +3, 18-19 = +4",
+      output_skill_preferences: ["sleight_of_hand", "insight", "perception"]
+    },
+    exalted_2nd_001: {
+      class: "eclipse",
+      race: "solar exalted",
+      anima: "hands engulfed in golden fire signing inappropriate words in ASL",
+      backgrounds: "resources: 2, manse: 3 (Psychic Walkie-Talkie Orb), contacts: 2",
+      equipment: "striped mime suit, mickey mouse gloves, flawless motley makeup, and a magic orb that allows speechless & telepathic communication up to 200 yards away",
+      virtues: "valor: 2, conviction: 1, temperence: 4, compassion: 2",
+      virtue_flaw: "temperence - will continue giving up actions until a completely motionless ascetic",
+      willpower: "6",
+      hit_points: "-0: 1, -1: 2, -2: 2, -4: 1, I: 1",
+      soak: "bashing: , lethal: , aggravated: ",
+      defense_values: "dodge: , parry: , mental: ",
+      essence: "level 2, personal: motes, peripheral: motes",
+      bonus_points: "18",
+      output_stat_preferences: [],
+      output_skill_preferences: [],
+      output_power_preferences: []
+    }
+  }
+)
+the_mime_search_list = SearchList.create(archetype_id: the_mime.id, search_playstyle_pref: "social", search_action_pref: "leader, perform, manipulate, seduce", search_power_pref: "any")
+
+
 
 
 
@@ -165,138 +436,138 @@ end
 
 
 
-def generate_snippet_pool(output_character)
-    # refactor to only grab ids based on SystemTag joins
-    all_tags = Tag.all
-    tag_dictionary = generate_tag_dictionary(all_tags)
-    search_pool = generate_search_pool(output_character)
-    snippet_pool = fetch_snippet_pool(tag_dictionary, search_pool)
-end
+# def generate_snippet_pool(output_character)
+#     # refactor to only grab ids based on SystemTag joins
+#     all_tags = Tag.all
+#     tag_dictionary = generate_tag_dictionary(all_tags)
+#     search_pool = generate_search_pool(output_character)
+#     snippet_pool = fetch_snippet_pool(tag_dictionary, search_pool)
+# end
 
 
-# THIS WILL BE A VERY SLOW METHOD! DO UNIT TESTING HERE!
-# (try to design frontend to run this during, like, card animations or something to not slow down app...)
-def generate_tag_dictionary(all_tags)
-    # byebug
-    tag_dictionary = {}
-    all_tags.each do |tag|
-        first_letter = tag.text.slice(0, 1)
-        if !tag_dictionary.has_key?(first_letter)
-            tag_dictionary[first_letter] = []
-        end
-        tag_dictionary[first_letter] << tag
-    end
-    # byebug
-    tag_dictionary
-end
+# # THIS WILL BE A VERY SLOW METHOD! DO UNIT TESTING HERE!
+# # (try to design frontend to run this during, like, card animations or something to not slow down app...)
+# def generate_tag_dictionary(all_tags)
+#     # byebug
+#     tag_dictionary = {}
+#     all_tags.each do |tag|
+#         first_letter = tag.text.slice(0, 1)
+#         if !tag_dictionary.has_key?(first_letter)
+#             tag_dictionary[first_letter] = []
+#         end
+#         tag_dictionary[first_letter] << tag
+#     end
+#     # byebug
+#     tag_dictionary
+# end
 
 
-def generate_search_pool(output_character)
-    # SEE IF YOU CAN ALSO USE THE  playstyle_preference + form text  TO ALSO ADD TO POOL!
-    #
-    # refactor to lookup GameSystem with output_character[:game_system_id], and grab game_system[:unique_snippet_sources]
-    unique_system_sources = $game_system_unique_snippet_sources || []
-    string_pool = ""
+# def generate_search_pool(output_character)
+#     # SEE IF YOU CAN ALSO USE THE  playstyle_preference + form text  TO ALSO ADD TO POOL!
+#     #
+#     # refactor to lookup GameSystem with output_character[:game_system_id], and grab game_system[:unique_snippet_sources]
+#     unique_system_sources = $game_system_unique_snippet_sources || []
+#     string_pool = ""
 
-    output_character.each do |key, value|
-        if key == :class
-            string_pool += " #{output_character[:class]}"
+#     output_character.each do |key, value|
+#         if key == :class
+#             string_pool += " #{output_character[:class]}"
 
-        elsif key == :race
-            string_pool += " #{output_character[:race]}"
+#         elsif key == :race
+#             string_pool += " #{output_character[:race]}"
 
-        elsif key == :archetype_name
-            string_pool += " #{output_character[:archetype_name]}"
+#         elsif key == :archetype_name
+#             string_pool += " #{output_character[:archetype_name]}"
 
-        elsif key == :skills
-            output_character[:skills][:list].each do |skill_hash|
-                if skill_hash[:name]
-                    string_pool += " #{skill_hash[:name]}"
-                end
-            end
+#         elsif key == :skills
+#             output_character[:skills][:list].each do |skill_hash|
+#                 if skill_hash[:name]
+#                     string_pool += " #{skill_hash[:name]}"
+#                 end
+#             end
 
-        # take :name and 1st sentence ONLY of :description
-        elsif key == :powers
-            output_character[:powers][:list].each do |power_hash|
-                if power_hash[:name]
-                    sentence = power_hash[:description].split(". ")[0]
-                    string_pool += " #{power_hash[:name]} #{sentence}"
-                end
-            end
+#         # take :name and 1st sentence ONLY of :description
+#         elsif key == :powers
+#             output_character[:powers][:list].each do |power_hash|
+#                 if power_hash[:name]
+#                     sentence = power_hash[:description].split(". ")[0]
+#                     string_pool += " #{power_hash[:name]} #{sentence}"
+#                 end
+#             end
 
-        elsif unique_system_sources.length > 0
-            unique_system_sources.each do |string|
-                key = string.to_sym
-                string_pool += " #{output_character[:key]}"
-            end
-        end
+#         elsif unique_system_sources.length > 0
+#             unique_system_sources.each do |string|
+#                 key = string.to_sym
+#                 string_pool += " #{output_character[:key]}"
+#             end
+#         end
         
-    end
+#     end
 
-    search_pool = generate_tags(string_pool)
+#     search_pool = generate_tags(string_pool)
     
-end
+# end
 
 
-def fetch_snippet_pool(tag_dictionary, search_pool)
-    # compare tag_dictionary verses search_pool to narrow down character-specific tags
-            # snippet_list = tag_dictionary.map do |tag|
-            #     tag.snippets.where(system_specific: nil)
-            # end
+# def fetch_snippet_pool(tag_dictionary, search_pool)
+#     # compare tag_dictionary verses search_pool to narrow down character-specific tags
+#             # snippet_list = tag_dictionary.map do |tag|
+#             #     tag.snippets.where(system_specific: nil)
+#             # end
 
             
-    # not sure why multiples of snippets are ending up in snippet_pool - investigate!!
-    snippet_pool = Set[] 
-    # snippet_pool = []
+#     # not sure why multiples of snippets are ending up in snippet_pool - investigate!!
+#     snippet_pool = Set[] 
+#     # snippet_pool = []
 
-    search_pool.each do |search_string|
-        key = search_string.slice(0, 1)
-        if tag_dictionary.has_key?(key)
-            tag_dictionary[key].each do |tag_hash|
-                if tag_hash[:text] == search_string
-                    tag_hash.snippets.each do |snippet|
-                        snippet_pool << snippet
-                    end
-                end
-            end
-        end 
-    end
+#     search_pool.each do |search_string|
+#         key = search_string.slice(0, 1)
+#         if tag_dictionary.has_key?(key)
+#             tag_dictionary[key].each do |tag_hash|
+#                 if tag_hash[:text] == search_string
+#                     tag_hash.snippets.each do |snippet|
+#                         snippet_pool << snippet
+#                     end
+#                 end
+#             end
+#         end 
+#     end
     
-    sort_snippets_story_location(snippet_pool)
-end
+#     sort_snippets_story_location(snippet_pool)
+# end
 
 
-def sort_snippets_story_location(snippet_pool)
-    sorted_snippet_pool = {
-        "very_beginning": [],
-        "near_beginning": [],
-        "middle": [],
-        "near_end": [],
-        "very_end": []
-    }
-    snippet_pool.each do |snippet_hash|
-        story_location = snippet_hash[:story_location].to_sym
-        sorted_snippet_pool[story_location] << snippet_hash[:text]
-    end    
-    generate_character_backstory(sorted_snippet_pool)
-end
+# def sort_snippets_story_location(snippet_pool)
+#     sorted_snippet_pool = {
+#         "very_beginning": [],
+#         "near_beginning": [],
+#         "middle": [],
+#         "near_end": [],
+#         "very_end": []
+#     }
+#     snippet_pool.each do |snippet_hash|
+#         story_location = snippet_hash[:story_location].to_sym
+#         sorted_snippet_pool[story_location] << snippet_hash[:text]
+#     end    
+#     generate_character_backstory(sorted_snippet_pool)
+# end
 
 
-def generate_character_backstory(sorted_snippet_pool)
-    character_backstory = {
-        "very_beginning": "",
-        "near_beginning": "",
-        "middle": "",
-        "near_end": "",
-        "very_end": "" 
-    }
-    sorted_snippet_pool.each do |story_location, snippet_array|
-        random_index = (rand * snippet_array.length).floor
-        character_backstory[story_location] = snippet_array[random_index]
-    end
-    character_backstory
-    byebug
-end
+# def generate_character_backstory(sorted_snippet_pool)
+#     character_backstory = {
+#         "very_beginning": "",
+#         "near_beginning": "",
+#         "middle": "",
+#         "near_end": "",
+#         "very_end": "" 
+#     }
+#     sorted_snippet_pool.each do |story_location, snippet_array|
+#         random_index = (rand * snippet_array.length).floor
+#         character_backstory[story_location] = snippet_array[random_index]
+#     end
+#     character_backstory
+#     byebug
+# end
 
 
 parse_snippet_lists(big_sword_knight)
@@ -304,5 +575,5 @@ parse_snippet_lists(smooth_talking_ninja)
 parse_snippet_lists(corn_god_worshipping_wizard)
 parse_snippet_lists(the_mime)
 
-generate_snippet_pool(output_character1)
-generate_snippet_pool(output_character2)
+# generate_snippet_pool(output_character1)
+# generate_snippet_pool(output_character2)

@@ -18,6 +18,8 @@ Rails.application.routes.draw do
         resources :search_lists
       # end
 
+      resources :game_systems
+
       
       resources :snippets
       resources :snippet_tags

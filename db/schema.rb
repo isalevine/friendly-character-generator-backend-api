@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_20_015221) do
+ActiveRecord::Schema.define(version: 2019_05_20_234303) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,10 @@ ActiveRecord::Schema.define(version: 2019_05_20_015221) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "stat_priorities", default: "{}", null: false
+    t.jsonb "skill_priorities", default: "{}", null: false
+    t.jsonb "power_priorities", default: "{}", null: false
+    t.jsonb "system_unique", default: "{}", null: false
   end
 
   create_table "base_characters", force: :cascade do |t|
@@ -27,6 +31,27 @@ ActiveRecord::Schema.define(version: 2019_05_20_015221) do
     t.integer "search_preference_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "game_systems", force: :cascade do |t|
+    t.string "full_title"
+    t.string "edition"
+    t.string "alias"
+    t.string "unique_name"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.jsonb "system_classes", default: "{}", null: false
+    t.jsonb "system_races", default: "{}", null: false
+    t.jsonb "system_stats", default: "{}", null: false
+    t.jsonb "system_skills", default: "{}", null: false
+    t.jsonb "system_powers", default: "{}", null: false
+    t.jsonb "system_spells", default: "{}", null: false
+    t.text "system_unique", default: [], array: true
+    t.text "unique_snippet_sources", default: [], array: true
+    t.jsonb "stat_conversions", default: "{}", null: false
+    t.jsonb "skill_conversions", default: "{}", null: false
+    t.jsonb "class_conversions", default: "{}", null: false
   end
 
   create_table "search_lists", force: :cascade do |t|
