@@ -4,6 +4,19 @@ class ApplicationController < ActionController::API
 
 
 
+    # GameSystem / output_character logic
+    # ==============================================================
+    
+
+
+
+
+
+
+
+
+
+
     # Converter logic
     # ===============================================================
     class Converter
@@ -419,7 +432,7 @@ class ApplicationController < ActionController::API
     end
 
 
-    
+
 
 
 
