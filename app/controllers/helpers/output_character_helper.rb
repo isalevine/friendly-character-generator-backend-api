@@ -1,6 +1,8 @@
-
 require_relative '../../test-logic-files/test-dnd-game-system.rb'
 require 'byebug'
+
+
+# COPIED CODE INTO applicationcontroller !!!
 
 def generate_output_character(game_system)
 
@@ -72,7 +74,6 @@ def generate_output_character(game_system)
         end
     end
 
-    byebug
     output_character
 end
 
