@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  full_title: MyString
+  edition: MyString
+  alias: MyString
+  unique_name: MyString
+  description: MyString
+
+two:
+  full_title: MyString
+  edition: MyString
+  alias: MyString
+  unique_name: MyString
+  description: MyString

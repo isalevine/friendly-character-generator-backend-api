@@ -1,7 +1,7 @@
 class ArchetypesController < ApplicationController
 
   def index
-    @archetypes = Archetype.all
+    @archetypes = Archetype.all.to_json
     render json: @archetypes
   end
 

@@ -18,10 +18,16 @@ Rails.application.routes.draw do
         resources :search_lists
       # end
 
+      resources :game_systems
+
       
       resources :snippets
       resources :snippet_tags
       resources :tags
+
+
+      post '/converter/generate_output_character', to: 'converter#generate_output_character'
+      post '/converter/archetype_system_converter', to: 'converter#archetype_system_converter'
 
 
     # end
