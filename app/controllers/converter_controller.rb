@@ -468,6 +468,7 @@ class ConverterController < ApplicationController
     end
   
   
+    # IMPORTANT REFACTOR: randomize ORDER that tags will be searched in??
     def generate_search_pool(output_character)
         # SEE IF YOU CAN ALSO USE THE  playstyle_preference + form text  TO ALSO ADD TO POOL!
         #
