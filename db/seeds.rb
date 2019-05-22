@@ -62,7 +62,7 @@ big_sword_knight = Archetype.create(
       spell_priorities: {}
     },
 
-    snippet_search_terms: ["knight", "fight", "attack", "slay", "defend", "mercenary", "military", "journey",],
+    snippet_search_terms: ["fight", "attack", "slay", "defend", "mercenary", "military", "journey",],
   
     system_unique: {
       dnd_5th_001: {
@@ -135,7 +135,7 @@ smooth_talking_ninja = Archetype.create(
     spell_priorities: {}
   },
 
-  snippet_search_terms: ["sneaky", "night", "dark", "shadow", "hide", "talk", "charm", "polite", "society", "throwing", "knife", "treasure", "journey", "howl", "bounty", "hunting"],
+  snippet_search_terms: ["sneaky", "night", "dark", "shadow", "hide", "talk", "charm", "polite", "society", "throwing", "knife", "treasure", "journey",],
 
   system_unique: {
     dnd_5th_001: {
@@ -208,7 +208,7 @@ corn_god_worshipping_wizard = Archetype.create(
       spell_priorities: {}
     },
 
-    snippet_search_terms: ["power", "cast", "cult", "worship", "idols", "studying", "spells", "visions", "dark", "journey", "oath", "water", "discovered"],
+    snippet_search_terms: ["power", "cast", "cult", "worship", "idols", "studying", "spells", "visions", "dark", "journey", "water",],
   
     system_unique: {
       dnd_5th_001: {
@@ -278,7 +278,7 @@ the_mime = Archetype.create(
     spell_priorities: {}
   },
 
-  snippet_search_terms: ["hands", "gestures", "silence", "performance", "traveling", "dark", "charm", "social", "jester", "killed", "journey", "coin",],
+  snippet_search_terms: ["hands", "gestures", "silence", "performance", "traveling", "dark", "charm", "social", "jester", "killed", "journey", "lewd",],
 
   system_unique: {
     dnd_5th_001: {
@@ -658,7 +658,7 @@ misc_snippets = {
       "For a hulking monster, they actually look surprisingly un-terrifying. Don't try to terrorize people, it's a bad look.",
       "Their greatest treasure is a small gold coin with a lewd picture etched into it--DO NOT LOSE IT!",
       "They've done a good job of keeping down their urge to burn things...but it's only a matter of time...",
-      "They're easily startled by cats.",
+      "They are easily startled by cats.",
   ]
 }
 
@@ -697,8 +697,10 @@ def generate_tags(snippet_text, snippet_id = nil, create_db_tags = false)
     # filter list is being CUT DOWN to increase randomness of matches
     # => different behavior will be needed once many snippets are seeded
     # => CONSIDER: what is the ideal % of total Snippets to show up in pool?
-    # => (currently, 9 / 24 for 'corn_god_worshipping_wizard')
-    filter_words = ["a", "an", "the", "and"]
+    filter_words = ["a", "an", "the", "and",
+      "is", "of", "to", "be", "in", "they", "their", "them", "or", "if", "this", "like",
+      "had", "but", "what", "with", "at",
+    ]
 
     snippet_text.downcase!
     snippet_text.gsub!(regex1, " ")
@@ -721,10 +723,15 @@ end
 
 def create_tags(tag_array, snippet_id)
     tag_array.each do |tag|
+        tag_id = nil
         if TAG_LIST.add?(tag)
             new_tag = Tag.create(text: tag)
-            create_snippet_tag_join(snippet_id, new_tag.id)
+            tag_id = new_tag.id
+        else
+            found_tag = Tag.find_by(text: tag)    
+            tag_id = found_tag.id
         end
+        create_snippet_tag_join(snippet_id, tag_id)
     end
 end
 

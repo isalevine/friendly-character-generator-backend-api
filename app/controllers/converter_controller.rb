@@ -519,13 +519,12 @@ class ConverterController < ApplicationController
                 end
   
             # take :name and 1st sentence ONLY of :description
-            # TEMPORARILY: ENABLE ALL OF :description TO INCREASE SNIPPET_SEARCH_POOL!!
             elsif key == "powers"
                 output_character[:powers][:list].each do |power_hash|
                     if power_hash[:name]
-                        # sentence = power_hash[:description].split(". ")[0]
-                        # string_pool += " #{power_hash[:name]} #{sentence}"
-                        string_pool += " #{power_hash[:name]} #{power_hash[:description]}"
+                        sentence = power_hash[:description].split(". ")[0]
+                        string_pool += " #{power_hash[:name]} #{sentence}"
+                        # string_pool += " #{power_hash[:name]} #{power_hash[:description]}"
                     end
                 end
 
