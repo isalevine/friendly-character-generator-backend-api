@@ -227,6 +227,8 @@ class ConverterController < ApplicationController
             #     skill_choice_order = ["class_race"]
             end
 
+            # byebug
+
             # check if skills are allocated by spending a limited number of points
             if skills[:points_num]
                 points_to_spend = skills[:points_num]
@@ -258,7 +260,19 @@ class ConverterController < ApplicationController
                                 if conversion_hash[:base][:skill1] == archetype_skill
                                     output_skill1 = conversion_hash[:output][:skill1]
                                     output_skill2 = conversion_hash[:output][:skill2]
-                                    if archetype[:system_unique][system_key][:output_skill_preferences].include?(output_skill1)
+
+                                    # # check if output_skill1 maximum has been reached--use to defer to output_skill2 
+                                    # # (SEE + REFACTOR WITH CODE BELOW IN chooser == "class_race")
+                                    # skill1_exceeded = false;
+                                    # output_character[:skills][:list].each do |skill_hash|
+                                    #     if skill_hash[:name] == output_skill1
+                                    #         if skill_hash[:points] >= skills[:maximum_score]
+                                    #             skill1_exceeded = true;
+                                    #         end
+                                    #     end
+                                    # end
+
+                                    if archetype[:system_unique][system_key][:output_skill_preferences].include?(output_skill1)  # && !skill1_exceeded
                                         priority_skill = output_skill1
                                     elsif archetype[:system_unique][system_key][:output_skill_preferences].include?(output_skill2)
                                         priority_skill = output_skill2
@@ -267,6 +281,8 @@ class ConverterController < ApplicationController
                                     end
                                 end
                             end
+
+                            # byebug
 
                             # format skill output and shovel into output_character's skill list
                             skill_hash = {}
@@ -287,7 +303,7 @@ class ConverterController < ApplicationController
                             class_race_array.each do |class_race_hash|
                                 if !class_race_hash[:name]
                                     break
-                                elsif class_race_hash[:name] == output_character[:class] || class_race_hash[:name] == output_character[:race]
+                                elsif class_race_hash[:name] == output_character[:class][:class] || class_race_hash[:name] == output_character[:race][:race]
                                     class_race_hash[:num_chosen].times do                                       
                                         priority_skill1 = nil
                                         priority_skill2 = nil
@@ -311,7 +327,7 @@ class ConverterController < ApplicationController
                                             skill2_points_maxed = false
                                             # byebug
                                             
-                                            # check if skill max scores have been reached
+                                            # check if skill max scores have been reached -- REFACTOR WITH CODE ABOVE IN chooser == "player" INTO ONE FUNCTION!!
                                             if output_character[:skills][:list].length > 0
                                                 # byebug
                                                 output_character[:skills][:list].each do |character_skill_hash|
