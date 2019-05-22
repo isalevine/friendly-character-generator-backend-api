@@ -21,6 +21,9 @@ GameSystem.all.destroy_all
 # # ??? DEPRECATE for only PLAYSTYLE and ACTIONS as search terms ???  stats: strength, stamina, dexterity, wisdom, intelligence, charisma
 # # powers: any, damage, heal, stealth, mind, control
 
+# CONSIDER snippet_search_terms => have users enter any amount of text (copy-pasted class description, self-written story, list of terms, etc.)
+# and have them be added to that array...
+
 big_sword_knight = Archetype.create(
     name: "big sword knight",
 
@@ -54,10 +57,12 @@ big_sword_knight = Archetype.create(
   
     power_priorities: {
       chosen_by_player: {
-        tags: ["sword", "combat", "extra attacks", "accuracy", "strength", "dodge", "reduce damage", "intimidate"]
+        tags: ["sword", "combat", "extra attacks", "accuracy", "strength", "dodge", "reduce damage", "intimidate", "mountain", "cold", "unbreakable", "foes",]
       },
       spell_priorities: {}
     },
+
+    snippet_search_terms: ["knight", "fight", "attack", "slay", "defend", "mercenary", "military", "journey",],
   
     system_unique: {
       dnd_5th_001: {
@@ -130,6 +135,8 @@ smooth_talking_ninja = Archetype.create(
     spell_priorities: {}
   },
 
+  snippet_search_terms: ["sneaky", "night", "dark", "shadow", "hide", "talk", "charm", "polite", "society", "throwing", "knife", "treasure", "journey", "howl", "bounty", "hunting"],
+
   system_unique: {
     dnd_5th_001: {
       class: "rogue",
@@ -200,6 +207,8 @@ corn_god_worshipping_wizard = Archetype.create(
       },
       spell_priorities: {}
     },
+
+    snippet_search_terms: ["power", "cast", "cult", "worship", "idols", "studying", "spells", "visions", "dark", "journey", "oath", "water", "discovered"],
   
     system_unique: {
       dnd_5th_001: {
@@ -268,6 +277,9 @@ the_mime = Archetype.create(
     },
     spell_priorities: {}
   },
+
+  snippet_search_terms: ["hands", "gestures", "silence", "performance", "traveling", "dark", "charm", "social", "jester", "killed", "journey", "coin",],
+
   system_unique: {
     dnd_5th_001: {
       class: "bard",
@@ -590,7 +602,7 @@ smooth_talking_ninja = {
     near_beginning: ["They struck out in order to travel the world, and along the way, found themself in dark corners of the world--like forests at night, stowing away in the hull of a stinky ship, and probably being thrown into a castle dungeon at least once or twice."],
     middle: ["They mastered the dexterity to be part of the night itself--first by donning a fine black suit and being a socialite, then by adding a Batman-like cowl to said suit and skulking around, and finally doing both at the same time. And now it's all the time.", "Instead of throwing weapons, they threw words--mellifluous words like falling flower blossoms, and vitriolic words that cut deeper than any blade or shuriken. But sweet or harsh, their timing with witty one-liners is impeccable."],
     near_end: ["Now, they seek to use their talents for stealth and charisma infiltrate the highest echelons on polite, proper, and royal society--either by talking their way in, or sneaking. Either way, they can make a quick escape in the event of any embarrassing social foibles."],
-    very_end: ["Seriously though, they love that Batman cowl. It makes them feel like a real ninja. No idea if they have a grappling hook, or any other useful gear, but they for sure have that cowl. (It doesn't really help anything though--in fact, the eyeholes are a little small, so it could actually hinder their dexterity!"]
+    very_end: ["Seriously though, they love that Batman cowl. It makes them feel like a real ninja. No idea if they have a grappling hook, or any other useful gear, but they for sure have that cowl."]
 }
 
 
@@ -609,6 +621,45 @@ the_mime = {
     middle: ["At one point, they became a court jester for a small kingdom's ruler, and perfected the charisma imparted by motley makeup and flamboyant style. They stuck with black-and-white stripes for clothes, and colorful diamonds for face makeup.", "The one time someone heard them speak in their natural voice, they immediately killed them in an alley--or so the rumor goes."],
     near_end: ["What drives them to wander about, giving their performance, waving their hands, weaving their spells? The people. But they never seem to make or keep any friends or lovers along the way...seems like a lonely existence. And yet, they continue on for that simple reason: the people."],
     very_end: ["(Yes, the hushed words on the street about them murdering someone are true.)"]
+}
+
+
+misc_snippets = {
+  very_beginning: [
+      "Born in an underground cult (seriously, like, mole-people underground), they were worshipping the various idols of the cult since they had motor skills.",
+      "The winter winds of the north could not stop a mighty mammoth-herder from coming south, and that is how they came to be in this land--born in a pile of mammoth-fur, with the constitution of a mammoth too.",
+      "Legends tell of undersea worlds encapsulated in giant magical bubbles--the legends don't mention anyone ever coming to the surface as proof, but they still claim to come from an underwater kingdom anyway.",
+      "Are there other dimensions? Who knows--but they're certainly not from this one, and whoever sent them here has the wisdom to not speak up.",
+      "The dense jungles do not allow many to enter, but those who do often leave with a gift--not for themselves, but for their children, who flourish with the jungle's power. They were born to such a destiny.",
+  ],
+  near_beginning: [
+      "Eventually, they were forced to come to the surface as a teenager. Since then, they have struggled to navigate this new sun-drenched world, but they've long since adapted to life here.",
+      "Empowered with a natural resistance to the cold, they honed their strength climbing innumerable mountains, and surviving amongst the treacherous flora and predatory fauna.",
+      "Water carries magic in this world, and their supposed watery origin seems to be tied to their own magical powers.",
+      "Their power has come to them in powerful and terrifying visions, where beings from other worlds (supposedly) impart skills directly into their eyeballs. The eyeballs do seem to be intact, though.",
+      "Their gift of dexterity manifested in a dense city, reminiscent of the gift's jungle origin, and saved them as they were forced to flee from a posse of un-bribe-able city guards.",  
+  ],
+  middle: [
+      "At one point, they tried to channel their experiences into painting--using dark colors, painting night scenes, and focusing deeply on shadow. Their paintings were not popular, but did help focus their power in a dark direction.",
+      "Their most dangerous test came at the peak of their journey, alone in a land riddled with vampires--there, they discovered their love of fighting off fifty foes at once, and they indeed possess the strength and constitution to do so.",
+      "Traveling town to town, they would give performance after performance--but with no home to call their own, they found themself perpetually an outcast, and eventually accepted being a reject from society along with the wisdom that brings.",
+      "They were once part of a dragon-slaying party, but decided to steal a piece of treasure for themself and run for it once the dragon started fighting back. They don't regret it.",
+      "They have long served as a mercenary for mad sorcerers and warlocks, watching over their twisted magical experiments and fighting off any unwelcome demonic guests.",
+  ],
+  near_end: [
+      "Now, they seek adventure that will take them to the utter heart of darkness--a demon lair would be nice, or some sort of portal to Hell. They're not picky.",
+      "Most recently, a trusted fortuneteller has informed them to seek adventure with a group of other similarly-destined folk, but they await their opportunity to backstab their friends and claim all riches and glory for themself.",
+      "They live a life of almost non-stop stealth, but have recently discovered the power of teaming up with others to overcome strong foes--especially when they're the only stealthy one.",
+      "Bounty-hunting is what eventually brought them here, but a last-minute plea has caused them to reconsider their bounty-hunting ways, and seek out a greater purpose in life.",
+      "Ultimately, they seek the power to breathe underwater, and finally have the constitution to reach that magical underwater kingdom on their own.",
+  ],
+  very_end: [
+      "Occasionally, they go howl at the full moon just to see if they can transform into a werewolf...but they can't. They just can't. Sorry.",
+      "For a hulking monster, they actually look surprisingly un-terrifying. Don't try to terrorize people, it's a bad look.",
+      "Their greatest treasure is a small gold coin with a lewd picture etched into it--DO NOT LOSE IT!",
+      "They've done a good job of keeping down their urge to burn things...but it's only a matter of time...",
+      "They're easily startled by cats.",
+  ]
 }
 
 
@@ -824,6 +875,8 @@ parse_snippet_lists(big_sword_knight)
 parse_snippet_lists(smooth_talking_ninja)
 parse_snippet_lists(corn_god_worshipping_wizard)
 parse_snippet_lists(the_mime)
+
+parse_snippet_lists(misc_snippets)
 
 # generate_snippet_pool(output_character1)
 # generate_snippet_pool(output_character2)

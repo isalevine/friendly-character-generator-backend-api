@@ -431,6 +431,14 @@ class ConverterController < ApplicationController
             # do something
         end
 
+
+        # add SNIPPET_SEARCH_TERMS
+        # =============================================================
+        if archetype[:snippet_search_terms].length > 0
+            output_character[:snippet_search_terms] = archetype[:snippet_search_terms]
+        end
+
+
         # output_character is ready => will be returned as "convertedCharacter" in fetch on frontend
         # byebug
         
@@ -511,12 +519,19 @@ class ConverterController < ApplicationController
                 end
   
             # take :name and 1st sentence ONLY of :description
+            # TEMPORARILY: ENABLE ALL OF :description TO INCREASE SNIPPET_SEARCH_POOL!!
             elsif key == "powers"
                 output_character[:powers][:list].each do |power_hash|
                     if power_hash[:name]
-                        sentence = power_hash[:description].split(". ")[0]
-                        string_pool += " #{power_hash[:name]} #{sentence}"
+                        # sentence = power_hash[:description].split(". ")[0]
+                        # string_pool += " #{power_hash[:name]} #{sentence}"
+                        string_pool += " #{power_hash[:name]} #{power_hash[:description]}"
                     end
+                end
+
+            elsif key == "snippet_search_terms"
+                output_character[:snippet_search_terms].each do |string|
+                    string_pool += " #{string}"
                 end
   
             elsif unique_system_sources.length > 0
@@ -540,8 +555,8 @@ class ConverterController < ApplicationController
         # filter list is being CUT DOWN to increase randomness of matches
         # => different behavior will be needed once many snippets are seeded
         # => CONSIDER: what is the ideal % of total Snippets to show up in pool?
-        # => (currently, 9 / 24 for 'corn_god_worshipping_wizard')
-        filter_words = ["a", "an", "the", "and"]
+        # => => FILTER WORDS CURRENTLY DISABLED!!
+        filter_words = ["the"]
     
         snippet_text.downcase!
         snippet_text.gsub!(regex1, " ")

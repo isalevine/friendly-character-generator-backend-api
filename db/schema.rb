@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_20_234303) do
+ActiveRecord::Schema.define(version: 2019_05_22_214148) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2019_05_20_234303) do
     t.jsonb "skill_priorities", default: "{}", null: false
     t.jsonb "power_priorities", default: "{}", null: false
     t.jsonb "system_unique", default: "{}", null: false
+    t.text "snippet_search_terms", default: [], array: true
   end
 
   create_table "base_characters", force: :cascade do |t|
