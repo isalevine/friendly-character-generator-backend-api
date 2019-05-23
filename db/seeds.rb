@@ -380,7 +380,7 @@ dnd_game_system = GameSystem.create(
     system_skills: {
         skill_alias: "skill",
         has_skills: true,
-        chosen_by: "both",
+        chosen_by: "class_race",
         points_num: 2,
         points_player: {
         preset: {

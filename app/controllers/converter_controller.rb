@@ -223,8 +223,8 @@ class ConverterController < ApplicationController
                 end
             # elsif skills[:chosen_by] == "player"
             #     skill_choice_order = ["player"]
-            # elsif skills[:chosen_by] == "class_race"
-            #     skill_choice_order = ["class_race"]
+            elsif skills[:chosen_by] == "class_race"
+                skill_choice_order = ["class_race"]
             end
 
             # byebug
