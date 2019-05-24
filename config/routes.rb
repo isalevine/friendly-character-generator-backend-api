@@ -30,7 +30,7 @@ Rails.application.routes.draw do
       post '/converter/generate_output_character', to: 'converter#generate_output_character'
       post '/converter/archetype_system_converter', to: 'converter#archetype_system_converter'
 
-      resources :users, only: [:create]
+      post '/users', to: 'users#create'
       post '/login', to: 'auth#create'
 
 
