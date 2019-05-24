@@ -1,4 +1,9 @@
+
+# IS THIS MODEL UNNECESSARY NOW?? Consider removing...
+
+
 class BaseCharactersController < ApplicationController
+  skip_before_action :authorized
 
   def show
     find_base_character

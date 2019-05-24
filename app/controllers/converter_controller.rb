@@ -1,4 +1,5 @@
 class ConverterController < ApplicationController
+    skip_before_action :authorized
 
 
     # METHODS TO GENERATE A GAME_SYSTEM'S BLANK OUTPUT_CHARACTER

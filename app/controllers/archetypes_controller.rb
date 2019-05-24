@@ -1,4 +1,5 @@
 class ArchetypesController < ApplicationController
+  skip_before_action :authorized
 
   def index
     @archetypes = Archetype.all.to_json

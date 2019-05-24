@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   #   namespace :v1 do
 
 
+      # ARE BASE_CHARACTERS USED ANYMORE?? CONSIDER REMOVING...
       resources :base_characters # do
         resources :search_preferences, only: [:show, :create, :update, :destroy]
       # end
@@ -28,6 +29,9 @@ Rails.application.routes.draw do
 
       post '/converter/generate_output_character', to: 'converter#generate_output_character'
       post '/converter/archetype_system_converter', to: 'converter#archetype_system_converter'
+
+      resources :users, only: [:create]
+      post '/login', to: 'auth#create'
 
 
     # end
