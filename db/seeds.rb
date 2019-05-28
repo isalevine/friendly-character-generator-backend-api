@@ -405,7 +405,7 @@ dnd_game_system = GameSystem.create(
         minimum_score: 0,
         maximum_score: 1,
         skill_num: 18,
-        skill_list: ["acrobatics", "animal handling", "arcana", "athletics", "deception", "history", "insight", "intimidation", "investigation", "medicine", "nature", "perception", "performance", "persuasion", "religion", "sleight of hand", "stealth", "survival", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
+        skill_list: ["acrobatics", "animal_handling", "arcana", "athletics", "deception", "history", "insight", "intimidation", "investigation", "medicine", "nature", "perception", "performance", "persuasion", "religion", "sleight_of_hand", "stealth", "survival", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
     },
 
     system_powers: {
