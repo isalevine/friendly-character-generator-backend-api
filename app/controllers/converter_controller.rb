@@ -600,31 +600,35 @@ class ConverterController < ApplicationController
         sort_snippets_story_location(snippet_pool)
     end
   
-  
+    # experimenting with shortened backstories, based on user feedback
     def sort_snippets_story_location(snippet_pool)
         sorted_snippet_pool = {
             "very_beginning": [],
-            "near_beginning": [],
+            # "near_beginning": [],
             "middle": [],
             "near_end": [],
-            "very_end": []
+            # "very_end": []
         }
         # byebug
         snippet_pool.each do |snippet_hash|
             story_location = snippet_hash[:story_location].to_sym
-            sorted_snippet_pool[story_location] << snippet_hash[:text]
+            # changed to an if statement based on shortening backstory snippet locations
+            if sorted_snippet_pool[story_location]
+                sorted_snippet_pool[story_location] << snippet_hash[:text]
+            end
         end    
         compile_character_backstory(sorted_snippet_pool)
     end
   
   
+    # experimenting with shortened backstories, based on user feedback
     def compile_character_backstory(sorted_snippet_pool)
         character_backstory = {
             "very_beginning": "",
-            "near_beginning": "",
+            # "near_beginning": "",
             "middle": "",
             "near_end": "",
-            "very_end": "" 
+            # "very_end": "" 
         }
         # byebug
         sorted_snippet_pool.each do |story_location, snippet_array|

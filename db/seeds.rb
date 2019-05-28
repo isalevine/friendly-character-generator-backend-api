@@ -57,12 +57,12 @@ big_sword_knight = Archetype.create(
   
     power_priorities: {
       chosen_by_player: {
-        tags: ["sword", "combat", "extra attacks", "accuracy", "strength", "dodge", "reduce damage", "intimidate", "mountain", "cold", "unbreakable", "foes",]
+        tags: ["sword", "combat", "extra attacks", "accuracy", "strength", "dodge", "reduce damage", "intimidate",]
       },
       spell_priorities: {}
     },
 
-    snippet_search_terms: ["fight", "attack", "slay", "defend", "mercenary", "military", "journey",],
+    snippet_search_terms: ["fight", "attack", "slay", "defend", "mercenary", "military", "journey", "mountain", "cold", "unbreakable", "foes",],
   
     system_unique: {
       dnd_5th_001: {
