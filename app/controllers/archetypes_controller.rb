@@ -54,7 +54,9 @@ class ArchetypesController < ApplicationController
     end
 
     power_keys = archetype_form_params[:powers].keys 
-    new_archetype_params[:power_priorities][:chosen_by_player] = power_keys.map do |key|
+    new_archetype_params[:power_priorities][:chosen_by_player] = {} 
+    # make sure fixed mapping is working correctly - and DON'T FORGET ABOUT SPELL PRIORITIES!!
+    new_archetype_params[:power_priorities][:chosen_by_player][:tags] = power_keys.map do |key|
       archetype_form_params[:powers][key]
     end
 
