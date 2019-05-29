@@ -429,7 +429,11 @@ class ConverterController < ApplicationController
         # check SYSTEM_UNIQUE
         # =============================================================
         if game_system[:system_unique][0]
-            # do something
+            output_character[:system_unique] = {}
+            output_character[:system_unique][system_key] = {}
+            archetype[:system_unique][system_key].each do |key, value|
+                output_character[:system_unique][system_key][key] = value
+            end
         end
 
 
@@ -440,10 +444,15 @@ class ConverterController < ApplicationController
         end
 
 
+        # add IMG_URL FOR CHARACTER PORTRAIT
+        # =============================================================
+        if archetype[:img_url]
+            output_character[:img_url] = archetype[:img_url]
+        end
+
+
         # output_character is ready => will be returned as "convertedCharacter" in fetch on frontend
         # byebug
-        
-        # render json: output_character
         
         backstory = generate_snippet_pool(output_character)
         output_character[:backstory] = backstory

@@ -42,6 +42,7 @@ class ArchetypesController < ApplicationController
 
 
     new_archetype_params[:name] = archetype_form_params[:general][:name]
+    new_archetype_params[:img_url] = archetype_form_params[:general][:img_url]
 
     stat_keys = archetype_form_params[:stats].keys 
     new_archetype_params[:stat_priorities][:chosen_by_player] = stat_keys.map do |key|

@@ -26,6 +26,7 @@ GameSystem.all.destroy_all
 
 big_sword_knight = Archetype.create(
     name: "big sword knight",
+    img_url: "http://pre09.deviantart.net/0a83/th/pre/f/2016/125/5/c/yhorm_the_giant_by_yare_yare_dong-da1g9ju.png",
 
     stat_priorities: {
       chosen_by_player: [
@@ -98,7 +99,8 @@ big_sword_knight_search_list = SearchList.create(archetype_id: big_sword_knight.
 
 
 smooth_talking_ninja = Archetype.create(
-    name: "smooth-talking ninja",
+  name: "smooth-talking ninja",
+  img_url: "https://cdn.imgbin.com/13/7/1/imgbin-tuxedo-mask-sailor-moon-tuxedo-4EHfHP0XqxerFq4eHTrrjL55P.jpg",
 
   stat_priorities: {
     chosen_by_player: [
@@ -172,6 +174,7 @@ ninja_search_list = SearchList.create(archetype_id: smooth_talking_ninja.id, sea
 
 corn_god_worshipping_wizard = Archetype.create(
     name: "corn-god-worshipping wizard",
+    img_url: "https://cdn.drawception.com/images/panels/2012/4-2/WQrqFWaCwO-12.png",
 
     stat_priorities: {
       chosen_by_player: [
@@ -244,16 +247,18 @@ wizard_search_list = SearchList.create(archetype_id: corn_god_worshipping_wizard
 
 
 the_mime = Archetype.create(
-    name: "the mime",   
-    stat_priorities: {
-    chosen_by_player: [
-      "charisma",
-      "intelligence",
-      "dexterity",
-      "strength",
-      "constitution",
-      "wisdom"
-    ]
+  name: "the mime",   
+  img_url: "https://data.whicdn.com/images/130762762/large.jpg",
+
+  stat_priorities: {
+  chosen_by_player: [
+    "charisma",
+    "intelligence",
+    "dexterity",
+    "strength",
+    "constitution",
+    "wisdom"
+  ]
   },
   skill_priorities: {
     chosen_by_player: [
