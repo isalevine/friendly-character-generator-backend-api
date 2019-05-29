@@ -32,6 +32,7 @@ Rails.application.routes.draw do
 
       post '/users', to: 'users#create'
       post '/login', to: 'auth#create'
+      post '/new_archetype', to: 'archetypes#new_archetype'
 
 
     # end
