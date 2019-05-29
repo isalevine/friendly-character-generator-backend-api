@@ -83,16 +83,16 @@ class ArchetypesController < ApplicationController
     end
 
 
-
+    # hard-coded catches for nil values are disabled--MUST FILTER OUT EMPTY/INCOMPLETE NEW ARCHETYPES FROM FORM BEFORE POSTING!!
     archetype_form_params[:searchList][:playstyle].each do |playstyle, boolean|
       if boolean
         new_search_list_params[:search_playstyle_pref] += "#{playstyle}, "
       end
     end
     # hard-coded solution if none are selected - VET THIS ON JAVASCRIPT/FORM SIDE BEFORE FETCHING??
-    if new_search_list_params[:search_playstyle_pref] == ""
-      new_search_list_params[:search_playstyle_pref] = "physical, mental, social"
-    end
+    # if new_search_list_params[:search_playstyle_pref] == ""
+    #   new_search_list_params[:search_playstyle_pref] = "physical, mental, social"
+    # end
 
     archetype_form_params[:searchList][:action].each do |action, boolean|
       if boolean
@@ -100,9 +100,9 @@ class ArchetypesController < ApplicationController
       end
     end
     # hard-coded solution if none are selected - VET THIS ON JAVASCRIPT/FORM SIDE BEFORE FETCHING??
-    if new_search_list_params[:search_action_pref] == ""
-      new_search_list_params[:search_action_pref] = "weapon, spells, leader"
-    end
+    # if new_search_list_params[:search_action_pref] == ""
+    #   new_search_list_params[:search_action_pref] = "weapon, spells, leader"
+    # end
 
     archetype_form_params[:searchList][:power].each do |power, boolean|
       if boolean
@@ -110,25 +110,25 @@ class ArchetypesController < ApplicationController
       end
     end
     # hard-coded solution if none are selected - VET THIS ON JAVASCRIPT/FORM SIDE BEFORE FETCHING??
-    if new_search_list_params[:search_power_pref] == ""
-      new_search_list_params[:search_power_pref] = "any"
-    end
+    # if new_search_list_params[:search_power_pref] == ""
+    #   new_search_list_params[:search_power_pref] = "any"
+    # end
 
 
 
 
-    byebug
+    # byebug
 
 
     @archetype = Archetype.new(new_archetype_params)
     @search_list = SearchList.new(new_search_list_params)
 
     if @archetype.save
-      byebug
+      # byebug
       @search_list[:archetype_id] = @archetype[:id]
 
       if @search_list.save
-        byebug
+        # byebug
         render json: @archetype
       end
     end
