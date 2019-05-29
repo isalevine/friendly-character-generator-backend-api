@@ -552,6 +552,8 @@ class ConverterController < ApplicationController
             
         end
 
+        string_pool.downcase!
+
         # byebug
         search_pool = generate_tags(string_pool)
         
