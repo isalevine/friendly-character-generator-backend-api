@@ -1,4 +1,5 @@
 class ConverterController < ApplicationController
+    skip_before_action :authorized
 
 
     # METHODS TO GENERATE A GAME_SYSTEM'S BLANK OUTPUT_CHARACTER
@@ -223,9 +224,11 @@ class ConverterController < ApplicationController
                 end
             # elsif skills[:chosen_by] == "player"
             #     skill_choice_order = ["player"]
-            # elsif skills[:chosen_by] == "class_race"
-            #     skill_choice_order = ["class_race"]
+            elsif skills[:chosen_by] == "class_race"
+                skill_choice_order = ["class_race"]
             end
+
+            # byebug
 
             # check if skills are allocated by spending a limited number of points
             if skills[:points_num]
@@ -258,7 +261,19 @@ class ConverterController < ApplicationController
                                 if conversion_hash[:base][:skill1] == archetype_skill
                                     output_skill1 = conversion_hash[:output][:skill1]
                                     output_skill2 = conversion_hash[:output][:skill2]
-                                    if archetype[:system_unique][system_key][:output_skill_preferences].include?(output_skill1)
+
+                                    # # check if output_skill1 maximum has been reached--use to defer to output_skill2 
+                                    # # (SEE + REFACTOR WITH CODE BELOW IN chooser == "class_race")
+                                    # skill1_exceeded = false;
+                                    # output_character[:skills][:list].each do |skill_hash|
+                                    #     if skill_hash[:name] == output_skill1
+                                    #         if skill_hash[:points] >= skills[:maximum_score]
+                                    #             skill1_exceeded = true;
+                                    #         end
+                                    #     end
+                                    # end
+
+                                    if archetype[:system_unique][system_key][:output_skill_preferences].include?(output_skill1)  # && !skill1_exceeded
                                         priority_skill = output_skill1
                                     elsif archetype[:system_unique][system_key][:output_skill_preferences].include?(output_skill2)
                                         priority_skill = output_skill2
@@ -267,6 +282,8 @@ class ConverterController < ApplicationController
                                     end
                                 end
                             end
+
+                            # byebug
 
                             # format skill output and shovel into output_character's skill list
                             skill_hash = {}
@@ -287,7 +304,7 @@ class ConverterController < ApplicationController
                             class_race_array.each do |class_race_hash|
                                 if !class_race_hash[:name]
                                     break
-                                elsif class_race_hash[:name] == output_character[:class] || class_race_hash[:name] == output_character[:race]
+                                elsif class_race_hash[:name] == output_character[:class][:class] || class_race_hash[:name] == output_character[:race][:race]
                                     class_race_hash[:num_chosen].times do                                       
                                         priority_skill1 = nil
                                         priority_skill2 = nil
@@ -311,7 +328,7 @@ class ConverterController < ApplicationController
                                             skill2_points_maxed = false
                                             # byebug
                                             
-                                            # check if skill max scores have been reached
+                                            # check if skill max scores have been reached -- REFACTOR WITH CODE ABOVE IN chooser == "player" INTO ONE FUNCTION!!
                                             if output_character[:skills][:list].length > 0
                                                 # byebug
                                                 output_character[:skills][:list].each do |character_skill_hash|
@@ -412,13 +429,30 @@ class ConverterController < ApplicationController
         # check SYSTEM_UNIQUE
         # =============================================================
         if game_system[:system_unique][0]
-            # do something
+            output_character[:system_unique] = {}
+            output_character[:system_unique][system_key] = {}
+            archetype[:system_unique][system_key].each do |key, value|
+                output_character[:system_unique][system_key][key] = value
+            end
         end
+
+
+        # add SNIPPET_SEARCH_TERMS
+        # =============================================================
+        if archetype[:snippet_search_terms].length > 0
+            output_character[:snippet_search_terms] = archetype[:snippet_search_terms]
+        end
+
+
+        # add IMG_URL FOR CHARACTER PORTRAIT
+        # =============================================================
+        if archetype[:img_url]
+            output_character[:img_url] = archetype[:img_url]
+        end
+
 
         # output_character is ready => will be returned as "convertedCharacter" in fetch on frontend
         # byebug
-        
-        # render json: output_character
         
         backstory = generate_snippet_pool(output_character)
         output_character[:backstory] = backstory
@@ -468,6 +502,7 @@ class ConverterController < ApplicationController
     end
   
   
+    # IMPORTANT REFACTOR: randomize ORDER that tags will be searched in??
     def generate_search_pool(output_character)
         # SEE IF YOU CAN ALSO USE THE  playstyle_preference + form text  TO ALSO ADD TO POOL!
         #
@@ -499,7 +534,13 @@ class ConverterController < ApplicationController
                     if power_hash[:name]
                         sentence = power_hash[:description].split(". ")[0]
                         string_pool += " #{power_hash[:name]} #{sentence}"
+                        # string_pool += " #{power_hash[:name]} #{power_hash[:description]}"
                     end
+                end
+
+            elsif key == "snippet_search_terms"
+                output_character[:snippet_search_terms].each do |string|
+                    string_pool += " #{string}"
                 end
   
             elsif unique_system_sources.length > 0
@@ -523,8 +564,8 @@ class ConverterController < ApplicationController
         # filter list is being CUT DOWN to increase randomness of matches
         # => different behavior will be needed once many snippets are seeded
         # => CONSIDER: what is the ideal % of total Snippets to show up in pool?
-        # => (currently, 9 / 24 for 'corn_god_worshipping_wizard')
-        filter_words = ["a", "an", "the", "and"]
+        # => => FILTER WORDS CURRENTLY DISABLED!!
+        filter_words = ["the"]
     
         snippet_text.downcase!
         snippet_text.gsub!(regex1, " ")
@@ -568,31 +609,35 @@ class ConverterController < ApplicationController
         sort_snippets_story_location(snippet_pool)
     end
   
-  
+    # experimenting with shortened backstories, based on user feedback
     def sort_snippets_story_location(snippet_pool)
         sorted_snippet_pool = {
             "very_beginning": [],
-            "near_beginning": [],
+            # "near_beginning": [],
             "middle": [],
             "near_end": [],
-            "very_end": []
+            # "very_end": []
         }
         # byebug
         snippet_pool.each do |snippet_hash|
             story_location = snippet_hash[:story_location].to_sym
-            sorted_snippet_pool[story_location] << snippet_hash[:text]
+            # changed to an if statement based on shortening backstory snippet locations
+            if sorted_snippet_pool[story_location]
+                sorted_snippet_pool[story_location] << snippet_hash[:text]
+            end
         end    
         compile_character_backstory(sorted_snippet_pool)
     end
   
   
+    # experimenting with shortened backstories, based on user feedback
     def compile_character_backstory(sorted_snippet_pool)
         character_backstory = {
             "very_beginning": "",
-            "near_beginning": "",
+            # "near_beginning": "",
             "middle": "",
             "near_end": "",
-            "very_end": "" 
+            # "very_end": "" 
         }
         # byebug
         sorted_snippet_pool.each do |story_location, snippet_array|
