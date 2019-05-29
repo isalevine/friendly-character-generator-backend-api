@@ -401,7 +401,7 @@ origami_paladin_search_list = SearchList.create(archetype_id: origami_paladin.id
 
 sea_elf_sorcerer = Archetype.create(
   name: "Sea-Elf Sorcerer",   
-  img_url: "http://www.wizards.com/mtg/images/daily/stf/stf67_trick.jpg",
+  img_url: "https://i.pinimg.com/originals/f2/9d/7c/f29d7c6b070ebb09143387258e9b0de9.png",
 
   stat_priorities: {
   chosen_by_player: [
