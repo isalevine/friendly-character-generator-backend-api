@@ -24,8 +24,13 @@ GameSystem.all.destroy_all
 # CONSIDER snippet_search_terms => have users enter any amount of text (copy-pasted class description, self-written story, list of terms, etc.)
 # and have them be added to that array...
 
+
+# BASIC ARCHETYPES - covers all basic search terms (playstyle, action, power)
+# => EDITED to accomodate new seeds + tighten up search_lists
+# ============================================================================
+
 big_sword_knight = Archetype.create(
-    name: "big sword knight",
+    name: "Big Sword Knight",
     img_url: "http://pre09.deviantart.net/0a83/th/pre/f/2016/125/5/c/yhorm_the_giant_by_yare_yare_dong-da1g9ju.png",
 
     stat_priorities: {
@@ -95,11 +100,11 @@ big_sword_knight = Archetype.create(
       }
     }
 )
-big_sword_knight_search_list = SearchList.create(archetype_id: big_sword_knight.id, search_playstyle_pref: "physical", search_action_pref: "weapon, tank", search_power_pref: "any")
+big_sword_knight_search_list = SearchList.create(archetype_id: big_sword_knight.id, search_playstyle_pref: "physical", search_action_pref: "weapon, tank", search_power_pref: "damage")
 
 
 smooth_talking_ninja = Archetype.create(
-  name: "smooth-talking ninja",
+  name: "Smooth-Talking Ninja",
   img_url: "https://cdn.imgbin.com/13/7/1/imgbin-tuxedo-mask-sailor-moon-tuxedo-4EHfHP0XqxerFq4eHTrrjL55P.jpg",
 
   stat_priorities: {
@@ -173,7 +178,7 @@ ninja_search_list = SearchList.create(archetype_id: smooth_talking_ninja.id, sea
 
 
 corn_god_worshipping_wizard = Archetype.create(
-    name: "corn-god-worshipping wizard",
+    name: "Corn-God-Worshipping Wizard",
     img_url: "https://cdn.drawception.com/images/panels/2012/4-2/WQrqFWaCwO-12.png",
 
     stat_priorities: {
@@ -243,11 +248,11 @@ corn_god_worshipping_wizard = Archetype.create(
       }
     }  
 )
-wizard_search_list = SearchList.create(archetype_id: corn_god_worshipping_wizard.id, search_playstyle_pref: "physical, mental", search_action_pref: "spells, knowledge", search_power_pref: "any")
+wizard_search_list = SearchList.create(archetype_id: corn_god_worshipping_wizard.id, search_playstyle_pref: "physical, mental", search_action_pref: "spells, knowledge", search_power_pref: "damage, heal, mind, control")
 
 
 the_mime = Archetype.create(
-  name: "the mime",   
+  name: "The Mime",   
   img_url: "https://data.whicdn.com/images/130762762/large.jpg",
 
   stat_priorities: {
@@ -315,10 +320,311 @@ the_mime = Archetype.create(
     }
   }
 )
-the_mime_search_list = SearchList.create(archetype_id: the_mime.id, search_playstyle_pref: "social", search_action_pref: "leader, perform, manipulate, seduce", search_power_pref: "any")
+the_mime_search_list = SearchList.create(archetype_id: the_mime.id, search_playstyle_pref: "social", search_action_pref: "perform, manipulate, seduce", search_power_pref: "damage, stealth, control")
 
 
 
+# new seed archetypes - ONLY FOR DND!! (will need refactors for Exalted)
+# ============================================================================
+
+origami_paladin = Archetype.create(
+  name: "Origami Paladin",   
+  img_url: "https://pm1.narvii.com/6802/a6d3c9a8e762d8a55e1418a04521feb166c6c631v2_hq.jpg",
+
+  stat_priorities: {
+  chosen_by_player: [
+    "wisdom",
+    "strength",
+    "constitution",
+    "charisma",
+    "intelligence",
+    "dexterity"
+  ]
+  },
+  skill_priorities: {
+    chosen_by_player: [
+      "magic_computers",
+      "feats_of_strength",
+      "athletics_dodge",
+      "intimidate",
+      "awareness",
+      "socialize",
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil
+    ]
+  },
+  power_priorities: {
+    chosen_by_player: {
+      tags: ["heal", "fire", "armor", "holy"]
+    },
+    spell_priorities: {}
+  },
+
+  snippet_search_terms: ["holy", "knight", "art", "origami"],
+
+  system_unique: {
+    dnd_5th_001: {
+      class: "paladin",
+      race: "dwarf",
+      hit_points: "roll d10, add Constitution modifier",
+      armor_class: "armor base AC, add Dexterity modifier",
+      alignment: "neutral-good",
+      ability_modifiers: "8-9 = -1; 10-11 = 0; 12-13 = +1; 14-15 = +2; 16-17 = +3, 18-19 = +4",
+      output_skill_preferences: ["religion", "medicine", "insight"]
+    },
+    exalted_2nd_001: {
+      class: "",
+      race: "",
+      anima: "",
+      backgrounds: "",
+      equipment: "",
+      virtues: "",
+      virtue_flaw: "",
+      willpower: "",
+      hit_points: "",
+      soak: "",
+      defense_values: "",
+      essence: "",
+      bonus_points: "",
+      output_stat_preferences: [],
+      output_skill_preferences: [],
+      output_power_preferences: []
+    }
+  }
+)
+origami_paladin_search_list = SearchList.create(archetype_id: origami_paladin.id, search_playstyle_pref: "physical, social", search_action_pref: "weapon, tank, spells, leader", search_power_pref: "damage, heal")
+
+
+sea_elf_sorcerer = Archetype.create(
+  name: "Sea-Elf Sorcerer",   
+  img_url: "http://www.wizards.com/mtg/images/daily/stf/stf67_trick.jpg",
+
+  stat_priorities: {
+  chosen_by_player: [
+    "wisdom",
+    "intelligence",
+    "dexterity",
+    "charisma",
+    "constitution",
+    "strength"
+  ]
+  },
+  skill_priorities: {
+    chosen_by_player: [
+      "magic_computers",
+      "awareness",
+      "awareness",
+      "intimidation",
+      "deception",
+      "persuasion",
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil
+    ]
+  },
+  power_priorities: {
+    chosen_by_player: {
+      tags: ["undine", "water", "merfolk", "underwater"]
+    },
+    spell_priorities: {}
+  },
+
+  snippet_search_terms: ["water", "magic", "underwater", "merfolk"],
+
+  system_unique: {
+    dnd_5th_001: {
+      class: "sorcerer",
+      race: "elf",
+      hit_points: "roll d10, add Constitution modifier",
+      armor_class: "armor base AC, add Dexterity modifier",
+      alignment: "neutral-evil",
+      ability_modifiers: "8-9 = -1; 10-11 = 0; 12-13 = +1; 14-15 = +2; 16-17 = +3, 18-19 = +4",
+      output_skill_preferences: ["arcana", "nature", "animal_handling"]
+    },
+    exalted_2nd_001: {
+      class: "",
+      race: "",
+      anima: "",
+      backgrounds: "",
+      equipment: "",
+      virtues: "",
+      virtue_flaw: "",
+      willpower: "",
+      hit_points: "",
+      soak: "",
+      defense_values: "",
+      essence: "",
+      bonus_points: "",
+      output_stat_preferences: [],
+      output_skill_preferences: [],
+      output_power_preferences: []
+    }
+  }
+)
+sea_elf_sorcerer_search_list = SearchList.create(archetype_id: sea_elf_sorcerer.id, search_playstyle_pref: "mental, social", search_action_pref: "spells, knowledge, manipulate", search_power_pref: "any")
+
+
+barbarian_barber = Archetype.create(
+  name: "Barbarian Barber",   
+  img_url: "http://25.media.tumblr.com/a9abdc846ff91adbe3c00505e9db3c0d/tumblr_n0fso0bACm1r5yty8o1_1280.jpg",
+
+  stat_priorities: {
+  chosen_by_player: [
+    "strength",
+    "constitution",
+    "charisma",
+    "wisdom",
+    "intelligence",
+    "dexterity"
+  ]
+  },
+  skill_priorities: {
+    chosen_by_player: [
+      "feats_of_strength",
+      "intimidate",
+      "athletics_dodge",
+      "awareness",
+      "feats_of_strength",
+      "awareness",
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil
+    ]
+  },
+  power_priorities: {
+    chosen_by_player: {
+      tags: ["strength", "attack", "intimidate"]
+    },
+    spell_priorities: {}
+  },
+
+  snippet_search_terms: ["mountain", "scared", "barber", "hair", "sword"],
+
+  system_unique: {
+    dnd_5th_001: {
+      class: "barbarian",
+      race: "human",
+      hit_points: "roll d10, add Constitution modifier",
+      armor_class: "armor base AC, add Dexterity modifier",
+      alignment: "lawful-neutral",
+      ability_modifiers: "8-9 = -1; 10-11 = 0; 12-13 = +1; 14-15 = +2; 16-17 = +3, 18-19 = +4",
+      output_skill_preferences: ["athletics", "perception", "survival", "nature"]
+    },
+    exalted_2nd_001: {
+      class: "",
+      race: "",
+      anima: "",
+      backgrounds: "",
+      equipment: "",
+      virtues: "",
+      virtue_flaw: "",
+      willpower: "",
+      hit_points: "",
+      soak: "",
+      defense_values: "",
+      essence: "",
+      bonus_points: "",
+      output_stat_preferences: [],
+      output_skill_preferences: [],
+      output_power_preferences: []
+    }
+  }
+)
+barbarian_barber_search_list = SearchList.create(archetype_id: barbarian_barber.id, search_playstyle_pref: "physical", search_action_pref: "weapon, tank", search_power_pref: "damage, heal, mind")
+
+
+drunk_monk = Archetype.create(
+  name: "Drunk Monk",   
+  img_url: "https://www.midnightpulp.com/wp-content/uploads/2018/03/drunken-master-slippery-snake_channel_poster.jpg",
+
+  stat_priorities: {
+  chosen_by_player: [
+    "dexterity",
+    "wisdom",
+    "charisma",
+    "strength",
+    "intelligence",
+    "constitution"
+  ]
+  },
+  skill_priorities: {
+    chosen_by_player: [
+      "athletics_dodge",
+      "feats_of_strength",
+      "awareness",
+      "socialize",
+      "performance",
+      "deception",
+      nil,
+      nil,
+      nil,
+      nil,
+      nil,
+      nil
+    ]
+  },
+  power_priorities: {
+    chosen_by_player: {
+      tags: ["speed", "martial arts", "drinking", "extra attacks"]
+    },
+    spell_priorities: {}
+  },
+
+  snippet_search_terms: ["drunken", "master", "martial arts", "kung fu", "drinking", "drunk"],
+
+  system_unique: {
+    dnd_5th_001: {
+      class: "monk",
+      race: "halfling",
+      hit_points: "roll d10, add Constitution modifier",
+      armor_class: "armor base AC, add Dexterity modifier",
+      alignment: "true-neutral",
+      ability_modifiers: "8-9 = -1; 10-11 = 0; 12-13 = +1; 14-15 = +2; 16-17 = +3, 18-19 = +4",
+      output_skill_preferences: ["athletics", "perception", "insight"]
+    },
+    exalted_2nd_001: {
+      class: "",
+      race: "",
+      anima: "",
+      backgrounds: "",
+      equipment: "",
+      virtues: "",
+      virtue_flaw: "",
+      willpower: "",
+      hit_points: "",
+      soak: "",
+      defense_values: "",
+      essence: "",
+      bonus_points: "",
+      output_stat_preferences: [],
+      output_skill_preferences: [],
+      output_power_preferences: []
+    }
+  }
+)
+drunk_monk_search_list = SearchList.create(archetype_id: drunk_monk.id, search_playstyle_pref: "physical, social", search_action_pref: "weapon, sneak, investigate, knowledge, leader, perform", search_power_pref: "any")
+
+
+
+
+
+
+
+
+
+
+# GAME SYSTEM - DND!!!
+# ============================================================================
 
 dnd_game_system = GameSystem.create(
     full_title: "Dungeons and Dragons",
@@ -628,42 +934,55 @@ the_mime = {
     very_end: ["(Yes, the hushed words on the street about them murdering someone are true.)"]
 }
 
-
+# NEAR_BEGINNING and VERY_END are currently DISABLED for convertedCharacters!!
 misc_snippets = {
   very_beginning: [
-      "Born in an underground cult (seriously, like, mole-people underground), they were worshipping the various idols of the cult since they had motor skills.",
-      "The winter winds of the north could not stop a mighty mammoth-herder from coming south, and that is how they came to be in this land--born in a pile of mammoth-fur, with the constitution of a mammoth too.",
-      "Legends tell of undersea worlds encapsulated in giant magical bubbles--the legends don't mention anyone ever coming to the surface as proof, but they still claim to come from an underwater kingdom anyway.",
-      "Are there other dimensions? Who knows--but they're certainly not from this one, and whoever sent them here has the wisdom to not speak up.",
-      "The dense jungles do not allow many to enter, but those who do often leave with a gift--not for themselves, but for their children, who flourish with the jungle's power. They were born to such a destiny.",
+    "Born in an underground cult (seriously, like, mole-people underground), they were worshipping the various idols of the cult since they had motor skills.",
+    "The winter winds of the north could not stop a mighty mammoth-herder from coming south, and that is how they came to be in this land--born in a pile of mammoth-fur, with the constitution of a mammoth too.",
+    "Legends tell of undersea worlds encapsulated in giant magical bubbles--the legends don't mention anyone ever coming to the surface as proof, but they still claim to come from an underwater kingdom anyway.",
+    "Are there other dimensions? Who knows--but they're certainly not from this one, and whoever sent them here has the wisdom to not speak up.",
+    "The dense jungles do not allow many to enter, but those who do often leave with a gift--not for themselves, but for their children, who flourish with the jungle's power. They were born to such a destiny.",
+    "They were born near the top of a high mountain, foraging as a little baby on lichen and sparse grasses. Temporarily adopted by a puma family, their animal instincts remain strong--as does their love of wild, untamed hair.",
+    "Born in a scholarly land of librarians and archivists, they grew up around the arts of calligraphy and cartography--but what they grew to love most was the craft of making paper.",
+    "They come from an endless swampland that travelers swear can only be found under the grim light of the harvest moon...okay, that's just a myth, but the secluded people of the Great Swamp like to keep the myth going.",
+  
   ],
   near_beginning: [
-      "Eventually, they were forced to come to the surface as a teenager. Since then, they have struggled to navigate this new sun-drenched world, but they've long since adapted to life here.",
-      "Empowered with a natural resistance to the cold, they honed their strength climbing innumerable mountains, and surviving amongst the treacherous flora and predatory fauna.",
-      "Water carries magic in this world, and their supposed watery origin seems to be tied to their own magical powers.",
-      "Their power has come to them in powerful and terrifying visions, where beings from other worlds (supposedly) impart skills directly into their eyeballs. The eyeballs do seem to be intact, though.",
-      "Their gift of dexterity manifested in a dense city, reminiscent of the gift's jungle origin, and saved them as they were forced to flee from a posse of un-bribe-able city guards.",  
+    "Eventually, they were forced to come to the surface as a teenager. Since then, they have struggled to navigate this new sun-drenched world, but they've long since adapted to life here.",
+    "Empowered with a natural resistance to the cold, they honed their strength climbing innumerable mountains, and surviving amongst the treacherous flora and predatory fauna.",
+    "Water carries magic in this world, and their supposed watery origin seems to be tied to their own magical powers.",
+    "Their power has come to them in powerful and terrifying visions, where beings from other worlds (supposedly) impart skills directly into their eyeballs. The eyeballs do seem to be intact, though.",
+    "Their gift of dexterity manifested in a dense city, reminiscent of the gift's jungle origin, and saved them as they were forced to flee from a posse of un-bribe-able city guards.",  
   ],
   middle: [
-      "At one point, they tried to channel their experiences into painting--using dark colors, painting night scenes, and focusing deeply on shadow. Their paintings were not popular, but did help focus their power in a dark direction.",
-      "Their most dangerous test came at the peak of their journey, alone in a land riddled with vampires--there, they discovered their love of fighting off fifty foes at once, and they indeed possess the strength and constitution to do so.",
-      "Traveling town to town, they would give performance after performance--but with no home to call their own, they found themself perpetually an outcast, and eventually accepted being a reject from society along with the wisdom that brings.",
-      "They were once part of a dragon-slaying party, but decided to steal a piece of treasure for themself and run for it once the dragon started fighting back. They don't regret it.",
-      "They have long served as a mercenary for mad sorcerers and warlocks, watching over their twisted magical experiments and fighting off any unwelcome demonic guests.",
+    "At one point, they tried to channel their experiences into painting--using dark colors, painting night scenes, and focusing deeply on shadow. Their paintings were not popular, but did help focus their power in a dark direction.",
+    "Their most dangerous test came at the peak of their journey, alone in a land riddled with vampires--there, they discovered their love of fighting off fifty foes at once, and they indeed possess the strength and constitution to do so.",
+    "Traveling town to town, they would give performance after performance--but with no home to call their own, they found themself perpetually an outcast, and eventually accepted being a reject from society along with the wisdom that brings.",
+    "They were once part of a dragon-slaying party, but decided to steal a piece of treasure for themself and run for it once the dragon started fighting back. They don't regret it.",
+    "They have long served as a mercenary for mad sorcerers and warlocks, watching over their twisted magical experiments and fighting off any unwelcome demonic guests.",
+    "As they trained their body and mind in kung fu, they took up drinking to dull the pain and allow continuous training. This paid off when their master tried to intervene, and was swiftly defeated by the newly-crowned drunken master.",
+    "Their powers are drawn from nearby sources of water, and they are compelled to seek out water to keep their skin moisturized and shiny, as well as regenerate their magic abilities. If they go too long without water, they will forget some spells.",
+    "In their first clash with civilization, they were immediately drawn into a barbershop due to their wooly appearance. From there, their natural love of steel and swords kicked in, and they apprenticed as a barber for years, mastering blades of all sizes.",
+    "They are perpetually folding paper into forms that make them stronger--they can craft locks that rival steel, and armor that functions as well as chainmail. However, their favorite art subject to create are origami flowers.",
+
   ],
   near_end: [
-      "Now, they seek adventure that will take them to the utter heart of darkness--a demon lair would be nice, or some sort of portal to Hell. They're not picky.",
-      "Most recently, a trusted fortuneteller has informed them to seek adventure with a group of other similarly-destined folk, but they await their opportunity to backstab their friends and claim all riches and glory for themself.",
-      "They live a life of almost non-stop stealth, but have recently discovered the power of teaming up with others to overcome strong foes--especially when they're the only stealthy one.",
-      "Bounty-hunting is what eventually brought them here, but a last-minute plea has caused them to reconsider their bounty-hunting ways, and seek out a greater purpose in life.",
-      "Ultimately, they seek the power to breathe underwater, and finally have the constitution to reach that magical underwater kingdom on their own.",
+    "Now, they seek adventure that will take them to the utter heart of darkness--a demon lair would be nice, or some sort of portal to Hell. They're not picky.",
+    "Most recently, a trusted fortuneteller has informed them to seek adventure with a group of other similarly-destined folk, but they await their opportunity to backstab their friends and claim all riches and glory for themself.",
+    "They live a life of almost non-stop stealth, but have recently discovered the power of teaming up with others to overcome strong foes--especially when they're the only stealthy one.",
+    "Bounty-hunting is what eventually brought them here, but a last-minute plea has caused them to reconsider their bounty-hunting ways, and seek out a greater purpose in life.",
+    "Ultimately, they seek the power to breathe underwater, and finally have the constitution to reach that magical underwater kingdom on their own.",
+    "They now seek a source of truly purified water, and to understand the holy power that it may unlock.",
+    "They are perpetually seeking a new master who may reveal similarly chaotic, unpredictable, and arm-flailing martial arts as their own drunken style. Don't let their love of drink fool you--they are a deadly martial artist who seeks even more power.",
+    "They are now in search of a place to call home, where they can perfect their art and use their craft for peaceful means, like home decorating and making toys for children.",
+
   ],
   very_end: [
-      "Occasionally, they go howl at the full moon just to see if they can transform into a werewolf...but they can't. They just can't. Sorry.",
-      "For a hulking monster, they actually look surprisingly un-terrifying. Don't try to terrorize people, it's a bad look.",
-      "Their greatest treasure is a small gold coin with a lewd picture etched into it--DO NOT LOSE IT!",
-      "They've done a good job of keeping down their urge to burn things...but it's only a matter of time...",
-      "They are easily startled by cats.",
+    "Occasionally, they go howl at the full moon just to see if they can transform into a werewolf...but they can't. They just can't. Sorry.",
+    "For a hulking monster, they actually look surprisingly un-terrifying. Don't try to terrorize people, it's a bad look.",
+    "Their greatest treasure is a small gold coin with a lewd picture etched into it--DO NOT LOSE IT!",
+    "They've done a good job of keeping down their urge to burn things...but it's only a matter of time...",
+    "They are easily startled by cats.",
   ]
 }
 
