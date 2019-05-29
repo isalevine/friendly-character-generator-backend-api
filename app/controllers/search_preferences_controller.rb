@@ -1,4 +1,5 @@
 class SearchPreferencesController < ApplicationController
+  skip_before_action :authorized
 
   def show
     find_search_preference

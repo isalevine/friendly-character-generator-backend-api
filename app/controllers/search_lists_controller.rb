@@ -1,4 +1,5 @@
 class SearchListsController < ApplicationController
+  skip_before_action :authorized
 
   def index
     @search_lists = SearchList.all
