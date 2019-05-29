@@ -305,7 +305,6 @@ class ConverterController < ApplicationController
                                 if !class_race_hash[:name]
                                     break
                                 elsif class_race_hash[:name] == output_character[:class][:class] || class_race_hash[:name] == output_character[:race][:race]
-                                    byebug
                                     class_race_hash[:num_chosen].times do                                       
                                         priority_skill1 = nil
                                         priority_skill2 = nil
