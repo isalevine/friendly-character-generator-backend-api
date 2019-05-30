@@ -320,7 +320,7 @@ the_mime = Archetype.create(
     }
   }
 )
-the_mime_search_list = SearchList.create(archetype_id: the_mime.id, search_playstyle_pref: "social", search_action_pref: "perform, manipulate, seduce", search_power_pref: "damage, stealth, control")
+the_mime_search_list = SearchList.create(archetype_id: the_mime.id, search_playstyle_pref: "social", search_action_pref: "perform, manipulate, seduce", search_power_pref: "damage, stealth, control, mind")
 
 
 
@@ -396,7 +396,7 @@ origami_paladin = Archetype.create(
     }
   }
 )
-origami_paladin_search_list = SearchList.create(archetype_id: origami_paladin.id, search_playstyle_pref: "physical, social", search_action_pref: "weapon, tank, spells, leader", search_power_pref: "damage, heal")
+origami_paladin_search_list = SearchList.create(archetype_id: origami_paladin.id, search_playstyle_pref: "physical, social", search_action_pref: "weapon, tank, spells, leader, seduce", search_power_pref: "damage, heal, stealth")
 
 
 sea_elf_sorcerer = Archetype.create(
@@ -468,7 +468,7 @@ sea_elf_sorcerer = Archetype.create(
     }
   }
 )
-sea_elf_sorcerer_search_list = SearchList.create(archetype_id: sea_elf_sorcerer.id, search_playstyle_pref: "mental, social", search_action_pref: "spells, knowledge, manipulate", search_power_pref: "any")
+sea_elf_sorcerer_search_list = SearchList.create(archetype_id: sea_elf_sorcerer.id, search_playstyle_pref: "physical, mental, social", search_action_pref: "spells, knowledge, manipulate", search_power_pref: "any")
 
 
 barbarian_barber = Archetype.create(
@@ -540,7 +540,7 @@ barbarian_barber = Archetype.create(
     }
   }
 )
-barbarian_barber_search_list = SearchList.create(archetype_id: barbarian_barber.id, search_playstyle_pref: "physical", search_action_pref: "weapon, tank", search_power_pref: "damage, heal, mind")
+barbarian_barber_search_list = SearchList.create(archetype_id: barbarian_barber.id, search_playstyle_pref: "physical", search_action_pref: "weapon, tank", search_power_pref: "damage, heal, mind, control")
 
 
 drunk_monk = Archetype.create(
