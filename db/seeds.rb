@@ -845,17 +845,17 @@ dnd_game_system = GameSystem.create(
         
         chosen_by_class_race: {
         classes: [
-            { name: "barbarian", num_chosen: 2, list: [] },
+            { name: "barbarian", num_chosen: 2, list: [{skill: "animal_handling", bonus: 1}, {skill: "athletics", bonus: 1}, {skill: "intimidation", bonus: 1}, {skill: "nature", bonus: 1}, {skill: "perception", bonus: 1}, {skill: "survival", bonus: 1} ] },
             { name: "bard", num_chosen: 3, list: [ {skill: "performance", bonus: 1}, {skill: "persuasion", bonus: 1}, {skill: "intimidation", bonus: 1}, {skill: "insight", bonus: 1}, {skill: "perception", bonus: 1}, {skill: "deception", bonus: 1} ] },
-            { name: "cleric", num_chosen: 2, list: [] },
-            { name: "druid", num_chosen: 2, list: [] },
+            { name: "cleric", num_chosen: 2, list: [{skill: "history", bonus: 1}, {skill: "insight", bonus: 1}, {skill: "medicine", bonus: 1}, {skill: "persuasion", bonus: 1}, {skill: "religion", bonus: 1} ] },
+            { name: "druid", num_chosen: 2, list: [{skill: "arcana", bonus: 1}, {skill: "animal_handling", bonus: 1}, {skill: "insight", bonus: 1}, {skill: "medicine", bonus: 1}, {skill: "nature", bonus: 1}, {skill: "perception", bonus: 1}, {skill: "religion", bonus: 1}, {skill: "survival", bonus: 1} ] },
             { name: "fighter", num_chosen: 2, list: [ {skill: "animal_handling", bonus: 1}, {skill: "athletics", bonus: 1}, {skill: "intimidation", bonus: 1}, {skill: "nature", bonus: 1}, {skill: "perception", bonus: 1}, {skill: "survival", bonus: 1} ] },
-            { name: "monk", num_chosen: 2, list: [] },
-            { name: "paladin", num_chosen: 2, list: [] },
-            { name: "ranger", num_chosen: 3, list: [] },
+            { name: "monk", num_chosen: 2, list: [{skill: "acrobatics", bonus: 1}, {skill: "athletics", bonus: 1}, {skill: "history", bonus: 1}, {skill: "insight", bonus: 1}, {skill: "religion", bonus: 1}, {skill: "stealth", bonus: 1} ] },
+            { name: "paladin", num_chosen: 2, list: [{skill: "athletics", bonus: 1}, {skill: "insight", bonus: 1}, {skill: "intimidation", bonus: 1}, {skill: "medicine", bonus: 1}, {skill: "persuasion", bonus: 1}, {skill: "religion", bonus: 1} ] },
+            { name: "ranger", num_chosen: 3, list: [{skill: "animal_handling", bonus: 1}, {skill: "athletics", bonus: 1}, {skill: "insight", bonus: 1}, {skill: "investigation", bonus: 1}, {skill: "nature", bonus: 1}, {skill: "perception", bonus: 1}, {skill: "stealth", bonus: 1}, {skill: "survival", bonus: 1} ] },
             { name: "rogue", num_chosen: 4, list: [ {skill: "acrobatics", bonus: 1}, {skill: "athletics", bonus: 1}, {skill: "deception", bonus: 1}, {skill: "intimidation", bonus: 1}, {skill: "investigation", bonus: 1}, {skill: "stealth", bonus: 1}, {skill: "sleight_of_hand", bonus: 1}, {skill: "perception", bonus: 1}, {skill: "persuasion", bonus: 1}, {skill: "insight", bonus: 1} ] },
-            { name: "sorcerer", num_chosen: 2, list: [] },
-            { name: "warlock", num_chosen: 2, list: [] },
+            { name: "sorcerer", num_chosen: 2, list: [{skill: "arcana", bonus: 1}, {skill: "deception", bonus: 1}, {skill: "insight", bonus: 1}, {skill: "intimidation", bonus: 1}, {skill: "persuasion", bonus: 1}, {skill: "religion", bonus: 1} ] },
+            { name: "warlock", num_chosen: 2, list: [{skill: "arcana", bonus: 1}, {skill: "deception", bonus: 1}, {skill: "history", bonus: 1}, {skill: "intimidation", bonus: 1}, {skill: "investigation", bonus: 1}, {skill: "nature", bonus: 1}, {skill: "religion", bonus: 1} ] },
             { name: "wizard", num_chosen: 2, list: [ {skill: "arcana", bonus: 1}, {skill: "history", bonus: 1}, {skill: "insight", bonus: 1}, {skill: "investigation", bonus: 1}, {skill: "medicine", bonus: 1}, {skill: "religion", bonus: 1} ] },
         ],
         races: [
