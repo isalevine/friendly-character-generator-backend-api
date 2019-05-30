@@ -302,10 +302,12 @@ class ConverterController < ApplicationController
                         # find matching class or race for conversion
                         conversions[:chosen_by_class_race].each do |key, class_race_array|
                             class_race_array.each do |class_race_hash|
+                                # byebug
                                 if !class_race_hash[:name]
                                     break
                                 elsif class_race_hash[:name] == output_character[:class][:class] || class_race_hash[:name] == output_character[:race][:race]
-                                    class_race_hash[:num_chosen].times do                                       
+                                    # currently: loops until :num_chosen by class/race is hit
+                                    while output_character[:skills][:list].count < class_race_hash[:num_chosen]                                      
                                         priority_skill1 = nil
                                         priority_skill2 = nil
 

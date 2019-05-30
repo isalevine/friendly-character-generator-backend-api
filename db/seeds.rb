@@ -415,7 +415,7 @@ sea_elf_sorcerer = Archetype.create(
   },
   skill_priorities: {
     chosen_by_player: [
-      "magic_computers",
+      "magic_computer",
       "awareness",
       "awareness",
       "intimidation",
