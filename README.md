@@ -86,10 +86,17 @@ And of course, for the mage sprite--thank you once again Jerom on OpenGameArt:
 
 Additional images used for dummy character portraits--please message me and I will gladly take them down:
 [https://forums.nexusmods.com/index.php?/topic/5896894-yhorm-the-giant-from-dark-souls-3/](https://forums.nexusmods.com/index.php?/topic/5896894-yhorm-the-giant-from-dark-souls-3/)
+
 [https://imgbin.com/png/iiWuN7V6/tuxedo-mask-sailor-moon-png](https://imgbin.com/png/iiWuN7V6/tuxedo-mask-sailor-moon-png)
+
 [https://www.google.com/search?q=corn+wizard&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjfhd6ekMDiAhVrHTQIHderBsUQ_AUIDigB&biw=1440&bih=717#imgrc=Y25Fr9tskYFtLM:](https://www.google.com/search?q=corn+wizard&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjfhd6ekMDiAhVrHTQIHderBsUQ_AUIDigB&biw=1440&bih=717#imgrc=Y25Fr9tskYFtLM:)
+
 [https://weheartit.com/entry/130762762](https://weheartit.com/entry/130762762)
+
 https://pm1.narvii.com/6802/a6d3c9a8e762d8a55e1418a04521feb166c6c631v2_hq.jpg
+
 https://i.pinimg.com/originals/f2/9d/7c/f29d7c6b070ebb09143387258e9b0de9.png
+
 http://25.media.tumblr.com/a9abdc846ff91adbe3c00505e9db3c0d/tumblr_n0fso0bACm1r5yty8o1_1280.jpg
+
 https://www.midnightpulp.com/wp-content/uploads/2018/03/drunken-master-slippery-snake_channel_poster.jpg
