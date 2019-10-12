@@ -574,7 +574,7 @@ class ConverterController < ApplicationController
         snippet_text.downcase!
         snippet_text.gsub!(regex1, " ")
         snippet_text.gsub!(regex2, "")
-        tag_array = snippet_text.split(" ")
+        tag_array = snippet_text.split(" ")     # replace this and .uniq with a Set?
         tag_array.uniq!
         tag_array.filter! { |tag| !filter_words.include?(tag) }
     
