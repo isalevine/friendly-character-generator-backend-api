@@ -1021,7 +1021,7 @@ def generate_tags(snippet_text, snippet_id = nil, create_db_tags = false)
     # filter list is being CUT DOWN to increase randomness of matches
     # => different behavior will be needed once many snippets are seeded
     # => CONSIDER: what is the ideal % of total Snippets to show up in pool?
-    filter_words = ["a", "an", "the", "and",
+    filter_words = Set["a", "an", "the", "and",
       "is", "of", "to", "be", "in", "they", "their", "them", "or", "if", "this", "like",
       "had", "but", "what", "with", "at",
     ]
