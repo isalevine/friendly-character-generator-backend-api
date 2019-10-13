@@ -161,7 +161,7 @@ class ConverterController < ApplicationController
             #     stat_choice_order = ["class_race"]
             end
             
-            # check if stats are allocated by spending a limited nunber of points
+            # check if stats are allocated by spending a limited number of points
             if stats[:points_num]
                 points = stats[:points_num]
                 # check for choice_order + what spends the points (player/class/race)
@@ -325,7 +325,7 @@ class ConverterController < ApplicationController
                                         end
 
                                         class_race_hash[:list].each do |skill|
-                                            skill_hash = {} 
+                                            skill_hash = {}
                                             skill1_points_maxed = false
                                             skill2_points_maxed = false
                                             # byebug
@@ -397,7 +397,7 @@ class ConverterController < ApplicationController
                 power_choice_order = ["class_race"]
             end
 
-            # check if powers are allocated by spending a limited nunber of points
+            # check if powers are allocated by spending a limited number of points
             if powers[:points_num]
                 # points_to_spend = powers[:points_num]
                     powers[:search_tags].each do |chooser|
@@ -579,7 +579,7 @@ class ConverterController < ApplicationController
         tag_array.filter! { |tag| !filter_words.include?(tag) }
     
         if create_db_tags
-            create_tags(tag_array, snippet_id)
+            # create_tags(tag_array, snippet_id)    # create_tags() only exist in seeds.rb?
         else
             tag_array
         end
