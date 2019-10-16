@@ -569,7 +569,7 @@ class ConverterController < ApplicationController
         # => different behavior will be needed once many snippets are seeded
         # => CONSIDER: what is the ideal % of total Snippets to show up in pool?
         # => => FILTER WORDS CURRENTLY DISABLED!!
-        filter_words = ["the"]
+        filter_words = Set["the"]
     
         snippet_text.downcase!
         snippet_text.gsub!(regex1, " ")
