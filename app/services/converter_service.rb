@@ -3,10 +3,12 @@
 
 # code/methods being migrated from converter_controller.rb
 class ConverterService
-    def initialize(game_system, output_character)
+    def initialize(archetype, game_system, output_character)
+        @archetype = archetype
         @game_system = game_system
-        @output_character = {}
+        @output_character = output_character
     end
 
+    # move both generate_output_character and archetype_system_converter methods/logic here...
 
 end
