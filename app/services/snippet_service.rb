@@ -1,0 +1,3 @@
+class SnippetService
+    # move methods from seeds.rb here to generate snippets, then call SnippetService in seeds.rb...
+end
