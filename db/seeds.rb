@@ -987,86 +987,94 @@ misc_snippets = {
 }
 
 
-TAG_LIST = Set[]
-def load_tag_list
-    tags = Tag.all
-    tags.each do |tag|
-        TAG_LIST << tag.text
-    end
-end
 
 
-def parse_snippet_lists(object)
-    load_tag_list
+# Code below migrated to /app/services/snippet_tag_generator -- okay to delete??
+# =================================================================================================================
 
-    object.each do |story_key, snippet_array|
-        story_location = story_key.to_s
-        create_snippets(story_location, snippet_array)
-    end    
-end
-
-def create_snippets(story_location, snippet_array)
-    snippet_array.each do |snippet_text|
-        # byebug
-        new_snippet = Snippet.create(story_location: story_location, text: snippet_text, system_specific: nil)
-        generate_tags(snippet_text, new_snippet.id, create_db_tags: true)
-    end
-end
+# TAG_LIST = Set[]
+# def load_tag_list
+#     tags = Tag.all
+#     tags.each do |tag|
+#         TAG_LIST << tag.text
+#     end
+# end
 
 
-# create tags, do not append to snippet yet (will require a new hash)
-def generate_tags(snippet_text, snippet_id = nil, create_db_tags = false)
-    regex1 = /(-)|(--)|(\.\.\.)|(_)/
-    regex2 = /([.,:;?!"'`@#$%^&*()+={}-])/
-    # filter list is being CUT DOWN to increase randomness of matches
-    # => different behavior will be needed once many snippets are seeded
-    # => CONSIDER: what is the ideal % of total Snippets to show up in pool?
-    filter_words = Set["a", "an", "the", "and",
-      "is", "of", "to", "be", "in", "they", "their", "them", "or", "if", "this", "like",
-      "had", "but", "what", "with", "at",
-    ]
+# def parse_snippet_lists(object)
+#     load_tag_list
 
-    snippet_text.downcase!
-    snippet_text.gsub!(regex1, " ")
-    snippet_text.gsub!(regex2, "")
-    tag_array = snippet_text.split(" ")
-    tag_array.uniq!
-    tag_array.filter! { |tag| !filter_words.include?(tag) }
+#     object.each do |story_key, snippet_array|
+#         story_location = story_key.to_s
+#         create_snippets(story_location, snippet_array)
+#     end    
+# end
 
-    puts "generate_tags output the following tag_array:"
-    puts tag_array
-    puts
-
-    if create_db_tags
-        create_tags(tag_array, snippet_id)
-    else
-        tag_array
-    end
-end
+# def create_snippets(story_location, snippet_array)
+#     snippet_array.each do |snippet_text|
+#         # byebug
+#         new_snippet = Snippet.create(story_location: story_location, text: snippet_text, system_specific: nil)
+#         generate_tags(snippet_text, new_snippet.id, create_db_tags: true)
+#     end
+# end
 
 
-def create_tags(tag_array, snippet_id)
-    tag_array.each do |tag|
-        tag_id = nil
-        if TAG_LIST.add?(tag)
-            new_tag = Tag.create(text: tag)
-            tag_id = new_tag.id
-        else
-            found_tag = Tag.find_by(text: tag)    
-            tag_id = found_tag.id
-        end
-        create_snippet_tag_join(snippet_id, tag_id)
-    end
-end
+# # create tags, do not append to snippet yet (will require a new hash)
+# def generate_tags(snippet_text, snippet_id = nil, create_db_tags = false)
+#     regex1 = /(-)|(--)|(\.\.\.)|(_)/
+#     regex2 = /([.,:;?!"'`@#$%^&*()+={}-])/
+#     # filter list is being CUT DOWN to increase randomness of matches
+#     # => different behavior will be needed once many snippets are seeded
+#     # => CONSIDER: what is the ideal % of total Snippets to show up in pool?
+#     filter_words = Set["a", "an", "the", "and",
+#       "is", "of", "to", "be", "in", "they", "their", "them", "or", "if", "this", "like",
+#       "had", "but", "what", "with", "at",
+#     ]
+
+#     snippet_text.downcase!
+#     snippet_text.gsub!(regex1, " ")
+#     snippet_text.gsub!(regex2, "")
+#     tag_array = snippet_text.split(" ")
+#     tag_array.uniq!
+#     tag_array.filter! { |tag| !filter_words.include?(tag) }
+
+#     puts "generate_tags output the following tag_array:"
+#     puts tag_array
+#     puts
+
+#     if create_db_tags
+#         create_tags(tag_array, snippet_id)
+#     else
+#         tag_array
+#     end
+# end
 
 
-def create_snippet_tag_join(snippet_id, tag_id)
-    SnippetTag.create(snippet_id: snippet_id, tag_id: tag_id)
-end
+# def create_tags(tag_array, snippet_id)
+#     tag_array.each do |tag|
+#         tag_id = nil
+#         if TAG_LIST.add?(tag)
+#             new_tag = Tag.create(text: tag)
+#             tag_id = new_tag.id
+#         else
+#             found_tag = Tag.find_by(text: tag)    
+#             tag_id = found_tag.id
+#         end
+#         create_snippet_tag_join(snippet_id, tag_id)
+#     end
+# end
+
+
+# def create_snippet_tag_join(snippet_id, tag_id)
+#     SnippetTag.create(snippet_id: snippet_id, tag_id: tag_id)
+# end
 
 
 
 
+
+# NOT SURE WHY THIS CODE IS COMMENTED OUT -- OKAY TO DELETE??
+# =================================================================================================================
 
 # def generate_snippet_pool(output_character)
 #     # refactor to only grab ids based on SystemTag joins
@@ -1201,13 +1209,14 @@ end
 #     byebug
 # end
 
+snippet_tag_generator = SnippetTagGenerator.new
 
-parse_snippet_lists(big_sword_knight)
-parse_snippet_lists(smooth_talking_ninja)
-parse_snippet_lists(corn_god_worshipping_wizard)
-parse_snippet_lists(the_mime)
+snippet_tag_generator.parse_snippet_lists(big_sword_knight)
+snippet_tag_generator.parse_snippet_lists(smooth_talking_ninja)
+snippet_tag_generator.parse_snippet_lists(corn_god_worshipping_wizard)
+snippet_tag_generator.parse_snippet_lists(the_mime)
 
-parse_snippet_lists(misc_snippets)
+snippet_tag_generator.parse_snippet_lists(misc_snippets)
 
 # generate_snippet_pool(output_character1)
 # generate_snippet_pool(output_character2)

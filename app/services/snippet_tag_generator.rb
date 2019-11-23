@@ -10,7 +10,7 @@ class SnippetTagGenerator
     def load_tag_list
         tags = Tag.all
         tags.each do |tag|
-            TAG_LIST << tag.text
+            @tag_list << tag.text
         end
     end
     
