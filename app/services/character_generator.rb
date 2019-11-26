@@ -3,9 +3,12 @@
 
 # code/methods being migrated from converter_controller.rb
 class CharacterGenerator
-    def initialize(archetype, game_system)
-        @archetype = archetype
-        @game_system = game_system
+    attr_reader :game_system
+    attr_accessor :archetype, :output_character
+    
+    def initialize(game_system)
+        @game_system = game_system[:game_system]    # why does this need to be accessed with [:game_system] when params[:game_system] is passed to this from ConverterController??
+        @archetype = nil
         @output_character = {}
     end
 
@@ -86,7 +89,8 @@ class CharacterGenerator
             end
         end
     
-        render json: output_character
+        # render json: output_character
+        return output_character.to_json
     end
 
 
@@ -99,10 +103,10 @@ class CharacterGenerator
     # ===========================================================
 
     def archetype_system_converter
-        # byebug
-        archetype = params[:archetype]
-        game_system = params[:game_system][:game_system]
-        output_character = params[:game_system][:output_character]
+        # # byebug
+        # archetype = params[:archetype]
+        # game_system = params[:game_system][:game_system]
+        # output_character = params[:game_system][:output_character]
 
         system_key = game_system[:unique_name].to_sym
         output_character[:game_system_id] = game_system[:id]
