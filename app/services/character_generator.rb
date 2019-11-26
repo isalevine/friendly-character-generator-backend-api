@@ -1,10 +1,10 @@
 # refer to this link for help/debugging if /app/services doesn't autoload: 
 # https://stackoverflow.com/questions/37156226/how-can-i-add-a-services-directory-to-the-load-path-in-rails/37157085
 
-# code/methods being migrated from converter_controller.rb
+
 class CharacterGenerator
     attr_reader :game_system
-    attr_accessor :archetype, :output_character
+    attr_accessor :archetype, :output_character     # refactor: make archetype an attr_reader only, and set during initialize (as part of single API call refactor...)
     
     def initialize(game_system)
         @game_system = game_system[:game_system]    # why does this need to be accessed with [:game_system] when params[:game_system] is passed to this from ConverterController??
