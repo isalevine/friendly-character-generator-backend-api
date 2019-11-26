@@ -3,22 +3,18 @@
 
 # code/methods being migrated from converter_controller.rb
 class CharacterGenerator
-    def initialize(archetype, game_system, output_character)
+    def initialize(archetype, game_system)
         @archetype = archetype
         @game_system = game_system
-        @output_character = output_character
+        @output_character = {}
     end
+
+
 
     # move both generate_output_character and archetype_system_converter methods/logic here...
 
-
-    
     def generate_output_character
-        # byebug
-    
-        game_system = params[:game_system]
-        output_character = {}
-    
+        # necessary (or not) to include `@` before each reference to an attribute??
         output_character[:archetype_name] = nil
     
         if game_system[:system_classes][:has_classes]
@@ -466,7 +462,8 @@ class CharacterGenerator
         
         backstory = generate_snippet_pool(output_character)
         output_character[:backstory] = backstory
-        render json: output_character
+        # render json: output_character
+        return output_character.to_json
 
         # load_snippets(output_character)
 

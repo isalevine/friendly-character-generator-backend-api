@@ -1,6 +1,15 @@
 class ConverterController < ApplicationController
     skip_before_action :authorized
 
+
+    def create_character
+        cg = CharacterGenerator.new(archetype: params[:archetype], game_system: params[:game_system])   # possibly params[:game_system][:game_system]??
+    end
+
+
+
+
+
     # COPYING OVER TO character_generator.rb
     # => comment out blocks as they are migrated/tested successfully?
 
