@@ -12,12 +12,13 @@ class CharacterGenerator
         @output_character = {}
     end
 
+    # REFACTOR to only have one API call made => generate character, run converter, and add snippets ALL AT ONCE (as private methods?) ...
 
 
-    # move both generate_output_character and archetype_system_converter methods/logic here...
+
+    # methods below originally from converter_controller.rb ...
 
     def generate_output_character
-        # necessary (or not) to include `@` before each reference to an attribute??
         output_character[:archetype_name] = nil
     
         if game_system[:system_classes][:has_classes]
