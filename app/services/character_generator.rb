@@ -1,12 +1,18 @@
-class ConverterController < ApplicationController
-    skip_before_action :authorized
+# refer to this link for help/debugging if /app/services doesn't autoload: 
+# https://stackoverflow.com/questions/37156226/how-can-i-add-a-services-directory-to-the-load-path-in-rails/37157085
 
-    # COPYING OVER TO character_generator.rb
-    # => comment out blocks as they are migrated/tested successfully?
+# code/methods being migrated from converter_controller.rb
+class CharacterGenerator
+    def initialize(archetype, game_system, output_character)
+        @archetype = archetype
+        @game_system = game_system
+        @output_character = output_character
+    end
 
-    # METHODS TO GENERATE A GAME_SYSTEM'S BLANK OUTPUT_CHARACTER
-    # ===========================================================
+    # move both generate_output_character and archetype_system_converter methods/logic here...
 
+
+    
     def generate_output_character
         # byebug
     
@@ -653,6 +659,5 @@ class ConverterController < ApplicationController
         # byebug
         character_backstory
     end
-  
 
 end
