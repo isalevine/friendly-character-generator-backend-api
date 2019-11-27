@@ -19,7 +19,7 @@ class CharacterGenerator
     # methods below originally from converter_controller.rb ...
 
     def generate_output_character
-        output_character[:archetype_name] = nil
+        # output_character[:archetype_name] = nil     # not sure why this is needed? => seemed to work ok when commented out... OK to remove??
     
         if game_system[:system_classes][:has_classes]
             classes = game_system[:system_classes]
