@@ -14,26 +14,29 @@ The frontend repo can be found here: [https://github.com/isalevine/friendly-char
 
 
 ## Highlights
-### 1. All Dungeons and Dragons character-creation system rules are [encoded into a single nested Ruby hash](https://github.com/isalevine/friendly-character-generator-backend-api/blob/5d3cc9a02af78375450675037717cd6be780745e/db/seeds.rb#L629)--and the pattern is easily replicable to allow other tabletop RPG systems to be parsed the same way!
+### 1. [Check out the live app on Heroku!](https://friendly-character-generator.herokuapp.com/)
+It may require a refresh to ensure that both the frontend and backend dynos are active on Heroku.
+
+### 2. All Dungeons and Dragons character-creation system rules are [encoded into a single nested Ruby hash](https://github.com/isalevine/friendly-character-generator-backend-api/blob/5d3cc9a02af78375450675037717cd6be780745e/db/seeds.rb#L629)--and the pattern is easily replicable to allow other tabletop RPG systems to be parsed the same way!
 In order for this app to work, the character-creation rules for a tabletop game must be easy to parse.
 
 I manually distilled generic character-creation rules from across several games (Dungeons and Dragons, Exalted, World of Darkness), and encoded options into an easy-to-copy hash. This allows additional game systems to be added to the app!
 
-### 2. Users are able to generate characters based on three simple questions, [none of which require any knowledge of Dungeons and Dragons](https://github.com/isalevine/friendly-character-generator-frontend/blob/bfe4ffcaa74ecf9e49d0ed2e68cfd3435797fce0/src/components/forms/PowerForm.js#L34) or other tabletop RPG games.
+### 3. Users are able to generate characters based on three simple questions, [none of which require any knowledge of Dungeons and Dragons](https://github.com/isalevine/friendly-character-generator-frontend/blob/bfe4ffcaa74ecf9e49d0ed2e68cfd3435797fce0/src/components/forms/PowerForm.js#L34) or other tabletop RPG games.
 Users enter their choices in a form, and those three values are able to find a matching character archetype in the database.
 
 The character archetype has preferences and rankings for the types of skills, powers, and stats it can have.
 
-### 3. The backend Rails app parses the character-creation rules, and [dynamically assigns available points](https://github.com/isalevine/friendly-character-generator-backend-api/blob/5d3cc9a02af78375450675037717cd6be780745e/app/services/character_generator.rb#L242) (and other decisions) based on both the specific game's rules and the type of character requested by the user.
+### 4. The backend Rails app parses the character-creation rules, and [dynamically assigns available points](https://github.com/isalevine/friendly-character-generator-backend-api/blob/5d3cc9a02af78375450675037717cd6be780745e/app/services/character_generator.rb#L242) (and other decisions) based on both the specific game's rules and the type of character requested by the user.
 
-### 4. All characters have a [semi-randomly generated backstory](https://github.com/isalevine/friendly-character-generator-backend-api/blob/5d3cc9a02af78375450675037717cd6be780745e/app/services/character_generator.rb#L488), based on the text gathered from the character sheet's skills, power descriptions, and other texts.
+### 5. All characters have a [semi-randomly generated backstory](https://github.com/isalevine/friendly-character-generator-backend-api/blob/5d3cc9a02af78375450675037717cd6be780745e/app/services/character_generator.rb#L488), based on the text gathered from the character sheet's skills, power descriptions, and other texts.
 This text [generates a pool of individual words](https://github.com/isalevine/friendly-character-generator-backend-api/blob/5d3cc9a02af78375450675037717cd6be780745e/app/services/snippet_tag_generator.rb#L36), which are used to query tags in the database. 
 
 These tags match the individual words to potential backstory snippets--[one or two sentence descriptions of a phase of the character's life](https://github.com/isalevine/friendly-character-generator-backend-api/blob/5d3cc9a02af78375450675037717cd6be780745e/db/seeds.rb#L921)--which are then randomly selected and compiled into a semi-cohesive story.
 
-### 5. Users can immediately [print out their character](https://github.com/isalevine/friendly-character-generator-frontend/blob/bfe4ffcaa74ecf9e49d0ed2e68cfd3435797fce0/src/components/characters/ExtendedCharacter.js#L92)!
+### 6. Users can immediately [print out their character](https://github.com/isalevine/friendly-character-generator-frontend/blob/bfe4ffcaa74ecf9e49d0ed2e68cfd3435797fce0/src/components/characters/ExtendedCharacter.js#L92)!
 
-### 6. A form on the frontend allows users [to contribute new character archetypes to the database](https://github.com/isalevine/friendly-character-generator-frontend/blob/bfe4ffcaa74ecf9e49d0ed2e68cfd3435797fce0/src/components/forms/ArchetypeMakerForm.js#L7)!
+### 7. A form on the frontend allows users [to contribute new character archetypes to the database](https://github.com/isalevine/friendly-character-generator-frontend/blob/bfe4ffcaa74ecf9e49d0ed2e68cfd3435797fce0/src/components/forms/ArchetypeMakerForm.js#L7)!
 This React form contains all the options for designing a game-system-agnostic character archetype, including:
 * Ranking the priority for [character stats and skills](https://github.com/isalevine/friendly-character-generator-frontend/blob/bfe4ffcaa74ecf9e49d0ed2e68cfd3435797fce0/src/components/forms/ArchetypeMakerForm.js#L19)
 * Setting [the playstyle responses from the user](https://github.com/isalevine/friendly-character-generator-frontend/blob/bfe4ffcaa74ecf9e49d0ed2e68cfd3435797fce0/src/components/forms/ArchetypeMakerForm.js#L92) that will lead to generating this particular character type
